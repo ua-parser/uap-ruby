@@ -5,7 +5,7 @@ Gem::Specification.new do |gem|
   gem.author      = "Tim Lucas"
   gem.email       = "t@toolmantim.com"
   gem.homepage    = "http://github.com/toolmantim/user_agent_parser"
-  gem.summary     = "A simple, comprehensive Ruby gem for parsing user agent strings based on BrowserScope's UA database"
+  gem.summary     = "A simple, comprehensive Ruby gem for parsing user agent strings with the help of BrowserScope's UA database"
   gem.description = gem.summary
   gem.license     = "MIT"
 
