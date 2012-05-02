@@ -6,7 +6,7 @@ UserAgentParser is a simple, comprehensive Ruby gem for parsing user agent strin
 
 * Ruby >= 1.9.2
 
-Ruby 1.8.7 is not supported due to the requirement for the newer psych YAML parser. If you can get it working on 1.8.7 please send a pull request.
+Note: Ruby 1.8.7 is not supported due to the requirement for the newer psych YAML parser. If you can get it working on 1.8.7 please send a pull request.
 
 ## Installation
 
