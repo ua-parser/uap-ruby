@@ -1,6 +1,6 @@
 Gem::Specification.new do |gem|
   gem.name    = "user_agent_parser"
-  gem.version = "0.1.0"
+  gem.version = "0.1.1"
 
   gem.author      = "Tim Lucas"
   gem.email       = "t@toolmantim.com"
@@ -9,7 +9,7 @@ Gem::Specification.new do |gem|
   gem.description = gem.summary
   gem.license     = "MIT"
 
-  gem.files = %x{ git ls-files }.split("\n").select { |d| d =~ %r{^(License|README|lib/|vendor/ua-parser/regexes.yaml)} }
+  gem.files = %x{ git ls-files }.split("\n").select { |d| d =~ %r{^(MIT-LICENSE|Readme.md|lib/)} } + ['vendor/ua-parser/regexes.yaml']
 
   # We need the newer psych YAML parser for the browserscope YAML files
   gem.required_ruby_version = '>= 1.9.2'
