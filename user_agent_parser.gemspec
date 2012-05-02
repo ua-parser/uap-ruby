@@ -12,5 +12,5 @@ Gem::Specification.new do |gem|
   gem.files = %x{ git ls-files }.split("\n").select { |d| d =~ %r{^(License|README|lib/|vendor/ua-parser/regexes.yaml)} }
 
   # We need the newer psych YAML parser for the browserscope YAML files
-  gem.required_ruby_version '>= 1.9.2'
+  gem.required_ruby_version = '>= 1.9.2'
 end
