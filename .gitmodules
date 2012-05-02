@@ -1,0 +1,3 @@
+[submodule "vendor/ua-parser"]
+	path = vendor/ua-parser
+	url = https://github.com/tobie/ua-parser.git
