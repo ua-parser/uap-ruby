@@ -57,23 +57,22 @@ end
 
 module MiniTest
   module Assertions
-    # Asserts that the parsed UserAgent satisifies the YAML test case
-    def assert_satisfies_test_case(tc, ua, msg=nil)
-      assert_equal(ua.family, tc['family']) if tc['family']
-
-      assert_equal(ua.version[0], tc['v1']) if tc['v1']
-      assert_equal(ua.version[1], tc['v2']) if tc['v2']
-      assert_equal(ua.version[2], tc['v3']) if tc['v3']
-
-      assert_equal(ua.os.name, tc['os']) if tc['os']
-
-      assert_equal(ua.os.version[0], tc['os_v1']) if tc['os_v1']
-      assert_equal(ua.os.version[1], tc['os_v2']) if tc['os_v2']
-      assert_equal(ua.os.version[2], tc['os_v3']) if tc['os_v3']
-      assert_equal(ua.os.version[3], tc['os_v4']) if tc['os_v4']
+    # Asserts the test case property is equal to the expected value. On failure
+    # the message includes the property and user_agent_string from the test
+    # case for easier debugging
+    def assert_test_case_property_equal test_case, actual, test_case_property
+      assert_equal test_case[test_case_property],
+                   actual,
+                   "#{test_case_property} failed for user agent: #{test_case['user_agent_string']}"
     end
+    # Asserts that the version is not nil and that it's segment matches the 
+    # value of the given test case property
+    def assert_version_segment_equal_test_case_property segment, version, test_case, test_case_property
+      refute_nil version, "#{test_case_property} failed for user agent: #{test_case['user_agent_string']}"
+      assert_test_case_property_equal test_case, version[segment], test_case_property
+    end
+    Object.infect_an_assertion :assert_test_case_property_equal, :must_equal_test_case_property
+    Object.infect_an_assertion :assert_version_segment_equal_test_case_property, :segment_must_equal_test_case_property
   end
-  module Expectations
-    infect_an_assertion :assert_satisfies_test_case, :must_satisfy_test_case
-  end
+  
 end
