@@ -13,7 +13,7 @@ module UserAgentParser
   private
 
     def all_patterns
-      @all_patterns ||= YAML.load_file(UserAgentParser.patterns_path)
+      @all_patterns ||= YAML.load(File.read(UserAgentParser.patterns_path))
     end
 
     def patterns type
