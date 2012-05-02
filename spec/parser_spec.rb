@@ -8,7 +8,8 @@ describe UserAgentParser::Parser do
 
   describe "#parse" do
     ua_parser_test_cases.each do |tc|
-      it "should parse #{tc['user_agent_string'][0..60]}" do
+      clean_test_name = tc['user_agent_string'].gsub(/[^a-z0-9_.-]/i,'_')
+      it "should parse #{clean_test_name}" do
         ua = @parser.parse(tc['user_agent_string'])
 
         ua.family.must_equal_test_case_property(tc, 'family') if tc['family']
