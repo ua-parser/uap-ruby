@@ -1,29 +1,33 @@
 # UserAgentParser
 
-UserAgentParser is a simple, comprehensive Ruby gem for parsing user agent strings based upon [BrowserScope](http://www.browserscope.org/)'s UA parser. The parsing patterns come from the most excellent [ua-parser project](https://github.com/tobie/ua-parser) by [Tobie Langel](https://github.com/tobie/).
+UserAgentParser is a simple, comprehensive Ruby gem for parsing user agent strings. It utilises [BrowserScope](http://www.browserscope.org/)'s UA parser via the most excellent [ua-parser project](https://github.com/tobie/ua-parser) by [Tobie Langel](https://github.com/tobie/).
 
 ## Installation
 
-    $ gem install user_agent_parser
+```bash
+$ gem install user_agent_parser
+```
 
-## Usage example
+## Example usage
 
-    require 'user_agent_parser'
-    => true
-    ua = UserAgentParser.parse 'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.0;)'
-    => #<UserAgentParser::UserAgent IE 9.0 (Windows Vista)>
-    ua.to_s
-    => "IE 9.0 (Windows Vista)"
-    ua.family
-    => "IE"
-    ua.version.to_s
-    => "9.0"
-    ua.version[0]
-    => 9
-    ua.version[1]
-    => 0
-    ua.os.name
-    => "Windows Vista"
+```ruby
+require 'user_agent_parser'
+=> true
+ua = UserAgentParser.parse 'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.0;)'
+=> #<UserAgentParser::UserAgent IE 9.0 (Windows Vista)>
+ua.to_s
+=> "IE 9.0 (Windows Vista)"
+ua.family
+=> "IE"
+ua.version.to_s
+=> "9.0"
+ua.version[0]
+=> 9
+ua.version[1]
+=> 0
+ua.os.name
+=> "Windows Vista"
+```
 
 ## The pattern database
 
@@ -31,16 +35,20 @@ The [ua-parser database](https://github.com/tobie/ua-parser/blob/master/regexes.
 
 You can also specify the path to your own, updated and/or customised `regexes.yaml` file:
 
-    UserAgentParser.patterns_path = '/some/path/to/regexes.yaml'
+```ruby
+UserAgentParser.patterns_path = '/some/path/to/regexes.yaml'
+```
 
 ## Comprehensive you say?
 
-    $ rake test
-    ...
+```bash
+$ rake test
+...
     
-    Finished tests in 144.220280s, 89.0027 tests/s, 234.9739 assertions/s.
+Finished tests in 144.220280s, 89.0027 tests/s, 234.9739 assertions/s.
 
-    12836 tests, 33888 assertions, 0 failures, 0 errors, 0 skips
+12836 tests, 33888 assertions, 0 failures, 0 errors, 0 skips
+```
 
 ## Limitations
 
