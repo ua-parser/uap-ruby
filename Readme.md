@@ -1,6 +1,6 @@
 # UserAgentParser [![Build Status](https://secure.travis-ci.org/toolmantim/user_agent_parser.png?branch=master)](http://travis-ci.org/toolmantim/user_agent_parser)
 
-UserAgentParser is a simple, comprehensive Ruby gem for parsing user agent strings. It uses [BrowserScope](http://www.browserscope.org/)'s parsing patterns via the most excellent [ua-parser project](https://github.com/tobie/ua-parser) by [Tobie Langel](https://github.com/tobie/).
+UserAgentParser is a simple, comprehensive Ruby gem for parsing user agent strings. It uses [BrowserScope](http://www.browserscope.org/)'s [parsing patterns](https://github.com/tobie/ua-parser).
 
 ## Requirements
 
@@ -57,8 +57,6 @@ Finished tests in 144.220280s, 89.0027 tests/s, 234.9739 assertions/s.
 ```
 
 ## Limitations
-
-Chrome Frame detection is not yet included, but once [ua-parser issue #14](https://github.com/tobie/ua-parser/issues/14) is resolved this gem will be updated along with it.
 
 There's no support for providing overrides from Javascript user agent detection like there is with original BrowserScope library. The Javascript overrides were only necessary for detecting IE 9 Platform Preview and older versions of [Chrome Frame](https://developers.google.com/chrome/chrome-frame/).
 
