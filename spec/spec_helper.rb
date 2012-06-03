@@ -7,25 +7,24 @@ require 'user_agent_parser'
 
 def ua_parser_test_cases
   parser_test_cases("test_user_agent_parser") +
-  parser_test_cases("test_user_agent_parser_os") +
-  parser_test_cases("additional_os_tests") +
   parser_test_cases("firefox_user_agent_strings") +
   parser_test_cases("pgts_browser_list")
+end
+
+def os_parser_test_cases
+  parser_test_cases("test_user_agent_parser_os") +
+  parser_test_cases("additional_os_tests")  
 end
 
 def parser_test_cases(file)
   yaml_test_resource(file)['test_cases'].map do |tc|
     {
       'user_agent_string' => tc['user_agent_string'],
-      'family'  => tc['family'],
-      'v1'      => parse_test_version(tc['v1']),
-      'v2'      => parse_test_version(tc['v2']),
-      'v3'      => parse_test_version(tc['v3']),
-      'os'      => tc['os'],
-      'os_v1'   => parse_test_version(tc['os_v1']),
-      'os_v2'   => parse_test_version(tc['os_v2']),
-      'os_v3'   => parse_test_version(tc['os_v3']),
-      'os_v4'   => parse_test_version(tc['os_v4'])
+      'family'      => tc['family'],
+      'major'       => parse_test_version(tc['major']),
+      'minor'       => parse_test_version(tc['minor']),
+      'patch'       => parse_test_version(tc['patch']),
+      'patch_minor' => parse_test_version(tc['patch_minor']),
     }
   end.reject do |tc|
     # We don't do the hacky javascript user agent overrides
@@ -34,7 +33,7 @@ def parser_test_cases(file)
     # For the above reason, we don't detect the IE Platform Preview cases
     tc['family'] == 'IE Platform Preview'
   end.reject do |tc|
-    # Same goes for the older chromeframe UA's (without versions)
+    # Same goes for the older chromeframe UA's (the ones without versions)
     tc['user_agent_string'].include?('chromeframe;')
   end
 end
