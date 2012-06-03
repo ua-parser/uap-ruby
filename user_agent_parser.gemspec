@@ -1,6 +1,6 @@
 Gem::Specification.new do |gem|
   gem.name    = "user_agent_parser"
-  gem.version = "0.1.2"
+  gem.version = "1.0.0"
 
   gem.author      = "Tim Lucas"
   gem.email       = "t@toolmantim.com"
