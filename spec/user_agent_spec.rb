@@ -6,13 +6,8 @@ describe UserAgentParser::UserAgent do
       UserAgentParser::UserAgent.new("Chrome").to_s.must_equal "Chrome"
     end
     it "returns a string of family and version" do
-      v = UserAgentParser::Version.new("1.2")
-      UserAgentParser::UserAgent.new("Chrome", v).to_s.must_equal "Chrome 1.2"
-    end
-    it "returns a string of family, version and os" do
       v = UserAgentParser::Version.new("1.2.3pre")
-      os = UserAgentParser::OperatingSystem.new("Windows", UserAgentParser::Version.new("2.3.4b6"))
-      UserAgentParser::UserAgent.new("Chrome", v, os).to_s.must_equal "Chrome 1.2.3pre (Windows 2.3.4b6)"
+      UserAgentParser::UserAgent.new("Chrome", v).to_s.must_equal "Chrome 1.2.3pre"
     end
   end
   describe "#==" do

@@ -13,7 +13,6 @@ module UserAgentParser
     def to_s
       s = family
       s += " #{version}" if version
-      s += " (#{os})" if os
       s
     end
 
