@@ -17,4 +17,16 @@ describe UserAgentParser::UserAgent do
       ua1.must_equal ua2
     end
   end
+  describe "#inspect" do
+    before do
+      @ua = UserAgentParser::UserAgent.new("Chrome", UserAgentParser::Version.new("1.0"))
+    end
+    it "should return the family and version" do
+      @ua.inspect.to_s.must_equal '#<UserAgentParser::UserAgent Chrome 1.0>'
+    end
+    it "should return the OS if present" do
+      @ua.os = UserAgentParser::OperatingSystem.new("OS X", UserAgentParser::Version.new("10.7.4"))
+      @ua.inspect.must_equal "#<UserAgentParser::UserAgent Chrome 1.0 (OS X 10.7.4)>"
+    end
+  end
 end

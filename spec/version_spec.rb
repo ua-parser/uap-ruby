@@ -54,4 +54,9 @@ describe UserAgentParser::Version do
       UserAgentParser::Version.new("1.2.3").must_equal UserAgentParser::Version.new("1.2.3")
     end
   end
+  describe "#inspect" do
+    it "should return the class and version" do
+      UserAgentParser::Version.new("1.2.3").inspect.must_equal "#<UserAgentParser::Version 1.2.3>"
+    end
+  end
 end

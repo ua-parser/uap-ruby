@@ -22,16 +22,18 @@ require 'user_agent_parser'
 ua = UserAgentParser.parse 'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.0;)'
 => #<UserAgentParser::UserAgent IE 9.0 (Windows Vista)>
 ua.to_s
-=> "IE 9.0 (Windows Vista)"
+=> "IE 9.0"
 ua.family
 => "IE"
 ua.version.to_s
 => "9.0"
-ua.version[0]
+ua.version.major
 => 9
-ua.version[1]
+ua.version.minor
 => 0
-ua.os.name
+os = ua.os
+=> #<UserAgentParser::OperatingSystem Windows Vista>
+os.to_s
 => "Windows Vista"
 ```
 

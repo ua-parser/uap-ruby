@@ -17,4 +17,13 @@ describe UserAgentParser::OperatingSystem do
       os1.must_equal os2
     end
   end
+  describe "#inspect" do
+    before do
+      @ua = UserAgentParser::OperatingSystem.new("OS X", UserAgentParser::Version.new("10.7.4"))
+    end
+    it "should return the name and version" do
+      @ua.inspect.to_s.must_equal '#<UserAgentParser::OperatingSystem OS X 10.7.4>'
+    end
+  end
+  
 end

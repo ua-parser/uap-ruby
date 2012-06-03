@@ -17,7 +17,9 @@ module UserAgentParser
     end
 
     def inspect
-      "#<#{self.class} #{to_s}>"
+      s = to_s
+      s += " (#{os})" if os
+      "#<#{self.class} #{s}>"
     end
     
     def ==(other)
