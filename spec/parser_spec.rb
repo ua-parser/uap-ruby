@@ -5,9 +5,9 @@ describe UserAgentParser::Parser do
   before do
     @parser ||= UserAgentParser::Parser.new
   end
-  
+
   def self.ua_string_to_test_name(ua)
-    # Some Ruby versions (JRuby) need sanitised test names, as some chars screw 
+    # Some Ruby versions (JRuby) need sanitised test names, as some chars screw
     # up the test method definitions
     ua.gsub(/[^a-z0-9_.-]/i,'_')
   end
@@ -15,8 +15,20 @@ describe UserAgentParser::Parser do
     ua_string_to_test_name(tc['user_agent_string'])
   end
 
+  describe "#initialize" do
+    it "defaults patterns path file to global" do
+      parser = UserAgentParser::Parser.new
+      parser.patterns_path.must_equal(UserAgentParser.patterns_path)
+    end
+
+    it "allows overriding the global with a specific file" do
+      parser = UserAgentParser::Parser.new('some/path')
+      parser.patterns_path.must_equal('some/path')
+    end
+  end
+
   describe "#parse" do
-    
+
     ua_parser_test_cases.each do |tc|
       it "should parse UA for #{test_case_test_name(tc)}" do
         ua = @parser.parse(tc['user_agent_string'])
@@ -26,7 +38,7 @@ describe UserAgentParser::Parser do
         ua.version.patch.must_equal_test_case_property(tc, 'patch') if tc['patch']
       end
     end
-    
+
     os_parser_test_cases.each do |tc|
       it "should parse OS for #{test_case_test_name(tc)}" do
         ua = @parser.parse(tc['user_agent_string'])
@@ -37,7 +49,7 @@ describe UserAgentParser::Parser do
         ua.os.version.patch_minor.must_equal_test_case_property(tc, 'patch_minor') if tc['patch_minor']
       end
     end
-    
+
   end
-  
+
 end

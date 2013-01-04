@@ -4,16 +4,23 @@ module UserAgentParser
 
   class Parser
 
+    # Private: The path to the patterns yaml file that should be used.
+    attr_reader :patterns_path
+
+    def initialize(patterns_path = UserAgentParser.patterns_path)
+      @patterns_path = patterns_path
+    end
+
     def parse user_agent
       ua = parse_ua(user_agent)
       ua.os = parse_os(user_agent)
       ua
     end
-  
+
   private
 
     def all_patterns
-      @all_patterns ||= YAML.load_file(UserAgentParser.patterns_path)
+      @all_patterns ||= YAML.load_file(@patterns_path)
     end
 
     def patterns type
@@ -24,7 +31,7 @@ module UserAgentParser
         end
       end
     end
-  
+
     def parse_ua user_agent
       pattern, match = first_pattern_match(patterns("user_agent_parsers"), user_agent)
       if match
@@ -33,7 +40,7 @@ module UserAgentParser
         UserAgent.new
       end
     end
-  
+
     def parse_os user_agent
       pattern, match = first_pattern_match(patterns("os_parsers"), user_agent)
       if match
@@ -59,12 +66,12 @@ module UserAgentParser
       end
       v1 = pattern["v1_replacement"].sub('$1', v1 || '') if pattern["v1_replacement"]
       v2 = pattern["v2_replacement"].sub('$1', v2 || '') if pattern["v2_replacement"]
-      v3 = pattern["v3_replacement"].sub('$1', v3 || '') if pattern["v3_replacement"] 
+      v3 = pattern["v3_replacement"].sub('$1', v3 || '') if pattern["v3_replacement"]
       ua = UserAgent.new(family)
       ua.version = version_from_segments(v1, v2, v3)
       ua
     end
-  
+
     def os_from_pattern_match pattern, match
       os, v1, v2, v3, v4 = match[1], match[2], match[3], match[4], match[5]
       os = pattern["os_replacement"].sub('$1', os || '') if pattern["os_replacement"]
@@ -76,12 +83,12 @@ module UserAgentParser
       os.version = version_from_segments(v1, v2, v3, v4)
       os
     end
-  
+
     def version_from_segments(*segments)
       version_string = segments.compact.join(".")
       version_string.empty? ? nil : Version.new(version_string)
     end
-  
+
   end
 
 end
