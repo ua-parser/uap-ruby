@@ -1,17 +1,14 @@
 require 'yaml'
 
 module UserAgentParser
-
   class Parser
-
-    # Private: The path to the patterns yaml file that should be used.
     attr_reader :patterns_path
 
     def initialize(patterns_path = UserAgentParser.patterns_path)
       @patterns_path = patterns_path
     end
 
-    def parse user_agent
+    def parse(user_agent)
       os = parse_os(user_agent)
       parse_ua(user_agent, os)
     end
@@ -22,7 +19,7 @@ module UserAgentParser
       @all_patterns ||= YAML.load_file(@patterns_path)
     end
 
-    def patterns type
+    def patterns(type)
       @patterns ||= {}
       @patterns[type] ||= begin
         all_patterns[type].each do |p|
@@ -31,7 +28,7 @@ module UserAgentParser
       end
     end
 
-    def parse_ua user_agent, os = nil
+    def parse_ua(user_agent, os = nil)
       pattern, match = first_pattern_match(patterns("user_agent_parsers"), user_agent)
       if match
         user_agent_from_pattern_match(pattern, match, os)
@@ -40,7 +37,7 @@ module UserAgentParser
       end
     end
 
-    def parse_os user_agent
+    def parse_os(user_agent)
       pattern, match = first_pattern_match(patterns("os_parsers"), user_agent)
       if match
         os_from_pattern_match(pattern, match)
@@ -49,7 +46,7 @@ module UserAgentParser
       end
     end
 
-    def first_pattern_match patterns, value
+    def first_pattern_match(patterns, value)
       for p in patterns
         if m = p["regex"].match(value)
           return [p, m]
@@ -58,7 +55,7 @@ module UserAgentParser
       nil
     end
 
-    def user_agent_from_pattern_match pattern, match, os
+    def user_agent_from_pattern_match(pattern, match, os = nil)
       family, v1, v2, v3 = match[1], match[2], match[3], match[4]
       if pattern["family_replacement"]
         family = pattern["family_replacement"].sub('$1', family || '')
@@ -70,7 +67,7 @@ module UserAgentParser
       UserAgent.new(family, version, os)
     end
 
-    def os_from_pattern_match pattern, match
+    def os_from_pattern_match(pattern, match)
       os, v1, v2, v3, v4 = match[1], match[2], match[3], match[4], match[5]
       os = pattern["os_replacement"].sub('$1', os || '') if pattern["os_replacement"]
       v1 = pattern["v1_replacement"].sub('$1', v1 || '') if pattern["v1_replacement"]
@@ -85,7 +82,5 @@ module UserAgentParser
       version_string = segments.compact.join(".")
       version_string.empty? ? nil : Version.new(version_string)
     end
-
   end
-
 end
