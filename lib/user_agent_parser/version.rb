@@ -2,6 +2,8 @@ module UserAgentParser
 
   class Version
 
+    SEGMENTS_REGEX = /\d+\-\d+|\d+[a-zA-Z]+$|\d+|[A-Za-z][0-9A-Za-z-]*$/
+
     attr_accessor :version
     alias :to_s :version
 
@@ -10,9 +12,7 @@ module UserAgentParser
     end
 
     def segments
-      version.scan(/\d+\-\d+|\d+[a-zA-Z]+$|\d+|[A-Za-z][0-9A-Za-z-]*$/).map do |s|
-        s
-      end
+      version.scan(SEGMENTS_REGEX)
     end
 
     def [](segment)
