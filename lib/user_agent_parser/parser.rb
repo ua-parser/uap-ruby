@@ -12,9 +12,8 @@ module UserAgentParser
     end
 
     def parse user_agent
-      ua = parse_ua(user_agent)
-      ua.os = parse_os(user_agent)
-      ua
+      os = parse_os(user_agent)
+      parse_ua(user_agent, os)
     end
 
   private
@@ -32,10 +31,10 @@ module UserAgentParser
       end
     end
 
-    def parse_ua user_agent
+    def parse_ua user_agent, os = nil
       pattern, match = first_pattern_match(patterns("user_agent_parsers"), user_agent)
       if match
-        user_agent_from_pattern_match(pattern, match)
+        user_agent_from_pattern_match(pattern, match, os)
       else
         UserAgent.new
       end
@@ -59,7 +58,7 @@ module UserAgentParser
       nil
     end
 
-    def user_agent_from_pattern_match pattern, match
+    def user_agent_from_pattern_match pattern, match, os
       family, v1, v2, v3 = match[1], match[2], match[3], match[4]
       if pattern["family_replacement"]
         family = pattern["family_replacement"].sub('$1', family || '')
@@ -67,9 +66,8 @@ module UserAgentParser
       v1 = pattern["v1_replacement"].sub('$1', v1 || '') if pattern["v1_replacement"]
       v2 = pattern["v2_replacement"].sub('$1', v2 || '') if pattern["v2_replacement"]
       v3 = pattern["v3_replacement"].sub('$1', v3 || '') if pattern["v3_replacement"]
-      ua = UserAgent.new(family)
-      ua.version = version_from_segments(v1, v2, v3)
-      ua
+      version = version_from_segments(v1, v2, v3)
+      UserAgent.new(family, version, os)
     end
 
     def os_from_pattern_match pattern, match
