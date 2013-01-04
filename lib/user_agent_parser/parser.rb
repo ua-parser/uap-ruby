@@ -79,9 +79,8 @@ module UserAgentParser
       v2 = pattern["v2_replacement"].sub('$1', v2 || '') if pattern["v2_replacement"]
       v3 = pattern["v3_replacement"].sub('$1', v3 || '') if pattern["v3_replacement"]
       v4 = pattern["v3_replacement"].sub('$1', v3 || '') if pattern["v4_replacement"]
-      os = OperatingSystem.new(os)
-      os.version = version_from_segments(v1, v2, v3, v4)
-      os
+      version = version_from_segments(v1, v2, v3, v4)
+      OperatingSystem.new(os, version)
     end
 
     def version_from_segments(*segments)

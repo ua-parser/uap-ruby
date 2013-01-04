@@ -1,28 +1,28 @@
 module UserAgentParser
-
   class OperatingSystem
-  
-    attr_accessor :name, :version
-  
-    def initialize(name="Other", version=nil)
-      self.name = name
-      self.version = version
+    attr_reader :name, :version
+
+    def initialize(name = 'Other', version = nil)
+      @name = name
+      @version = version
     end
-  
+
     def to_s
-      s = name
-      s += " #{version}" if version
-      s
+      string = name
+      unless version.nil?
+        string += " #{version}"
+      end
+      string
     end
-  
+
     def inspect
       "#<#{self.class} #{to_s}>"
     end
-  
+
     def ==(other)
       name == other.name && version == other.version
     end
-  
-  end
 
+    alias_method :eql?, :==
+  end
 end
