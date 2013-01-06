@@ -47,9 +47,9 @@ module UserAgentParser
     end
 
     def first_pattern_match(patterns, value)
-      for p in patterns
-        if m = p["regex"].match(value)
-          return [p, m]
+      patterns.each do |pattern|
+        if match = pattern["regex"].match(value)
+          return [pattern, match]
         end
       end
       nil
