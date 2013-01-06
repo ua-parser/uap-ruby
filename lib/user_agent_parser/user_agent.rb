@@ -20,12 +20,12 @@ module UserAgentParser
       "#<#{self.class} #{string}>"
     end
 
-    def ==(other)
+    def eql?(other)
       family == other.family &&
         version == other.version &&
         os == other.os
     end
 
-    alias_method :eql?, :==
+    alias_method :==, :eql?
   end
 end
