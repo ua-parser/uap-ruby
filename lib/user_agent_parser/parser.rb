@@ -30,6 +30,7 @@ module UserAgentParser
 
     def parse_ua(user_agent, os = nil)
       pattern, match = first_pattern_match(patterns("user_agent_parsers"), user_agent)
+
       if match
         user_agent_from_pattern_match(pattern, match, os)
       else
@@ -39,6 +40,7 @@ module UserAgentParser
 
     def parse_os(user_agent)
       pattern, match = first_pattern_match(patterns("os_parsers"), user_agent)
+
       if match
         os_from_pattern_match(pattern, match)
       else
@@ -52,29 +54,59 @@ module UserAgentParser
           return [pattern, match]
         end
       end
+
       nil
     end
 
     def user_agent_from_pattern_match(pattern, match, os = nil)
       family, v1, v2, v3 = match[1], match[2], match[3], match[4]
+
       if pattern["family_replacement"]
         family = pattern["family_replacement"].sub('$1', family || '')
       end
-      v1 = pattern["v1_replacement"].sub('$1', v1 || '') if pattern["v1_replacement"]
-      v2 = pattern["v2_replacement"].sub('$1', v2 || '') if pattern["v2_replacement"]
-      v3 = pattern["v3_replacement"].sub('$1', v3 || '') if pattern["v3_replacement"]
+
+      if pattern["v1_replacement"]
+        v1 = pattern["v1_replacement"].sub('$1', v1 || '')
+      end
+
+      if pattern["v2_replacement"]
+        v2 = pattern["v2_replacement"].sub('$1', v2 || '')
+      end
+
+      if pattern["v3_replacement"]
+        v3 = pattern["v3_replacement"].sub('$1', v3 || '')
+      end
+
       version = version_from_segments(v1, v2, v3)
+
       UserAgent.new(family, version, os)
     end
 
     def os_from_pattern_match(pattern, match)
       os, v1, v2, v3, v4 = match[1], match[2], match[3], match[4], match[5]
-      os = pattern["os_replacement"].sub('$1', os || '') if pattern["os_replacement"]
-      v1 = pattern["v1_replacement"].sub('$1', v1 || '') if pattern["v1_replacement"]
-      v2 = pattern["v2_replacement"].sub('$1', v2 || '') if pattern["v2_replacement"]
-      v3 = pattern["v3_replacement"].sub('$1', v3 || '') if pattern["v3_replacement"]
-      v4 = pattern["v3_replacement"].sub('$1', v3 || '') if pattern["v4_replacement"]
+
+      if pattern["os_replacement"]
+        os = pattern["os_replacement"].sub('$1', os || '')
+      end
+
+      if pattern["v1_replacement"]
+        v1 = pattern["v1_replacement"].sub('$1', v1 || '')
+      end
+
+      if pattern["v2_replacement"]
+        v2 = pattern["v2_replacement"].sub('$1', v2 || '')
+      end
+
+      if pattern["v3_replacement"]
+        v3 = pattern["v3_replacement"].sub('$1', v3 || '')
+      end
+
+      if pattern["v4_replacement"]
+        v4 = pattern["v3_replacement"].sub('$1', v3 || '')
+      end
+
       version = version_from_segments(v1, v2, v3, v4)
+
       OperatingSystem.new(os, version)
     end
 
