@@ -33,7 +33,7 @@ module UserAgentParser
       if match
         user_agent_from_pattern_match(pattern, match, os)
       else
-        UserAgent.new
+        UserAgent.new(nil, nil, os)
       end
     end
 

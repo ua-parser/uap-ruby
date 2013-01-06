@@ -2,8 +2,8 @@ module UserAgentParser
   class UserAgent
     attr_reader :family, :version, :os
 
-    def initialize(family = 'Other', version = nil, os = nil)
-      @family = family
+    def initialize(family = nil, version = nil, os = nil)
+      @family = family || 'Other'
       @version = version
       @os = os
     end
