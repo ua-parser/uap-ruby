@@ -6,6 +6,7 @@ module UserAgentParser
 
     def initialize(patterns_path = UserAgentParser.patterns_path)
       @patterns_path = patterns_path
+      @patterns = {}
     end
 
     def parse(user_agent)
@@ -20,7 +21,6 @@ module UserAgentParser
     end
 
     def patterns(type)
-      @patterns ||= {}
       @patterns[type] ||= begin
         all_patterns[type].each do |pattern|
           pattern["regex"] = Regexp.new(pattern["regex"])
