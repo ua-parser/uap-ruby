@@ -21,6 +21,7 @@ module UserAgentParser
     end
 
     def eql?(other)
+      self.class.eql?(other.class) &&
       family == other.family &&
         version == other.version &&
         os == other.os

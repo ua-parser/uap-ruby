@@ -20,7 +20,9 @@ module UserAgentParser
     end
 
     def eql?(other)
-      name == other.name && version == other.version
+      self.class.eql?(other.class) &&
+        name == other.name &&
+        version == other.version
     end
 
     alias_method :==, :eql?
