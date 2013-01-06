@@ -22,8 +22,8 @@ module UserAgentParser
     def patterns(type)
       @patterns ||= {}
       @patterns[type] ||= begin
-        all_patterns[type].each do |p|
-          p["regex"] = Regexp.new(p["regex"])
+        all_patterns[type].each do |pattern|
+          pattern["regex"] = Regexp.new(pattern["regex"])
         end
       end
     end
