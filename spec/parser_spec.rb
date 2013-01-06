@@ -11,6 +11,7 @@ describe UserAgentParser::Parser do
     # up the test method definitions
     ua.gsub(/[^a-z0-9_.-]/i,'_')
   end
+
   def self.test_case_test_name(tc)
     ua_string_to_test_name(tc['user_agent_string'])
   end
@@ -28,28 +29,52 @@ describe UserAgentParser::Parser do
   end
 
   describe "#parse" do
-
     ua_parser_test_cases.each do |tc|
-      it "should parse UA for #{test_case_test_name(tc)}" do
+      it "parses UA for #{test_case_test_name(tc)}" do
         ua = @parser.parse(tc['user_agent_string'])
-        ua.family.must_equal_test_case_property(tc, 'family') if tc['family']
-        ua.version.major.must_equal_test_case_property(tc, 'major') if tc['major']
-        ua.version.minor.must_equal_test_case_property(tc, 'minor') if tc['minor']
-        ua.version.patch.must_equal_test_case_property(tc, 'patch') if tc['patch']
+
+        if tc['family']
+          ua.family.must_equal_test_case_property(tc, 'family')
+        end
+
+        if tc['major']
+          ua.version.major.must_equal_test_case_property(tc, 'major')
+        end
+
+        if tc['minor']
+          ua.version.minor.must_equal_test_case_property(tc, 'minor')
+        end
+
+        if tc['patch']
+          ua.version.patch.must_equal_test_case_property(tc, 'patch')
+        end
       end
     end
 
     os_parser_test_cases.each do |tc|
-      it "should parse OS for #{test_case_test_name(tc)}" do
+      it "parses OS for #{test_case_test_name(tc)}" do
         ua = @parser.parse(tc['user_agent_string'])
-        ua.os.name.must_equal_test_case_property(tc, 'family') if tc['family']
-        ua.os.version.major.must_equal_test_case_property(tc, 'major') if tc['major']
-        ua.os.version.minor.must_equal_test_case_property(tc, 'minor') if tc['minor']
-        ua.os.version.patch.must_equal_test_case_property(tc, 'patch') if tc['patch']
-        ua.os.version.patch_minor.must_equal_test_case_property(tc, 'patch_minor') if tc['patch_minor']
+
+        if tc['family']
+          ua.os.name.must_equal_test_case_property(tc, 'family')
+        end
+
+        if tc['major']
+          ua.os.version.major.must_equal_test_case_property(tc, 'major')
+        end
+
+        if tc['minor']
+          ua.os.version.minor.must_equal_test_case_property(tc, 'minor')
+        end
+
+        if tc['patch']
+          ua.os.version.patch.must_equal_test_case_property(tc, 'patch')
+        end
+
+        if tc['patch_minor']
+          ua.os.version.patch_minor.must_equal_test_case_property(tc, 'patch_minor')
+        end
       end
     end
-
   end
-
 end
