@@ -60,7 +60,7 @@ describe UserAgentParser::Parser do
   describe "#parse" do
     user_agent_test_cases.each do |test_case|
       it "parses UA for #{test_case_to_test_name(test_case)}" do
-        user_agent = UserAgentParser::Parser.new.parse(test_case['user_agent_string'])
+        user_agent = PARSER.parse(test_case['user_agent_string'])
 
         if test_case['family']
           user_agent.family.must_equal_test_case_property(test_case, 'family')
@@ -82,7 +82,7 @@ describe UserAgentParser::Parser do
 
     operating_system_test_cases.each do |test_case|
       it "parses OS for #{test_case_to_test_name(test_case)}" do
-        user_agent = UserAgentParser::Parser.new.parse(test_case['user_agent_string'])
+        user_agent = PARSER.parse(test_case['user_agent_string'])
 
         if test_case['family']
           user_agent.os.name.must_equal_test_case_property(test_case, 'family')

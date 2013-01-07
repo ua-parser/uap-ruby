@@ -23,3 +23,7 @@ module MiniTest
     Object.infect_an_assertion :assert_test_case_property_equal, :must_equal_test_case_property
   end
 end
+
+# Get instance of parser and preload patterns by calling #parse.
+PARSER = UserAgentParser::Parser.new
+PARSER.parse('')
