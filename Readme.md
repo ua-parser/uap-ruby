@@ -17,21 +17,21 @@ $ gem install user_agent_parser
 ```ruby
 require 'user_agent_parser'
 => true
-ua = UserAgentParser.parse 'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.0;)'
+user_agent = UserAgentParser.parse 'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.0;)'
 => #<UserAgentParser::UserAgent IE 9.0 (Windows Vista)>
-ua.to_s
+user_agent.to_s
 => "IE 9.0"
-ua.family
+user_agent.family
 => "IE"
-ua.version.to_s
+user_agent.version.to_s
 => "9.0"
-ua.version.major
-=> 9
-ua.version.minor
-=> 0
-os = ua.os
+user_agent.version.major
+=> "9"
+user_agent.version.minor
+=> "0"
+operating_system = user_agent.os
 => #<UserAgentParser::OperatingSystem Windows Vista>
-os.to_s
+operating_system.to_s
 => "Windows Vista"
 ```
 
@@ -49,11 +49,11 @@ UserAgentParser.patterns_path = '/some/path/to/regexes.yaml'
 
 ```bash
 $ rake test
-...
+... [snip] ...
 
-Finished tests in 144.220280s, 89.0027 tests/s, 234.9739 assertions/s.
+Finished tests in 6.877135s, 1874.9087 tests/s, 4945.9550 assertions/s.
 
-12836 tests, 33888 assertions, 0 failures, 0 errors, 0 skips
+12894 tests, 34014 assertions, 0 failures, 0 errors, 0 skips
 ```
 
 ## Limitations
