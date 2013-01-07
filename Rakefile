@@ -12,7 +12,9 @@ end
 
 Bundler::GemHelper.install_tasks
 
-desc "Lists all unique browser family names"
+# Does not actually get all families, as some are only listed in the regexes,
+# but gives you a pretty good idea of what will be returned.
+desc "Lists all unique family names for browsers and operating systems."
 task :families do
   require 'pathname'
   require 'pp'
