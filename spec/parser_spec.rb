@@ -1,27 +1,16 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe UserAgentParser::Parser do
-  def self.test_case_test_name(test_case)
-    user_agent = test_case['user_agent_string']
 
-    # Some Ruby versions (JRuby) need sanitised test names, as some chars screw
-    # up the test method definitions
-    user_agent.gsub(/[^a-z0-9_.-]/i, '_').squeeze('_')
+  # Some Ruby versions (JRuby) need sanitised test names, as some chars screw
+  # up the test method definitions
+  def self.test_case_to_test_name(test_case)
+    name = "#{test_case['user_agent_string']}_#{test_case['family']}"
+    clean_name = name.gsub(/[^a-z0-9_.-]/i, '_').squeeze('_')
   end
 
-  def self.ua_parser_test_cases
-    parser_test_cases("test_user_agent_parser") +
-    parser_test_cases("firefox_user_agent_strings") +
-    parser_test_cases("pgts_browser_list")
-  end
-
-  def self.os_parser_test_cases
-    parser_test_cases("test_user_agent_parser_os") +
-    parser_test_cases("additional_os_tests")
-  end
-
-  def self.parser_test_cases(file)
-    yaml_test_resource(file)['test_cases'].map do |test_case|
+  def self.file_to_test_cases(file)
+    file_to_yaml(file)['test_cases'].map do |test_case|
       {
         'user_agent_string' => test_case['user_agent_string'],
         'family'            => test_case['family'],
@@ -38,14 +27,21 @@ describe UserAgentParser::Parser do
     end
   end
 
-  def self.yaml_test_resource(resource)
+  def self.file_to_yaml(resource)
     test_resource_path = File.expand_path('../../vendor/ua-parser/test_resources', __FILE__)
-    resource_path = File.join(test_resource_path, "#{resource}.yaml")
+    resource_path = File.join(test_resource_path, resource)
     YAML.load_file(resource_path)
   end
 
-  def parser
-    @parser ||= UserAgentParser::Parser.new
+  def self.user_agent_test_cases
+    file_to_test_cases("test_user_agent_parser.yaml") +
+    file_to_test_cases("firefox_user_agent_strings.yaml") +
+    file_to_test_cases("pgts_browser_list.yaml")
+  end
+
+  def self.operating_system_test_cases
+    file_to_test_cases("test_user_agent_parser_os.yaml") +
+    file_to_test_cases("additional_os_tests.yaml")
   end
 
   describe "#initialize" do
@@ -61,50 +57,50 @@ describe UserAgentParser::Parser do
   end
 
   describe "#parse" do
-    ua_parser_test_cases.each do |tc|
-      it "parses UA for #{test_case_test_name(tc)}" do
-        ua = UserAgentParser::Parser.new.parse(tc['user_agent_string'])
+    user_agent_test_cases.each do |test_case|
+      it "parses UA for #{test_case_to_test_name(test_case)}" do
+        user_agent = UserAgentParser::Parser.new.parse(test_case['user_agent_string'])
 
-        if tc['family']
-          ua.family.must_equal_test_case_property(tc, 'family')
+        if test_case['family']
+          user_agent.family.must_equal_test_case_property(test_case, 'family')
         end
 
-        if tc['major']
-          ua.version.major.must_equal_test_case_property(tc, 'major')
+        if test_case['major']
+          user_agent.version.major.must_equal_test_case_property(test_case, 'major')
         end
 
-        if tc['minor']
-          ua.version.minor.must_equal_test_case_property(tc, 'minor')
+        if test_case['minor']
+          user_agent.version.minor.must_equal_test_case_property(test_case, 'minor')
         end
 
-        if tc['patch']
-          ua.version.patch.must_equal_test_case_property(tc, 'patch')
+        if test_case['patch']
+          user_agent.version.patch.must_equal_test_case_property(test_case, 'patch')
         end
       end
     end
 
-    os_parser_test_cases.each do |tc|
-      it "parses OS for #{test_case_test_name(tc)}" do
-        ua = parser.parse(tc['user_agent_string'])
+    operating_system_test_cases.each do |test_case|
+      it "parses OS for #{test_case_to_test_name(test_case)}" do
+        user_agent = UserAgentParser::Parser.new.parse(test_case['user_agent_string'])
 
-        if tc['family']
-          ua.os.name.must_equal_test_case_property(tc, 'family')
+        if test_case['family']
+          user_agent.os.name.must_equal_test_case_property(test_case, 'family')
         end
 
-        if tc['major']
-          ua.os.version.major.must_equal_test_case_property(tc, 'major')
+        if test_case['major']
+          user_agent.os.version.major.must_equal_test_case_property(test_case, 'major')
         end
 
-        if tc['minor']
-          ua.os.version.minor.must_equal_test_case_property(tc, 'minor')
+        if test_case['minor']
+          user_agent.os.version.minor.must_equal_test_case_property(test_case, 'minor')
         end
 
-        if tc['patch']
-          ua.os.version.patch.must_equal_test_case_property(tc, 'patch')
+        if test_case['patch']
+          user_agent.os.version.patch.must_equal_test_case_property(test_case, 'patch')
         end
 
-        if tc['patch_minor']
-          ua.os.version.patch_minor.must_equal_test_case_property(tc, 'patch_minor')
+        if test_case['patch_minor']
+          user_agent.os.version.patch_minor.must_equal_test_case_property(test_case, 'patch_minor')
         end
       end
     end
