@@ -3,27 +3,70 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 describe UserAgentParser::OperatingSystem do
   describe "#to_s" do
     it "returns a string of just the name" do
-      UserAgentParser::OperatingSystem.new("Windows").to_s.must_equal "Windows"
+      os = UserAgentParser::OperatingSystem.new("Windows")
+      os.to_s.must_equal "Windows"
     end
+
     it "returns a string of family and version" do
-      v = UserAgentParser::Version.new("7")
-      UserAgentParser::OperatingSystem.new("Windows", v).to_s.must_equal "Windows 7"
+      version = UserAgentParser::Version.new("7")
+      os = UserAgentParser::OperatingSystem.new("Windows", version)
+      os.to_s.must_equal "Windows 7"
     end
   end
+
   describe "#==" do
-    it "should return true for same user agents across different O/S's" do
-      os1 = UserAgentParser::OperatingSystem.new("Windows", UserAgentParser::Version.new("7"))
-      os2 = UserAgentParser::OperatingSystem.new("Windows", UserAgentParser::Version.new("7"))
+    it "returns true for same user agents across different O/S's" do
+      version = UserAgentParser::Version.new("7")
+      os1 = UserAgentParser::OperatingSystem.new("Windows", version)
+      os2 = UserAgentParser::OperatingSystem.new("Windows", version)
       os1.must_equal os2
     end
+
+    it "returns false for same name, different versions" do
+      seven = UserAgentParser::Version.new("7")
+      eight = UserAgentParser::Version.new("8")
+      os1 = UserAgentParser::OperatingSystem.new("Windows", seven)
+      os2 = UserAgentParser::OperatingSystem.new("Windows", eight)
+      os1.wont_equal os2
+    end
+
+    it "returns false for different name, same version" do
+      version = UserAgentParser::Version.new("7")
+      os1 = UserAgentParser::OperatingSystem.new("Windows", version)
+      os2 = UserAgentParser::OperatingSystem.new("Blah", version)
+      os1.wont_equal os2
+    end
   end
+
+  describe "#eql?" do
+    it "returns true for same user agents across different O/S's" do
+      version = UserAgentParser::Version.new("7")
+      os1 = UserAgentParser::OperatingSystem.new("Windows", version)
+      os2 = UserAgentParser::OperatingSystem.new("Windows", version)
+      assert_equal true, os1.eql?(os2)
+    end
+
+    it "returns false for same name, different versions" do
+      seven = UserAgentParser::Version.new("7")
+      eight = UserAgentParser::Version.new("8")
+      os1 = UserAgentParser::OperatingSystem.new("Windows", seven)
+      os2 = UserAgentParser::OperatingSystem.new("Windows", eight)
+      assert_equal false, os1.eql?(os2)
+    end
+
+    it "returns false for different name, same version" do
+      version = UserAgentParser::Version.new("7")
+      os1 = UserAgentParser::OperatingSystem.new("Windows", version)
+      os2 = UserAgentParser::OperatingSystem.new("Blah", version)
+      assert_equal false, os1.eql?(os2)
+    end
+  end
+
   describe "#inspect" do
-    before do
-      @ua = UserAgentParser::OperatingSystem.new("OS X", UserAgentParser::Version.new("10.7.4"))
-    end
-    it "should return the name and version" do
-      @ua.inspect.to_s.must_equal '#<UserAgentParser::OperatingSystem OS X 10.7.4>'
+    it "returns class name and instance to_s" do
+      version = UserAgentParser::Version.new("10.7.4")
+      os = UserAgentParser::OperatingSystem.new("OS X", version)
+      os.inspect.to_s.must_equal '#<UserAgentParser::OperatingSystem OS X 10.7.4>'
     end
   end
-  
 end

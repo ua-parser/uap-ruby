@@ -1,37 +1,47 @@
 module UserAgentParser
-  
   class Version
 
-    attr_accessor :version
+    # Private: Regex used to split version string into major, minor, patch,
+    # and patch_minor.
+    SEGMENTS_REGEX = /\d+\-\d+|\d+[a-zA-Z]+$|\d+|[A-Za-z][0-9A-Za-z-]*$/
+
+    attr_reader :version
     alias :to_s :version
 
     def initialize(version)
-      self.version = version.to_s.strip
+      @version = version.to_s.strip
     end
 
-    def segments
-      version.scan(/\d+\-\d+|\d+[a-zA-Z]+$|\d+|[A-Za-z][0-9A-Za-z-]*$/).map do |s|
-        /^\d+$/ =~ s ? s.to_i : s
-      end
+    def major
+      segments[0]
     end
 
-    def [](segment)
-      segments[segment]
+    def minor
+      segments[1]
     end
-    
-    def major; self[0] end
-    def minor; self[1] end
-    def patch; self[2] end
-    def patch_minor; self[3] end
-  
+
+    def patch
+      segments[2]
+    end
+
+    def patch_minor
+      segments[3]
+    end
+
     def inspect
       "#<#{self.class} #{to_s}>"
     end
-    
-    def ==(other)
-      version == other.version
+
+    def eql?(other)
+      self.class.eql?(other.class) &&
+        version == other.version
     end
 
-  end
+    alias_method :==, :eql?
 
+    # Private
+    def segments
+      @segments ||= version.scan(SEGMENTS_REGEX)
+    end
+  end
 end

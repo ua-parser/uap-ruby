@@ -1,33 +1,32 @@
 module UserAgentParser
-
   class UserAgent
+    attr_reader :family, :version, :os
 
-    attr_accessor :family, :version, :os
-
-    def initialize(family="Other", version=nil, os=nil)
-      self.family = family
-      self.version = version
-      self.os = os
+    def initialize(family = nil, version = nil, os = nil)
+      @family = family || 'Other'
+      @version = version
+      @os = os
     end
 
     def to_s
-      s = family
-      s += " #{version}" if version
-      s
+      string = family
+      string += " #{version}" if version
+      string
     end
 
     def inspect
-      s = to_s
-      s += " (#{os})" if os
-      "#<#{self.class} #{s}>"
+      string = to_s
+      string += " (#{os})" if os
+      "#<#{self.class} #{string}>"
     end
-    
-    def ==(other)
+
+    def eql?(other)
+      self.class.eql?(other.class) &&
       family == other.family &&
         version == other.version &&
         os == other.os
     end
 
+    alias_method :==, :eql?
   end
-  
 end
