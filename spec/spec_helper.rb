@@ -56,14 +56,7 @@ module MiniTest
                    actual,
                    "#{test_case_property} failed for user agent: #{test_case['user_agent_string']}"
     end
-    # Asserts that the version is not nil and that it's segment matches the
-    # value of the given test case property
-    def assert_version_segment_equal_test_case_property segment, version, test_case, test_case_property
-      refute_nil version, "#{test_case_property} failed for user agent: #{test_case['user_agent_string']}"
-      assert_test_case_property_equal test_case, version[segment], test_case_property
-    end
-    Object.infect_an_assertion :assert_test_case_property_equal, :must_equal_test_case_property
-    Object.infect_an_assertion :assert_version_segment_equal_test_case_property, :segment_must_equal_test_case_property
-  end
 
+    Object.infect_an_assertion :assert_test_case_property_equal, :must_equal_test_case_property
+  end
 end
