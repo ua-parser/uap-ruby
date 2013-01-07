@@ -1,4 +1,10 @@
 require 'minitest/autorun'
+require 'minitest/display'
+
+MiniTest::Display.options = {
+  :suite_names => true,
+  :color => true,
+}
 
 $:.unshift File.expand_path('../../lib', __FILE__)
 require 'user_agent_parser'
