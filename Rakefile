@@ -1,6 +1,5 @@
 require 'rake/testtask'
 require 'bundler'
-require 'yaml'
 
 task :default => :test
 
@@ -44,6 +43,8 @@ task :families do
 end
 
 def paths_to_familiies(paths)
+  require 'yaml'
+
   families = []
 
   paths.each do |path|

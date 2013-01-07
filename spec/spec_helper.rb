@@ -1,5 +1,4 @@
 require 'minitest/autorun'
-require 'yaml'
 
 $:.unshift File.join(File.dirname(__FILE__), "../lib")
 require 'user_agent_parser'
