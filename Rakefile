@@ -18,11 +18,8 @@ task :families do
   require 'pathname'
   require 'pp'
 
-  path = Pathname(__FILE__).dirname.join(
-    'vendor',
-    'ua-parser',
-    'test_resources',
-  )
+  root = Pathname(__FILE__).dirname
+  path = root.join('vendor', 'ua-parser', 'test_resources')
 
   browser_families = paths_to_familiies([
     path.join('test_user_agent_parser.yaml'),
