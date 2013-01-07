@@ -1,20 +1,21 @@
 PATH
   remote: .
   specs:
-    user_agent_parser (1.0.1)
+    user_agent_parser (1.0.2)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    json (1.7.0)
     minitest (2.12.1)
+    minitest-display (0.1.0)
+      minitest (~> 2.3)
     rake (0.9.2.2)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  json
   minitest
+  minitest-display
   rake
   user_agent_parser!
