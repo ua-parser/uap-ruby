@@ -33,6 +33,14 @@ operating_system = user_agent.os
 => #<UserAgentParser::OperatingSystem Windows Vista>
 operating_system.to_s
 => "Windows Vista"
+
+# You can also get an instance of the parser and re-use it:
+parser = UserAgentParser.new
+parser.parse('...')
+
+# And you can give each parser a different pattern file:
+parser = UserAgentParser.new('some/new/path/to/regexes.yml')
+parser.parse('...')
 ```
 
 ## The pattern database
