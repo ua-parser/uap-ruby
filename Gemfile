@@ -4,6 +4,5 @@ gemspec
 
 group :development, :test do
   gem "minitest"
-  gem "json"
   gem "rake"
 end
