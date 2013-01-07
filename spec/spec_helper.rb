@@ -1,6 +1,6 @@
 require 'minitest/autorun'
 
-$:.unshift File.join(File.dirname(__FILE__), "../lib")
+$:.unshift File.expand_path('../../lib', __FILE__)
 require 'user_agent_parser'
 
 module MiniTest
