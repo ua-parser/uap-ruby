@@ -11,7 +11,8 @@ module UserAgentParser
 
     def parse(user_agent)
       os = parse_os(user_agent)
-      parse_ua(user_agent, os)
+      device = parse_device(user_agent)
+      parse_ua(user_agent, os, device)
     end
 
   private
@@ -28,13 +29,13 @@ module UserAgentParser
       end
     end
 
-    def parse_ua(user_agent, os = nil)
+    def parse_ua(user_agent, os = nil, device = nil)
       pattern, match = first_pattern_match(patterns("user_agent_parsers"), user_agent)
 
       if match
-        user_agent_from_pattern_match(pattern, match, os)
+        user_agent_from_pattern_match(pattern, match, os, device)
       else
-        UserAgent.new(nil, nil, os)
+        UserAgent.new(nil, nil, os, device)
       end
     end
 
@@ -48,6 +49,16 @@ module UserAgentParser
       end
     end
 
+    def parse_device(user_agent)
+      pattern, match = first_pattern_match(patterns("device_parsers"), user_agent)
+
+      if match
+        device_from_pattern_match(pattern, match)
+      else
+        Device.new
+      end
+    end
+
     def first_pattern_match(patterns, value)
       patterns.each do |pattern|
         if match = pattern["regex"].match(value)
@@ -58,7 +69,7 @@ module UserAgentParser
       nil
     end
 
-    def user_agent_from_pattern_match(pattern, match, os = nil)
+    def user_agent_from_pattern_match(pattern, match, os = nil, device = nil)
       family, v1, v2, v3 = match[1], match[2], match[3], match[4]
 
       if pattern["family_replacement"]
@@ -79,7 +90,7 @@ module UserAgentParser
 
       version = version_from_segments(v1, v2, v3)
 
-      UserAgent.new(family, version, os)
+      UserAgent.new(family, version, os, device)
     end
 
     def os_from_pattern_match(pattern, match)
@@ -108,6 +119,16 @@ module UserAgentParser
       version = version_from_segments(v1, v2, v3, v4)
 
       OperatingSystem.new(os, version)
+    end
+
+    def device_from_pattern_match(pattern, match)
+      device = match[1]
+
+      if pattern["device_replacement"]
+        device = pattern["device_replacement"].sub('$1', device || '')
+      end
+
+      Device.new(device)
     end
 
     def version_from_segments(*segments)
