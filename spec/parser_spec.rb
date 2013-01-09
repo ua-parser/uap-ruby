@@ -45,6 +45,10 @@ describe UserAgentParser::Parser do
     file_to_test_cases("additional_os_tests.yaml")
   end
 
+  def self.device_test_cases
+    file_to_test_cases("test_device.yaml")
+  end
+
   describe "#initialize" do
     it "defaults patterns path file to global" do
       parser = UserAgentParser::Parser.new
@@ -83,25 +87,37 @@ describe UserAgentParser::Parser do
     operating_system_test_cases.each do |test_case|
       it "parses OS for #{test_case_to_test_name(test_case)}" do
         user_agent = PARSER.parse(test_case['user_agent_string'])
+        operating_system = user_agent.os
 
         if test_case['family']
-          user_agent.os.name.must_equal_test_case_property(test_case, 'family')
+          operating_system.name.must_equal_test_case_property(test_case, 'family')
         end
 
         if test_case['major']
-          user_agent.os.version.major.must_equal_test_case_property(test_case, 'major')
+          operating_system.version.major.must_equal_test_case_property(test_case, 'major')
         end
 
         if test_case['minor']
-          user_agent.os.version.minor.must_equal_test_case_property(test_case, 'minor')
+          operating_system.version.minor.must_equal_test_case_property(test_case, 'minor')
         end
 
         if test_case['patch']
-          user_agent.os.version.patch.must_equal_test_case_property(test_case, 'patch')
+          operating_system.version.patch.must_equal_test_case_property(test_case, 'patch')
         end
 
         if test_case['patch_minor']
-          user_agent.os.version.patch_minor.must_equal_test_case_property(test_case, 'patch_minor')
+          operating_system.version.patch_minor.must_equal_test_case_property(test_case, 'patch_minor')
+        end
+      end
+    end
+
+    device_test_cases.each do |test_case|
+      it "parses device for #{test_case_to_test_name(test_case)}" do
+        user_agent = PARSER.parse(test_case['user_agent_string'])
+        device = user_agent.device
+
+        if test_case['family']
+          device.name.must_equal_test_case_property(test_case, 'family')
         end
       end
     end
