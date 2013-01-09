@@ -34,7 +34,11 @@ operating_system = user_agent.os
 operating_system.to_s
 => "Windows Vista"
 
-# You can also get an instance of the parser and re-use it:
+# You can also get an instance of the parser and re-use it. The main reason you
+# would want to do this is performance. Each time a new parser instance is
+# created, all the patterns have to be read from disk and parsed by YAML.
+# Storing an instance of the parser means that will only happen once per
+# application instance boot.
 parser = UserAgentParser.new
 parser.parse('...')
 
