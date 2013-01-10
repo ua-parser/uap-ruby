@@ -10,10 +10,10 @@ module UserAgentParser
       @path = path
     end
 
-    # Public: Loads the file, parses contents and returns result.
+    # Public: Loads the file, parses yaml contents and returns result.
     #
     # Returns Hash of patterns.
-    def patterns
+    def call
       YAML.load_file(@path)
     end
   end

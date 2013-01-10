@@ -13,15 +13,16 @@ describe UserAgentParser::FilePatternLoader do
     end
   end
 
-  describe "#patterns" do
+  describe "#call" do
     it "returns hash of patterns" do
       loader = described_class.new(UserAgentParser::DefaultPatternPath)
-      expected = %w[
+      result = loader.call
+      result.must_be_instance_of Hash
+      result.keys.sort.must_equal %w[
         device_parsers
         os_parsers
         user_agent_parsers
       ]
-      loader.patterns.keys.sort.must_equal expected
     end
   end
 end
