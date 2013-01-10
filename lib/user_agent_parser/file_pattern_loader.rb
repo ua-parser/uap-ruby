@@ -13,8 +13,21 @@ module UserAgentParser
     # Public: Loads the file, parses yaml contents, converts patterns to ruby
     # regular expressions and returns result.
     #
+    # args - The Hash of arguments.
+    #        :fresh - The Boolean which determines whether to return the
+    #                 memoized result or load the patterns again and
+    #                 re-memoize them.
+    #
     # Returns Hash of patterns.
-    def call
+    def call(args = {})
+      if args.fetch(:fresh, false)
+        @call_result = fresh_call
+      else
+        @call_result ||= fresh_call
+      end
+    end
+
+    def fresh_call
       patterns = YAML.load_file(@path)
 
       patterns.keys.each do |type|

@@ -29,5 +29,19 @@ describe UserAgentParser::FilePatternLoader do
         end
       end
     end
+
+    it "memoizes result" do
+      loader = described_class.new(UserAgentParser::DefaultPatternPath)
+      result = loader.call
+      result.equal?(loader.call).must_equal true
+    end
+
+    it "allows forcing a fresh" do
+      loader = described_class.new(UserAgentParser::DefaultPatternPath)
+      result = loader.call
+      fresh_result = loader.call(:fresh => true)
+      result.equal?(fresh_result).must_equal false
+      fresh_result.equal?(loader.call).must_equal true
+    end
   end
 end
