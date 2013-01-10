@@ -67,7 +67,7 @@ describe UserAgentParser::Parser do
         user_agent = PARSER.parse(test_case['user_agent_string'])
 
         if test_case['family']
-          user_agent.family.must_equal_test_case_property(test_case, 'family')
+          user_agent.name.must_equal_test_case_property(test_case, 'family')
         end
 
         if test_case['major']

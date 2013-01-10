@@ -7,7 +7,7 @@ describe UserAgentParser::OperatingSystem do
       os.to_s.must_equal "Windows"
     end
 
-    it "returns a string of family and version" do
+    it "returns a string of name and version" do
       version = UserAgentParser::Version.new("7")
       os = UserAgentParser::OperatingSystem.new("Windows", version)
       os.to_s.must_equal "Windows 7"
