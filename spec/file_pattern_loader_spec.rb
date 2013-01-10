@@ -6,12 +6,7 @@ describe UserAgentParser::FilePatternLoader do
   end
 
   describe "#initialize" do
-    it "defaults path to vendored regexes yaml file" do
-      loader = described_class.new
-      loader.path.must_equal UserAgentParser::DefaultPatternPath
-    end
-
-    it "allows customizing path" do
+    it "sets path" do
       path = 'some/path/for/regexes.yaml'
       loader = described_class.new(path)
       loader.path.must_equal path
@@ -20,7 +15,7 @@ describe UserAgentParser::FilePatternLoader do
 
   describe "#patterns" do
     it "returns hash of patterns" do
-      loader = described_class.new
+      loader = described_class.new(UserAgentParser::DefaultPatternPath)
       expected = %w[
         device_parsers
         os_parsers

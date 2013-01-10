@@ -1,10 +1,12 @@
+require 'yaml'
+
 module UserAgentParser
   class FilePatternLoader
     # Private: The path to load the yaml regexes from.
     attr_reader :path
 
     # Public: Returns a new instance of the file pattern loader.
-    def initialize(path = UserAgentParser::DefaultPatternPath)
+    def initialize(path)
       @path = path
     end
 
