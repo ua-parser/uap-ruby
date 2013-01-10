@@ -97,5 +97,14 @@ describe UserAgentParser::UserAgent do
       agent = UserAgentParser::UserAgent.new("Chrome", family_version, os)
       agent.inspect.must_equal "#<UserAgentParser::UserAgent Chrome 1.0 (OS X 10.7.4)>"
     end
+
+    it "returns device if present" do
+      family_version = UserAgentParser::Version.new("5.0.2")
+      os_version = UserAgentParser::Version.new("4.2.1")
+      os = UserAgentParser::OperatingSystem.new("iOS", os_version)
+      device = UserAgentParser::Device.new("iPhone")
+      agent = UserAgentParser::UserAgent.new("Mobile Safari", family_version, os, device)
+      agent.inspect.must_equal "#<UserAgentParser::UserAgent Mobile Safari 5.0.2 (iOS 4.2.1) (iPhone)>"
+    end
   end
 end

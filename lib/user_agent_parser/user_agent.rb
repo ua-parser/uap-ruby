@@ -18,6 +18,7 @@ module UserAgentParser
     def inspect
       string = to_s
       string += " (#{os})" if os
+      string += " (#{device})" if device
       "#<#{self.class} #{string}>"
     end
 
