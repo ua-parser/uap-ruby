@@ -27,6 +27,10 @@ module UserAgentParser
       end
     end
 
+    # Private: Loads file, parses contents as YAML and converts patterns to
+    # regular expressions each time called.
+    #
+    # Returns Hash of patterns.
     def fresh_call
       patterns = YAML.load_file(@path)
 
