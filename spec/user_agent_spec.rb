@@ -6,7 +6,7 @@ describe UserAgentParser::UserAgent do
       UserAgentParser::UserAgent.new("Chrome").to_s.must_equal "Chrome"
     end
 
-    it "returns a string of family and version" do
+    it "returns a string of name and version" do
       version = UserAgentParser::Version.new("1.2.3pre")
       agent = UserAgentParser::UserAgent.new("Chrome", version)
       agent.to_s.must_equal "Chrome 1.2.3pre"
@@ -85,7 +85,7 @@ describe UserAgentParser::UserAgent do
       agent1.wont_equal agent2
     end
 
-    it "returns false for same os, but different family version" do
+    it "returns false for same os, but different browser version" do
       browser_version1 = UserAgentParser::Version.new("1.0")
       browser_version2 = UserAgentParser::Version.new("2.0")
       os = UserAgentParser::OperatingSystem.new('Windows')
@@ -120,7 +120,7 @@ describe UserAgentParser::UserAgent do
       assert_equal false, agent1.eql?(agent2)
     end
 
-    it "returns false for same os, but different family version" do
+    it "returns false for same os, but different browser version" do
       browser_version1 = UserAgentParser::Version.new("1.0")
       browser_version2 = UserAgentParser::Version.new("2.0")
       os = UserAgentParser::OperatingSystem.new('Windows')
@@ -131,7 +131,7 @@ describe UserAgentParser::UserAgent do
   end
 
   describe "#inspect" do
-    it "returns the family and version" do
+    it "returns the name and version" do
       browser_version = UserAgentParser::Version.new("1.0")
       agent = UserAgentParser::UserAgent.new("Chrome", browser_version)
       agent.inspect.to_s.must_equal '#<UserAgentParser::UserAgent Chrome 1.0>'
