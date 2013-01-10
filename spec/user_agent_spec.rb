@@ -84,13 +84,13 @@ describe UserAgentParser::UserAgent do
   end
 
   describe "#inspect" do
-    it "should return the family and version" do
+    it "returns the family and version" do
       family_version = UserAgentParser::Version.new("1.0")
       agent = UserAgentParser::UserAgent.new("Chrome", family_version)
       agent.inspect.to_s.must_equal '#<UserAgentParser::UserAgent Chrome 1.0>'
     end
 
-    it "should return the OS if present" do
+    it "returns the OS if present" do
       family_version = UserAgentParser::Version.new("1.0")
       os_version = UserAgentParser::Version.new("10.7.4")
       os = UserAgentParser::OperatingSystem.new("OS X", os_version)
