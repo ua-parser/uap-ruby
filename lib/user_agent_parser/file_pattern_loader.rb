@@ -10,11 +10,20 @@ module UserAgentParser
       @path = path
     end
 
-    # Public: Loads the file, parses yaml contents and returns result.
+    # Public: Loads the file, parses yaml contents, converts patterns to ruby
+    # regular expressions and returns result.
     #
     # Returns Hash of patterns.
     def call
-      YAML.load_file(@path)
+      patterns = YAML.load_file(@path)
+
+      patterns.keys.each do |type|
+        patterns[type].each do |pattern|
+          pattern['regex'] = Regexp.new(pattern['regex'])
+        end
+      end
+
+      patterns
     end
   end
 end

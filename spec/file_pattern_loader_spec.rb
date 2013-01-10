@@ -23,6 +23,11 @@ describe UserAgentParser::FilePatternLoader do
         os_parsers
         user_agent_parsers
       ]
+      result.keys.each do |type|
+        result[type].each do |pattern|
+          pattern['regex'].must_be_instance_of Regexp
+        end
+      end
     end
   end
 end
