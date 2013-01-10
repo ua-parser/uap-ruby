@@ -16,6 +16,7 @@ module UserAgentParser
   # Private: The path to the default pattern regexes file.
   DefaultPatternPath = VendorPath.join('ua-parser', 'regexes.yaml')
 
+  # Private: The default pattern loader instance to use for all parsers.
   DefaultPatternLoader = FilePatternLoader.new(DefaultPatternPath)
 
   # Path to the ua-parser regexes pattern database
