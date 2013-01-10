@@ -13,6 +13,46 @@ describe UserAgentParser::UserAgent do
     end
   end
 
+  describe "#initialize" do
+    describe "with family" do
+      it "sets family" do
+        agent = UserAgentParser::UserAgent.new("Chromium")
+        agent.family.must_equal "Chromium"
+      end
+    end
+
+    describe "with no family" do
+      it "sets family to Other" do
+        agent = UserAgentParser::UserAgent.new
+        agent.family.must_equal "Other"
+      end
+    end
+
+    describe "with version" do
+      it "sets version" do
+        version = UserAgentParser::Version.new('1.2.3')
+        agent = UserAgentParser::UserAgent.new(nil, version)
+        agent.version.must_equal version
+      end
+    end
+
+    describe "with os" do
+      it "sets os" do
+        os = UserAgentParser::OperatingSystem.new('Windows XP')
+        agent = UserAgentParser::UserAgent.new(nil, nil, os)
+        agent.os.must_equal os
+      end
+    end
+
+    describe "with device" do
+      it "sets device" do
+        device = UserAgentParser::Device.new('iPhone')
+        agent = UserAgentParser::UserAgent.new(nil, nil, nil, device)
+        agent.device.must_equal device
+      end
+    end
+  end
+
   describe "#==" do
     it "returns true for same agents with no OS" do
       version = UserAgentParser::Version.new("1.0")
