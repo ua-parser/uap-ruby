@@ -1,16 +1,19 @@
 module UserAgentParser
   class UserAgent
-    attr_reader :family, :version, :os, :device
+    attr_reader :name, :version, :os, :device
 
-    def initialize(family = nil, version = nil, os = nil, device = nil)
-      @family = family || 'Other'
+    # For backwards compatibility with older versions of this gem.
+    alias_method :family, :name
+
+    def initialize(name = nil, version = nil, os = nil, device = nil)
+      @name = name || 'Other'
       @version = version
       @os = os
       @device = device
     end
 
     def to_s
-      string = family
+      string = name
       string += " #{version}" if version
       string
     end
@@ -24,7 +27,7 @@ module UserAgentParser
 
     def eql?(other)
       self.class.eql?(other.class) &&
-      family == other.family &&
+      name == other.name &&
         version == other.version &&
         os == other.os
     end

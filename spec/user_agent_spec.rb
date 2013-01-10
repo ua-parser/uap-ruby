@@ -14,17 +14,17 @@ describe UserAgentParser::UserAgent do
   end
 
   describe "#initialize" do
-    describe "with family" do
-      it "sets family" do
+    describe "with name" do
+      it "sets name" do
         agent = UserAgentParser::UserAgent.new("Chromium")
-        agent.family.must_equal "Chromium"
+        agent.name.must_equal "Chromium"
       end
     end
 
-    describe "with no family" do
-      it "sets family to Other" do
+    describe "with no name" do
+      it "sets name to Other" do
         agent = UserAgentParser::UserAgent.new
-        agent.family.must_equal "Other"
+        agent.name.must_equal "Other"
       end
     end
 
@@ -50,6 +50,13 @@ describe UserAgentParser::UserAgent do
         agent = UserAgentParser::UserAgent.new(nil, nil, nil, device)
         agent.device.must_equal device
       end
+    end
+  end
+
+  describe "#family" do
+    it "returns name" do
+      agent = UserAgentParser::UserAgent.new('Safari')
+      agent.family.must_equal agent.name
     end
   end
 
