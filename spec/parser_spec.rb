@@ -49,22 +49,19 @@ describe UserAgentParser::Parser do
     file_to_test_cases("test_device.yaml")
   end
 
-  describe "#initialize" do
-    it "defaults patterns path file to global" do
-      parser = UserAgentParser::Parser.new
-      parser.patterns_path.must_equal(UserAgentParser.patterns_path)
-    end
+  def self.pattern_loader
+    UserAgentParser::DefaultPatternLoader
+  end
 
-    it "allows overriding the global with a specific file" do
-      parser = UserAgentParser::Parser.new('some/path')
-      parser.patterns_path.must_equal('some/path')
-    end
+  def pattern_loader
+    self.class.pattern_loader
   end
 
   describe "#parse" do
     user_agent_test_cases.each do |test_case|
       it "parses UA for #{test_case_to_test_name(test_case)}" do
-        user_agent = PARSER.parse(test_case['user_agent_string'])
+        parser = UserAgentParser::Parser.new(pattern_loader)
+        user_agent = parser.parse(test_case['user_agent_string'])
 
         if test_case['family']
           user_agent.name.must_equal_test_case_property(test_case, 'family')
@@ -86,7 +83,8 @@ describe UserAgentParser::Parser do
 
     operating_system_test_cases.each do |test_case|
       it "parses OS for #{test_case_to_test_name(test_case)}" do
-        user_agent = PARSER.parse(test_case['user_agent_string'])
+        parser = UserAgentParser::Parser.new(pattern_loader)
+        user_agent = parser.parse(test_case['user_agent_string'])
         operating_system = user_agent.os
 
         if test_case['family']
@@ -113,7 +111,8 @@ describe UserAgentParser::Parser do
 
     device_test_cases.each do |test_case|
       it "parses device for #{test_case_to_test_name(test_case)}" do
-        user_agent = PARSER.parse(test_case['user_agent_string'])
+        parser = UserAgentParser::Parser.new(pattern_loader)
+        user_agent = parser.parse(test_case['user_agent_string'])
         device = user_agent.device
 
         if test_case['family']
