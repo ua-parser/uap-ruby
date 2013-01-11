@@ -34,17 +34,15 @@ operating_system = user_agent.os
 operating_system.to_s
 => "Windows Vista"
 
-# You can also get an instance of the parser and re-use it. The main reason you
-# would want to do this is performance. Each time a new parser instance is
-# created, all the patterns have to be read from disk and parsed by YAML.
-# Storing an instance of the parser means that will only happen once per
-# application instance boot.
-parser = UserAgentParser.new
-parser.parse('...')
-
-# And you can give each parser a different pattern file:
-parser = UserAgentParser.new('some/new/path/to/regexes.yml')
-parser.parse('...')
+# The parser database will be loaded and parsed on every call to
+# UserAgentParser.parse and UserAgentParser.new, so if you're parsing multiple
+# strings, or you need to load the database ahead of time, you should
+# use UserAgentParser.new instead:
+parser = UserAgentParser::Parser.new
+parser.parse 'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.0;)'
+=> #<UserAgentParser::UserAgent IE 9.0 (Windows Vista)>
+parser.parse 'Opera/9.80 (Windows NT 5.1; U; ru) Presto/2.5.24 Version/10.53'
+=> #<UserAgentParser::UserAgent Opera 10.53 (Windows XP)>
 ```
 
 ## The pattern database
@@ -54,7 +52,10 @@ The [ua-parser database](https://github.com/tobie/ua-parser/blob/master/regexes.
 You can also specify the path to your own, updated and/or customised `regexes.yaml` file:
 
 ```ruby
-UserAgentParser.patterns_path = '/some/path/to/regexes.yaml'
+UserAgentParser.parse(ua_string, '/some/path/to/regexes.yaml')
+```
+```ruby
+UserAgentParser::Parser.new('/some/path/to/regexes.yaml').parse(ua_string)
 ```
 
 ## Comprehensive you say?

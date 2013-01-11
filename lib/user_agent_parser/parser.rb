@@ -1,10 +1,11 @@
 require 'yaml'
 
 module UserAgentParser
+  
   class Parser
     attr_reader :patterns_path
 
-    def initialize(patterns_path = UserAgentParser.patterns_path)
+    def initialize(patterns_path = UserAgentParser::DefaultPatternsPath)
       @patterns_path = patterns_path
       @patterns = {}
     end
