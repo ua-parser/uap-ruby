@@ -1,24 +1,21 @@
+require 'pathname'
 require 'user_agent_parser/parser'
 require 'user_agent_parser/user_agent'
 require 'user_agent_parser/version'
 require 'user_agent_parser/operating_system'
 require 'user_agent_parser/device'
+require 'user_agent_parser/file_pattern_loader'
 
 module UserAgentParser
-  # Path to the ua-parser regexes pattern database
-  def self.patterns_path
-    @patterns_path
-  end
+  # Private: The path to the root of this gem.
+  RootPath = Pathname(__FILE__).dirname
 
-  # Sets the path to the ua-parser regexes pattern database
-  def self.patterns_path=(path)
-    @patterns_path = path
-  end
+  # Private: The path to the vendor directory.
+  VendorPath = UserAgentParser::RootPath.join('..', 'vendor').expand_path
 
-  self.patterns_path = File.join(File.dirname(__FILE__), "../vendor/ua-parser/regexes.yaml")
+  # Private: The path to the default pattern regexes file.
+  DefaultPatternPath = VendorPath.join('ua-parser', 'regexes.yaml')
 
-  # Parse the given +user_agent_string+, returning a +UserAgent+
-  def self.parse(user_agent_string)
-    Parser.new.parse(user_agent_string)
-  end
+  # Private: The default pattern loader instance to use for all parsers.
+  DefaultPatternLoader = FilePatternLoader.new(DefaultPatternPath)
 end
