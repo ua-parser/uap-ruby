@@ -101,19 +101,19 @@ module UserAgentParser
       end
 
       if pattern["v1_replacement"]
-        v1 = pattern["v1_replacement"].sub('$1', v1 || '')
+        v1 = pattern["os_v1_replacement"].sub('$1', v1 || '')
       end
 
       if pattern["v2_replacement"]
-        v2 = pattern["v2_replacement"].sub('$1', v2 || '')
+        v2 = pattern["os_v2_replacement"].sub('$1', v2 || '')
       end
 
       if pattern["v3_replacement"]
-        v3 = pattern["v3_replacement"].sub('$1', v3 || '')
+        v3 = pattern["os_v3_replacement"].sub('$1', v3 || '')
       end
 
       if pattern["v4_replacement"]
-        v4 = pattern["v3_replacement"].sub('$1', v3 || '')
+        v4 = pattern["os_v4_replacement"].sub('$1', v4 || '')
       end
 
       version = version_from_segments(v1, v2, v3, v4)
