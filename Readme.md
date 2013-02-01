@@ -49,11 +49,14 @@ parser.parse 'Opera/9.80 (Windows NT 5.1; U; ru) Presto/2.5.24 Version/10.53'
 
 The [ua-parser database](https://github.com/tobie/ua-parser/blob/master/regexes.yaml) is included via a [git submodule](http://help.github.com/submodules/). To update the database the submodule needs to be updated and the gem re-released (pull requests for this are very welcome!).
 
-You can also specify the path to your own, updated and/or customised `regexes.yaml` file:
+You can also specify the path to your own, updated and/or customised `regexes.yaml` file as a second argument to `UserAgentParser.parse`:
 
 ```ruby
 UserAgentParser.parse(ua_string, '/some/path/to/regexes.yaml')
 ```
+
+or when instantiating a `UserAgentParser::Parser`:
+
 ```ruby
 UserAgentParser::Parser.new('/some/path/to/regexes.yaml').parse(ua_string)
 ```
