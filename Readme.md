@@ -61,10 +61,6 @@ or when instantiating a `UserAgentParser::Parser`:
 UserAgentParser::Parser.new('/some/path/to/regexes.yaml').parse(ua_string)
 ```
 
-## Limitations
-
-There's no support for providing overrides from Javascript user agent detection like there is with original BrowserScope library. The Javascript overrides were only necessary for detecting IE 9 Platform Preview and older versions of [Chrome Frame](https://developers.google.com/chrome/chrome-frame/).
-
 ## Contributing
 
 1. Fork
