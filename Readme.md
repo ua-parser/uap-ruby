@@ -35,9 +35,7 @@ operating_system.to_s
 => "Windows Vista"
 
 # The parser database will be loaded and parsed on every call to
-# UserAgentParser.parse and UserAgentParser.new, so if you're parsing multiple
-# strings, or you need to load the database ahead of time, you should
-# use UserAgentParser.new instead:
+# UserAgentParser.parse. To avoid this, instantiate your own Parser instance.
 parser = UserAgentParser::Parser.new
 parser.parse 'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.0;)'
 => #<UserAgentParser::UserAgent IE 9.0 (Windows Vista)>
