@@ -58,17 +58,6 @@ UserAgentParser.parse(ua_string, '/some/path/to/regexes.yaml')
 UserAgentParser::Parser.new('/some/path/to/regexes.yaml').parse(ua_string)
 ```
 
-## Comprehensive you say?
-
-```bash
-$ rake test
-... [snip] ...
-
-Finished tests in 6.877135s, 1874.9087 tests/s, 4945.9550 assertions/s.
-
-12894 tests, 34014 assertions, 0 failures, 0 errors, 0 skips
-```
-
 ## Limitations
 
 There's no support for providing overrides from Javascript user agent detection like there is with original BrowserScope library. The Javascript overrides were only necessary for detecting IE 9 Platform Preview and older versions of [Chrome Frame](https://developers.google.com/chrome/chrome-frame/).
