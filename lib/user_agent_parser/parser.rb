@@ -1,12 +1,12 @@
 require 'yaml'
 
 module UserAgentParser
+  
   class Parser
     attr_reader :patterns_path
 
-    def initialize(patterns_path = UserAgentParser.patterns_path)
-      @patterns_path = patterns_path
-      @patterns = {}
+    def initialize(patterns_path = UserAgentParser::DefaultPatternsPath)
+      @ua_patterns, @os_patterns, @device_patterns = load_patterns(patterns_path)
     end
 
     def parse(user_agent)
@@ -17,20 +17,21 @@ module UserAgentParser
 
   private
 
-    def all_patterns
-      @all_patterns ||= YAML.load_file(@patterns_path)
-    end
+    def load_patterns(path)
+      yml = YAML.load_file(path)
 
-    def patterns(type)
-      @patterns[type] ||= begin
-        all_patterns[type].each do |pattern|
+      # Parse all the regexs
+      yml.each_pair do |type, patterns|
+        patterns.each do |pattern|
           pattern["regex"] = Regexp.new(pattern["regex"])
         end
       end
+
+      [ yml["user_agent_parsers"], yml["os_parsers"], yml["device_parsers"] ]
     end
 
     def parse_ua(user_agent, os = nil, device = nil)
-      pattern, match = first_pattern_match(patterns("user_agent_parsers"), user_agent)
+      pattern, match = first_pattern_match(@ua_patterns, user_agent)
 
       if match
         user_agent_from_pattern_match(pattern, match, os, device)
@@ -40,7 +41,7 @@ module UserAgentParser
     end
 
     def parse_os(user_agent)
-      pattern, match = first_pattern_match(patterns("os_parsers"), user_agent)
+      pattern, match = first_pattern_match(@os_patterns, user_agent)
 
       if match
         os_from_pattern_match(pattern, match)
@@ -50,7 +51,7 @@ module UserAgentParser
     end
 
     def parse_device(user_agent)
-      pattern, match = first_pattern_match(patterns("device_parsers"), user_agent)
+      pattern, match = first_pattern_match(@device_patterns, user_agent)
 
       if match
         device_from_pattern_match(pattern, match)
@@ -65,7 +66,6 @@ module UserAgentParser
           return [pattern, match]
         end
       end
-
       nil
     end
 

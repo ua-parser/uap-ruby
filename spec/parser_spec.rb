@@ -3,11 +3,13 @@ require 'yaml'
 
 describe UserAgentParser::Parser do
 
+  PARSER = UserAgentParser::Parser.new
+
   # Some Ruby versions (JRuby) need sanitised test names, as some chars screw
   # up the test method definitions
   def self.test_case_to_test_name(test_case)
     name = "#{test_case['user_agent_string']}_#{test_case['family']}"
-    clean_name = name.gsub(/[^a-z0-9_.-]/i, '_').squeeze('_')
+    name.gsub(/[^a-z0-9_.-]/i, '_').squeeze('_')
   end
 
   def self.file_to_test_cases(file)
@@ -48,16 +50,37 @@ describe UserAgentParser::Parser do
   def self.device_test_cases
     file_to_test_cases("test_device.yaml")
   end
+  
+  def custom_patterns_path
+    File.join(File.dirname(__FILE__), "custom_regexes.yaml")
+  end
 
-  describe "#initialize" do
-    it "defaults patterns path file to global" do
-      parser = UserAgentParser::Parser.new
-      parser.patterns_path.must_equal(UserAgentParser.patterns_path)
+  describe "::parse" do
+    it "parses a UA" do
+      ua = UserAgentParser.parse("Mozilla/5.0 (Macintosh; U; PPC Mac OS X; en-us) AppleWebKit/418.8 (KHTML, like Gecko) Safari/419.3")
+      ua.family.must_equal("Safari")
     end
+    it "accepts a custom patterns path" do
+      ua = UserAgentParser.parse("Any user agent string", custom_patterns_path)
+      ua.family.must_equal("Custom browser")
+    end
+  end
 
-    it "allows overriding the global with a specific file" do
-      parser = UserAgentParser::Parser.new('some/path')
-      parser.patterns_path.must_equal('some/path')
+  describe "#initialize with a custom patterns path" do
+    it "uses the custom patterns" do
+      parser = UserAgentParser::Parser.new(custom_patterns_path)
+      ua = parser.parse("Any user agent string")
+
+      ua.name.must_equal("Custom browser")
+      ua.version.major.must_equal("1")
+      ua.version.minor.must_equal("2")
+      ua.version.patch.must_equal("3")
+
+      ua.os.name.must_equal("Custom OS")
+      ua.os.version.major.must_equal("1")
+      ua.os.version.minor.must_equal("2")
+
+      ua.device.name.must_equal("Custom device")
     end
   end
 
