@@ -3,7 +3,7 @@ module UserAgentParser
     attr_reader :name
 
     def initialize(name = nil)
-      @name = name
+      @name = name || 'Other'
     end
 
     def to_s

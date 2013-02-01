@@ -37,9 +37,8 @@ describe UserAgentParser::Parser do
   end
 
   def self.user_agent_test_cases
-    file_to_test_cases("test_user_agent_parser.yaml") +
     file_to_test_cases("firefox_user_agent_strings.yaml") +
-    file_to_test_cases("pgts_browser_list.yaml")
+    file_to_test_cases("test_user_agent_parser.yaml")
   end
 
   def self.operating_system_test_cases
