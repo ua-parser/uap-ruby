@@ -9,7 +9,7 @@ describe UserAgentParser::Parser do
   # up the test method definitions
   def self.test_case_to_test_name(test_case)
     name = "#{test_case['user_agent_string']}_#{test_case['family']}"
-    clean_name = name.gsub(/[^a-z0-9_.-]/i, '_').squeeze('_')
+    name.gsub(/[^a-z0-9_.-]/i, '_').squeeze('_')
   end
 
   def self.file_to_test_cases(file)
