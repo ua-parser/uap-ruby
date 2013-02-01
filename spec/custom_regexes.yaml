@@ -1,0 +1,16 @@
+user_agent_parsers:
+  - regex: '.*'
+    family_replacement: 'Custom browser'
+    v1_replacement: '1'
+    v2_replacement: '2'
+    v3_replacement: '3'
+
+os_parsers:
+  - regex: '.*'
+    os_replacement: 'Custom OS'
+    os_v1_replacement: '1'
+    os_v2_replacement: '2'
+
+device_parsers:
+  - regex: '.*'
+    device_replacement: 'Custom device'
