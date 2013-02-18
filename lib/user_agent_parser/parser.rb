@@ -5,7 +5,8 @@ module UserAgentParser
   class Parser
     attr_reader :patterns_path
 
-    def initialize(patterns_path = UserAgentParser::DefaultPatternsPath)
+    def initialize(options={})
+      @patterns_path = options[:patterns_path] || UserAgentParser::DefaultPatternsPath
       @ua_patterns, @os_patterns, @device_patterns = load_patterns(patterns_path)
     end
 

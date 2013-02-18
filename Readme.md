@@ -50,13 +50,13 @@ The [ua-parser database](https://github.com/tobie/ua-parser/blob/master/regexes.
 You can also specify the path to your own, updated and/or customised `regexes.yaml` file as a second argument to `UserAgentParser.parse`:
 
 ```ruby
-UserAgentParser.parse(ua_string, '/some/path/to/regexes.yaml')
+UserAgentParser.parse(ua_string, patterns_path: '/some/path/to/regexes.yaml')
 ```
 
 or when instantiating a `UserAgentParser::Parser`:
 
 ```ruby
-UserAgentParser::Parser.new('/some/path/to/regexes.yaml').parse(ua_string)
+UserAgentParser::Parser.new(patterns_path: '/some/path/to/regexes.yaml').parse(ua_string)
 ```
 
 ## Contributing

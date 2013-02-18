@@ -60,14 +60,14 @@ describe UserAgentParser::Parser do
       ua.family.must_equal("Safari")
     end
     it "accepts a custom patterns path" do
-      ua = UserAgentParser.parse("Any user agent string", custom_patterns_path)
+      ua = UserAgentParser.parse("Any user agent string", :patterns_path => custom_patterns_path)
       ua.family.must_equal("Custom browser")
     end
   end
 
   describe "#initialize with a custom patterns path" do
     it "uses the custom patterns" do
-      parser = UserAgentParser::Parser.new(custom_patterns_path)
+      parser = UserAgentParser::Parser.new(:patterns_path => custom_patterns_path)
       ua = parser.parse("Any user agent string")
 
       ua.name.must_equal("Custom browser")
