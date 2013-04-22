@@ -71,7 +71,7 @@ module UserAgentParser
     end
 
     def user_agent_from_pattern_match(pattern, match, os = nil, device = nil)
-      name, v1, v2, v3 = match[1], match[2], match[3], match[4]
+      name, v1, v2, v3, v4 = match[1], match[2], match[3], match[4], match[5]
 
       if pattern["family_replacement"]
         name = pattern["family_replacement"].sub('$1', name || '')
@@ -89,7 +89,11 @@ module UserAgentParser
         v3 = pattern["v3_replacement"].sub('$1', v3 || '')
       end
 
-      version = version_from_segments(v1, v2, v3)
+      if pattern["v4_replacement"]
+        v4 = pattern["v4_replacement"].sub('$1', v4 || '')
+      end
+
+      version = version_from_segments(v1, v2, v3, v4)
 
       UserAgent.new(name, version, os, device)
     end
