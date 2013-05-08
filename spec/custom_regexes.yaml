@@ -4,6 +4,7 @@ user_agent_parsers:
     v1_replacement: '1'
     v2_replacement: '2'
     v3_replacement: '3'
+    v4_replacement: '4'
 
 os_parsers:
   - regex: '.*'

@@ -49,7 +49,7 @@ describe UserAgentParser::Parser do
   def self.device_test_cases
     file_to_test_cases("test_device.yaml")
   end
-  
+
   def custom_patterns_path
     File.join(File.dirname(__FILE__), "custom_regexes.yaml")
   end
@@ -74,6 +74,7 @@ describe UserAgentParser::Parser do
       ua.version.major.must_equal("1")
       ua.version.minor.must_equal("2")
       ua.version.patch.must_equal("3")
+      ua.version.patch_minor.must_equal("4")
 
       ua.os.name.must_equal("Custom OS")
       ua.os.version.major.must_equal("1")
