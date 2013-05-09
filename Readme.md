@@ -70,8 +70,15 @@ All accepted pull requests will earn you commit and release rights.
 
 ## Releasing a new version
 
-1. Update the version in user_agent_parser.gemspec
-2. `git commit user_agent_parser.gemspec -m 'Version bump'`
+1. Update the version in `user_agent_parser.gemspec`
+2. `git commit user_agent_parser.gemspec` with the following message format:
+
+        Version x.x.x
+
+        Changelog:
+        * Some new feature
+        * Some new bug fix
+
 3. `rake release`
 
 ## License
