@@ -43,6 +43,21 @@ parser.parse 'Opera/9.80 (Windows NT 5.1; U; ru) Presto/2.5.24 Version/10.53'
 => #<UserAgentParser::UserAgent Opera 10.53 (Windows XP)>
 ```
 
+In a larger application, you could store a parser in a global to avoid repeat pattern loading:
+
+```ruby
+module MyApplication
+
+  # Instantiate the parser on load as it's quite expensive
+  USER_AGENT_PARSER = UserAgentParser::Parser.new
+
+  def self.user_agent_parser
+    USER_AGENT_PARSER
+  end
+
+end
+```
+
 ## The pattern database
 
 The [ua-parser database](https://github.com/tobie/ua-parser/blob/master/regexes.yaml) is included via a [git submodule](http://help.github.com/submodules/). To update the database the submodule needs to be updated and the gem re-released (pull requests for this are very welcome!).
