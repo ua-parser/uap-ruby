@@ -1,7 +1,7 @@
 require 'yaml'
 
 module UserAgentParser
-  
+
   class Parser
     attr_reader :patterns_path
 

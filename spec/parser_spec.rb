@@ -59,6 +59,7 @@ describe UserAgentParser::Parser do
       ua = UserAgentParser.parse("Mozilla/5.0 (Macintosh; U; PPC Mac OS X; en-us) AppleWebKit/418.8 (KHTML, like Gecko) Safari/419.3")
       ua.family.must_equal("Safari")
     end
+
     it "accepts a custom patterns path" do
       ua = UserAgentParser.parse("Any user agent string", :patterns_path => custom_patterns_path)
       ua.family.must_equal("Custom browser")
