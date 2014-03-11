@@ -9,7 +9,7 @@ Gem::Specification.new do |gem|
   gem.description = gem.summary
   gem.license     = "MIT"
 
-  gem.files = %x{ git ls-files }.split("\n").select { |d| d =~ %r{^(MIT-LICENSE|Readme.md|lib/)} } + ['vendor/ua-parser/regexes.yaml']
+  gem.files = %x{ git ls-files }.split("\n").select { |d| d =~ %r{^(MIT-LICENSE|Readme.md|lib|bin/)} } + ['vendor/ua-parser/regexes.yaml']
 
   gem.required_ruby_version = '>= 1.8.7'
 end

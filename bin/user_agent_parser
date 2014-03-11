@@ -1,0 +1,47 @@
+#!/usr/bin/env ruby
+
+$: << File.expand_path('../../lib', __FILE__)
+
+require 'optparse'
+
+require 'user_agent_parser'
+require 'user_agent_parser/cli'
+
+options = {}
+
+optparse = OptionParser.new do|opts|
+  opts.on('--name', 'Print name only') do
+    options[:name] = true
+  end
+
+  opts.on('--version', 'Print version only') do
+    options[:version] = true
+  end
+
+  opts.on('--major', 'Print major version only') do
+    options[:major] = true
+  end
+
+  opts.on('--minor', 'Print minor version only') do
+    options[:minor] = true
+  end
+
+  opts.on('--os', 'Print operating system only') do
+    options[:os] = true
+  end
+
+  opts.on('--format format', 'Print output in specified format') do |format|
+    options[:format] = format
+  end
+
+  opts.on('-h', '--help', 'Display this screen') do
+    puts opts
+    exit
+  end
+end
+
+optparse.parse!
+
+ARGF.each do |line|
+  puts UserAgentParser::Cli.new(line, options).run!
+end
