@@ -12,6 +12,44 @@ describe UserAgentParser::Cli do
     cli.run!.must_equal('Mobile Safari 6.0')
   end
 
+  describe 'invalid version' do
+    let(:user_agent) {
+      'Mozilla/5.0 (iPad; CPU OS like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/XYZ Mobile/10A523 Safari/8536.25'
+    }
+
+    describe '--version' do
+      let(:options) { { :version => true } }
+
+      it 'returns nil' do
+        cli.run!.must_be_nil
+      end
+    end
+
+    describe '--major' do
+      let(:options) { { :major => true } }
+
+      it 'returns nil' do
+        cli.run!.must_be_nil
+      end
+    end
+
+    describe '--minor' do
+      let(:options) { { :minor => true } }
+
+      it 'returns nil' do
+        cli.run!.must_be_nil
+      end
+    end
+
+    describe '--format' do
+      let(:options) { { :format => '%n|%v|%M|%m|%o' } }
+
+      it 'returns string without versions' do
+        cli.run!.must_equal('Mobile Safari||||Other')
+      end
+    end
+  end
+
   describe '--name' do
     let(:options) { { :name => true } }
 
