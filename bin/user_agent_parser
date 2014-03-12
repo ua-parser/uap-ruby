@@ -30,7 +30,14 @@ optparse = OptionParser.new do|opts|
     options[:os] = true
   end
 
-  opts.on('--format format', 'Print output in specified format') do |format|
+  opts.on('--format format',
+          'Print output in specified format. The available formatters are:',
+          ' - %n: name',
+          ' - %v: version',
+          ' - %M: major version',
+          ' - %m: minor version',
+          ' - %o: operating system'
+         ) do |format|
     options[:format] = format
   end
 
