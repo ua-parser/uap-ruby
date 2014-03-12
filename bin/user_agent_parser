@@ -42,6 +42,8 @@ end
 
 optparse.parse!
 
+parser = UserAgentParser::Parser.new
+
 ARGF.each do |line|
-  puts UserAgentParser::Cli.new(line, options).run!
+  puts UserAgentParser::Cli.new(parser.parse(line), options).run!
 end

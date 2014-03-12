@@ -4,8 +4,9 @@ require 'user_agent_parser/cli'
 describe UserAgentParser::Cli do
   let(:cli) { UserAgentParser::Cli.new(user_agent, options) }
   let(:options) { {} }
+  let(:parser) { UserAgentParser::Parser.new }
   let(:user_agent) {
-    'Mozilla/5.0 (iPad; CPU OS 6_0_1 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A523 Safari/8536.25'
+    parser.parse('Mozilla/5.0 (iPad; CPU OS 6_0_1 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A523 Safari/8536.25')
   }
 
   it 'prints name and version when no options' do
@@ -14,7 +15,7 @@ describe UserAgentParser::Cli do
 
   describe 'invalid version' do
     let(:user_agent) {
-      'Mozilla/5.0 (iPad; CPU OS like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/XYZ Mobile/10A523 Safari/8536.25'
+      parser.parse('Mozilla/5.0 (iPad; CPU OS like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/XYZ Mobile/10A523 Safari/8536.25')
     }
 
     describe '--version' do

@@ -1,7 +1,7 @@
 module UserAgentParser
   class Cli
     def initialize(user_agent, options = {})
-      @user_agent = UserAgentParser.parse(user_agent)
+      @user_agent = user_agent
       @options = options
     end
 
