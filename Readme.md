@@ -94,6 +94,7 @@ All accepted pull requests will earn you commit and release rights.
         * Some new feature
         * Some new bug fix
 3. `rake release`
+4. Create a [new Github release](https://github.com/toolmantim/user_agent_parser/releases/new)
 
 ## License
 
