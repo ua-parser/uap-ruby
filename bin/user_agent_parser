@@ -1,7 +1,5 @@
 #!/usr/bin/env ruby
 
-$: << File.expand_path('../../lib', File.readlink(__FILE__))
-
 require 'optparse'
 
 require 'user_agent_parser'
