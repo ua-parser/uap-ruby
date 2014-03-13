@@ -8,6 +8,7 @@ Gem::Specification.new do |gem|
   gem.summary     = "A simple, comprehensive Ruby gem for parsing user agent strings with the help of BrowserScope's UA database"
   gem.description = gem.summary
   gem.license     = "MIT"
+  gem.executables = ['user_agent_parser']
 
   gem.files = %x{ git ls-files }.split("\n").select { |d| d =~ %r{^(MIT-LICENSE|Readme.md|lib|bin/)} } + ['vendor/ua-parser/regexes.yaml']
 
