@@ -1,13 +1,15 @@
 require 'yaml'
 
 module UserAgentParser
-  
-  class Parser
-    attr_reader :patterns_path
+  class InvalidUriError < StandardError; end
 
+  class Parser
+    # Initialize a parser from one or more URIs
     def initialize(options={})
-      @patterns_path = options[:patterns_path] || UserAgentParser::DefaultPatternsPath
-      @ua_patterns, @os_patterns, @device_patterns = load_patterns(patterns_path)
+      @user_agent_patterns, @os_patterns, @device_patterns = [], [], []
+      options[:patterns_path] ||= UserAgentParser::DefaultPatternsPath
+
+      update(options[:patterns_path])
     end
 
     def parse(user_agent)
@@ -16,23 +18,50 @@ module UserAgentParser
       parse_ua(user_agent, os, device)
     end
 
-  private
+    # Update the ua database with one or more uris
+    def update(uris)
+      [uris].flatten.each do |uri|
+        parse_ua_regexes(read_ua_regexes(uri))
+      end
 
-    def load_patterns(path)
-      yml = YAML.load_file(path)
+      true
+    end
 
+    private
+
+    # Given a URI, read the data and deserialize it
+    def read_ua_regexes(uri)
+      # Attempt to read the data from the network if application, or the file on the local system
+      data = if uri =~ /\A(?:ht|f)tps?:\/\//
+        require 'open-uri'
+        begin
+          open(uri).read
+        rescue OpenURI::HTTPError
+          raise InvalidUriError.new("Cannot load referer data from URI #{uri} -- #{$!.to_s}", $!)
+        end
+      else
+        File.read(uri)
+      end
+
+      YAML.load(data)
+    end
+
+    # Given valid yaml, add it to the regexes
+    def parse_ua_regexes(yml)
       # Parse all the regexs
       yml.each_pair do |type, patterns|
         patterns.each do |pattern|
-          pattern["regex"] = Regexp.new(pattern["regex"])
+          pattern['regex'] = Regexp.new(pattern['regex'])
         end
       end
 
-      [ yml["user_agent_parsers"], yml["os_parsers"], yml["device_parsers"] ]
+      [:user_agent, :os, :device].each do |sym|
+        instance_variable_get("@#{sym}_patterns".to_sym).concat yml["#{sym}_parsers"] if yml.has_key?("#{sym}_parsers")
+      end
     end
 
     def parse_ua(user_agent, os = nil, device = nil)
-      pattern, match = first_pattern_match(@ua_patterns, user_agent)
+      pattern, match = first_pattern_match(@user_agent_patterns, user_agent)
 
       if match
         user_agent_from_pattern_match(pattern, match, os, device)
@@ -63,7 +92,8 @@ module UserAgentParser
 
     def first_pattern_match(patterns, value)
       patterns.each do |pattern|
-        if match = pattern["regex"].match(value)
+        # Use include? to skip matches we are pretty sure will fail
+        if match = pattern['regex'].match(value)
           return [pattern, match]
         end
       end
@@ -73,24 +103,24 @@ module UserAgentParser
     def user_agent_from_pattern_match(pattern, match, os = nil, device = nil)
       name, v1, v2, v3, v4 = match[1], match[2], match[3], match[4], match[5]
 
-      if pattern["family_replacement"]
-        name = pattern["family_replacement"].sub('$1', name || '')
+      if pattern['family_replacement']
+        name = pattern['family_replacement'].sub('$1', name || '')
       end
 
-      if pattern["v1_replacement"]
-        v1 = pattern["v1_replacement"].sub('$1', v1 || '')
+      if pattern['v1_replacement']
+        v1 = pattern['v1_replacement'].sub('$1', v1 || '')
       end
 
-      if pattern["v2_replacement"]
-        v2 = pattern["v2_replacement"].sub('$1', v2 || '')
+      if pattern['v2_replacement']
+        v2 = pattern['v2_replacement'].sub('$1', v2 || '')
       end
 
-      if pattern["v3_replacement"]
-        v3 = pattern["v3_replacement"].sub('$1', v3 || '')
+      if pattern['v3_replacement']
+        v3 = pattern['v3_replacement'].sub('$1', v3 || '')
       end
 
-      if pattern["v4_replacement"]
-        v4 = pattern["v4_replacement"].sub('$1', v4 || '')
+      if pattern['v4_replacement']
+        v4 = pattern['v4_replacement'].sub('$1', v4 || '')
       end
 
       version = version_from_segments(v1, v2, v3, v4)
@@ -101,24 +131,24 @@ module UserAgentParser
     def os_from_pattern_match(pattern, match)
       os, v1, v2, v3, v4 = match[1], match[2], match[3], match[4], match[5]
 
-      if pattern["os_replacement"]
-        os = pattern["os_replacement"].sub('$1', os || '')
+      if pattern['os_replacement']
+        os = pattern['os_replacement'].sub('$1', os || '')
       end
 
-      if pattern["os_v1_replacement"]
-        v1 = pattern["os_v1_replacement"].sub('$1', v1 || '')
+      if pattern['os_v1_replacement']
+        v1 = pattern['os_v1_replacement'].sub('$1', v1 || '')
       end
 
-      if pattern["os_v2_replacement"]
-        v2 = pattern["os_v2_replacement"].sub('$1', v2 || '')
+      if pattern['os_v2_replacement']
+        v2 = pattern['os_v2_replacement'].sub('$1', v2 || '')
       end
 
-      if pattern["os_v3_replacement"]
-        v3 = pattern["os_v3_replacement"].sub('$1', v3 || '')
+      if pattern['os_v3_replacement']
+        v3 = pattern['os_v3_replacement'].sub('$1', v3 || '')
       end
 
-      if pattern["os_v4_replacement"]
-        v4 = pattern["os_v4_replacement"].sub('$1', v4 || '')
+      if pattern['os_v4_replacement']
+        v4 = pattern['os_v4_replacement'].sub('$1', v4 || '')
       end
 
       version = version_from_segments(v1, v2, v3, v4)
@@ -129,15 +159,15 @@ module UserAgentParser
     def device_from_pattern_match(pattern, match)
       device = match[1]
 
-      if pattern["device_replacement"]
-        device = pattern["device_replacement"].sub('$1', device || '')
+      if pattern['device_replacement']
+        device = pattern['device_replacement'].sub('$1', device || '')
       end
 
       Device.new(device)
     end
 
     def version_from_segments(*segments)
-      version_string = segments.compact.join(".")
+      version_string = segments.compact.join('.')
       version_string.empty? ? nil : Version.new(version_string)
     end
   end
