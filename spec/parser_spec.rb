@@ -82,6 +82,16 @@ describe UserAgentParser::Parser do
 
       ua.device.name.must_equal("Custom device")
     end
+
+    it "loads default patterns and custom patterns" do
+      parser = UserAgentParser::Parser.new(:patterns_path => [UserAgentParser::DefaultPatternsPath, custom_patterns_path])
+      # Standard UA
+      ua = parser.parse('Mozilla/5.0 (Windows NT 6.0; rv:2.0b6pre) Gecko/20100907 Firefox/4.0b6pre')
+      ua.name.must_equal("Firefox Beta")
+
+      ua = parser.parse('Total Gibberish')
+      ua.name.must_equal("Custom browser")
+    end
   end
 
   describe "#parse" do
