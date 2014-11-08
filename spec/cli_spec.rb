@@ -9,7 +9,7 @@ describe UserAgentParser::Cli do
     parser.parse('Mozilla/5.0 (iPad; CPU OS 6_0_1 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A523 Safari/8536.25')
   }
 
-  it 'prints name and version when no options' do
+  it 'prints family and version when no options' do
     cli.run!.must_equal('Mobile Safari 6.0')
   end
 
@@ -43,10 +43,10 @@ describe UserAgentParser::Cli do
     end
 
     describe '--format' do
-      let(:options) { { :format => '%n|%v|%M|%m|%o' } }
+      let(:options) { { :format => '%n|%f|%v|%M|%m|%o' } }
 
       it 'returns string without versions' do
-        cli.run!.must_equal('Mobile Safari||||Other')
+        cli.run!.must_equal('Mobile Safari|Mobile Safari||||Other')
       end
     end
   end
@@ -55,6 +55,14 @@ describe UserAgentParser::Cli do
     let(:options) { { :name => true } }
 
     it 'returns name only' do
+      cli.run!.must_equal('Mobile Safari')
+    end
+  end
+
+  describe '--family' do
+    let(:options) { { :family => true } }
+
+    it 'returns family only' do
       cli.run!.must_equal('Mobile Safari')
     end
   end

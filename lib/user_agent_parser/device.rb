@@ -1,13 +1,15 @@
 module UserAgentParser
   class Device
-    attr_reader :name
+    attr_reader :family
 
-    def initialize(name = nil)
-      @name = name || 'Other'
+    alias_method :name, :family
+
+    def initialize(family = nil)
+      @family = family || 'Other'
     end
 
     def to_s
-      name
+      family
     end
 
     def inspect
@@ -15,7 +17,7 @@ module UserAgentParser
     end
 
     def eql?(other)
-      self.class.eql?(other.class) && name == other.name
+      self.class.eql?(other.class) && family == other.family
     end
 
     alias_method :==, :eql?

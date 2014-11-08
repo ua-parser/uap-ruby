@@ -70,17 +70,17 @@ describe UserAgentParser::Parser do
       parser = UserAgentParser::Parser.new(:patterns_path => custom_patterns_path)
       ua = parser.parse("Any user agent string")
 
-      ua.name.must_equal("Custom browser")
+      ua.family.must_equal("Custom browser")
       ua.version.major.must_equal("1")
       ua.version.minor.must_equal("2")
       ua.version.patch.must_equal("3")
       ua.version.patch_minor.must_equal("4")
 
-      ua.os.name.must_equal("Custom OS")
+      ua.os.family.must_equal("Custom OS")
       ua.os.version.major.must_equal("1")
       ua.os.version.minor.must_equal("2")
 
-      ua.device.name.must_equal("Custom device")
+      ua.device.family.must_equal("Custom device")
     end
   end
 
@@ -90,7 +90,7 @@ describe UserAgentParser::Parser do
         user_agent = PARSER.parse(test_case['user_agent_string'])
 
         if test_case['family']
-          user_agent.name.must_equal_test_case_property(test_case, 'family')
+          user_agent.family.must_equal_test_case_property(test_case, 'family')
         end
 
         if test_case['major']
@@ -113,7 +113,7 @@ describe UserAgentParser::Parser do
         operating_system = user_agent.os
 
         if test_case['family']
-          operating_system.name.must_equal_test_case_property(test_case, 'family')
+          operating_system.family.must_equal_test_case_property(test_case, 'family')
         end
 
         if test_case['major']
@@ -140,7 +140,7 @@ describe UserAgentParser::Parser do
         device = user_agent.device
 
         if test_case['family']
-          device.name.must_equal_test_case_property(test_case, 'family')
+          device.family.must_equal_test_case_property(test_case, 'family')
         end
       end
     end

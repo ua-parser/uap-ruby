@@ -1,7 +1,7 @@
 require 'yaml'
 
 module UserAgentParser
-  
+
   class Parser
     attr_reader :patterns_path
 
@@ -71,10 +71,10 @@ module UserAgentParser
     end
 
     def user_agent_from_pattern_match(pattern, match, os = nil, device = nil)
-      name, v1, v2, v3, v4 = match[1], match[2], match[3], match[4], match[5]
+      family, v1, v2, v3, v4 = match[1], match[2], match[3], match[4], match[5]
 
       if pattern["family_replacement"]
-        name = pattern["family_replacement"].sub('$1', name || '')
+        family = pattern["family_replacement"].sub('$1', family || '')
       end
 
       if pattern["v1_replacement"]
@@ -95,7 +95,7 @@ module UserAgentParser
 
       version = version_from_segments(v1, v2, v3, v4)
 
-      UserAgent.new(name, version, os, device)
+      UserAgent.new(family, version, os, device)
     end
 
     def os_from_pattern_match(pattern, match)

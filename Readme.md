@@ -21,7 +21,7 @@ user_agent = UserAgentParser.parse 'Mozilla/5.0 (compatible; MSIE 9.0; Windows N
 => #<UserAgentParser::UserAgent IE 9.0 (Windows Vista)>
 user_agent.to_s
 => "IE 9.0"
-user_agent.name
+user_agent.family
 => "IE"
 user_agent.version.to_s
 => "9.0"

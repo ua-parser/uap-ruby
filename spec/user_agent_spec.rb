@@ -2,11 +2,11 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe UserAgentParser::UserAgent do
   describe "#to_s" do
-    it "returns a string of just the name" do
+    it "returns a string of just the family" do
       UserAgentParser::UserAgent.new("Chrome").to_s.must_equal "Chrome"
     end
 
-    it "returns a string of name and version" do
+    it "returns a string of family and version" do
       version = UserAgentParser::Version.new("1.2.3pre")
       agent = UserAgentParser::UserAgent.new("Chrome", version)
       agent.to_s.must_equal "Chrome 1.2.3pre"
@@ -14,17 +14,17 @@ describe UserAgentParser::UserAgent do
   end
 
   describe "#initialize" do
-    describe "with name" do
-      it "sets name" do
+    describe "with family" do
+      it "sets family" do
         agent = UserAgentParser::UserAgent.new("Chromium")
-        agent.name.must_equal "Chromium"
+        agent.family.must_equal "Chromium"
       end
     end
 
-    describe "with no name" do
-      it "sets name to Other" do
+    describe "with no family" do
+      it "sets family to Other" do
         agent = UserAgentParser::UserAgent.new
-        agent.name.must_equal "Other"
+        agent.family.must_equal "Other"
       end
     end
 
@@ -53,10 +53,10 @@ describe UserAgentParser::UserAgent do
     end
   end
 
-  describe "#family" do
-    it "returns name" do
+  describe "#name" do
+    it "returns family" do
       agent = UserAgentParser::UserAgent.new('Safari')
-      agent.family.must_equal agent.name
+      agent.name.must_equal agent.family
     end
   end
 
@@ -131,7 +131,7 @@ describe UserAgentParser::UserAgent do
   end
 
   describe "#inspect" do
-    it "returns the name and version" do
+    it "returns the family and version" do
       browser_version = UserAgentParser::Version.new("1.0")
       agent = UserAgentParser::UserAgent.new("Chrome", browser_version)
       agent.inspect.to_s.must_equal '#<UserAgentParser::UserAgent Chrome 1.0>'

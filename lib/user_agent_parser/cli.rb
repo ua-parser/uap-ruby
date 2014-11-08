@@ -6,7 +6,9 @@ module UserAgentParser
     end
 
     def run!
-      if @options[:name]
+      if @options[:family]
+        @user_agent.family
+      elsif @options[:name]
         @user_agent.name
       elsif @options[:version]
         with_version do |version|
@@ -19,7 +21,9 @@ module UserAgentParser
       elsif @options[:os]
         @user_agent.os.to_s
       elsif format = @options[:format]
-        format.gsub('%n', @user_agent.name).
+        format.
+          gsub('%f', @user_agent.family).
+          gsub('%n', @user_agent.name).
           gsub('%v', version.to_s).
           gsub('%M', major.to_s).
           gsub('%m', minor.to_s).

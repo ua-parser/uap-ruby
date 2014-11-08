@@ -8,8 +8,12 @@ require 'user_agent_parser/cli'
 options = {}
 
 optparse = OptionParser.new do|opts|
-  opts.on('--name', 'Print name only') do
-    options[:name] = true
+  opts.on('--family', 'Print family only') do
+    options[:family] = true
+  end
+
+  opts.on('--name', 'Print name (alias for family) only') do
+    options[:family] = true
   end
 
   opts.on('--version', 'Print version only') do
@@ -30,7 +34,8 @@ optparse = OptionParser.new do|opts|
 
   opts.on('--format format',
           'Print output in specified format. The available formatters are:',
-          ' - %n: name',
+          ' - %f: family',
+          ' - %n: name (alias for family)',
           ' - %v: version',
           ' - %M: major version',
           ' - %m: minor version',

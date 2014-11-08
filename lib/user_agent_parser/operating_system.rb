@@ -1,14 +1,16 @@
 module UserAgentParser
   class OperatingSystem
-    attr_reader :name, :version
+    attr_reader :family, :version
 
-    def initialize(name = 'Other', version = nil)
-      @name = name
+    alias_method :name, :family
+
+    def initialize(family = 'Other', version = nil)
+      @family = family
       @version = version
     end
 
     def to_s
-      string = name
+      string = family
       unless version.nil?
         string += " #{version}"
       end
@@ -21,7 +23,7 @@ module UserAgentParser
 
     def eql?(other)
       self.class.eql?(other.class) &&
-        name == other.name &&
+        family == other.family &&
         version == other.version
     end
 
