@@ -137,8 +137,8 @@ module UserAgentParser
     end
 
     def version_from_segments(*segments)
-      version_string = segments.compact.join(".")
-      version_string.empty? ? nil : Version.new(version_string)
+      segments = segments.compact
+      segments.empty? ? nil : Version.new(*segments)
     end
   end
 end

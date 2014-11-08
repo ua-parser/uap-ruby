@@ -1,15 +1,20 @@
 module UserAgentParser
   class Version
 
-    # Private: Regex used to split version string into major, minor, patch,
-    # and patch_minor.
+    # Private: Regex used to split string version string into major, minor,
+    # patch, and patch_minor.
     SEGMENTS_REGEX = /\d+\-\d+|\d+[a-zA-Z]+$|\d+|[A-Za-z][0-9A-Za-z-]*$/
 
     attr_reader :version
     alias :to_s :version
 
-    def initialize(version)
-      @version = version.to_s.strip
+    def initialize(*args)
+      if args.length == 1 && args.first.is_a?(String)
+        @version = args.first.to_s.strip
+      else
+        @segments = args.map(&:to_s).map(&:strip)
+        @version = segments.join(".")
+      end
     end
 
     def major

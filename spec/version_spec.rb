@@ -49,6 +49,14 @@ describe UserAgentParser::Version do
     version.patch.must_equal "3-45"
   end
 
+  it "accepts Fixnum and String arguments" do
+    version = UserAgentParser::Version.new(1, "2a", 3, "4b")
+    version.major.must_equal '1'
+    version.minor.must_equal '2a'
+    version.patch.must_equal '3'
+    version.patch_minor.must_equal '4b'
+  end
+
   describe "#to_s" do
     it "returns the same string as initialized with" do
       version = UserAgentParser::Version.new("1.2.3b4")
