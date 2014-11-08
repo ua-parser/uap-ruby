@@ -2,9 +2,13 @@
 
 UserAgentParser is a simple, comprehensive Ruby gem for parsing user agent strings. It uses [BrowserScope](http://www.browserscope.org/)'s [parsing patterns](https://github.com/tobie/ua-parser).
 
-## Requirements
+## Supported Rubies
 
-* Ruby >= 1.8.7
+* Ruby 2.1
+* Ruby 2.0
+* Ruby 1.9.3
+* Ruby 1.9.2
+* JRuby
 
 ## Installation
 
