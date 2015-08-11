@@ -1,4 +1,4 @@
-# UserAgentParser [![Build Status](https://secure.travis-ci.org/toolmantim/user_agent_parser.png?branch=master)](http://travis-ci.org/toolmantim/user_agent_parser)
+# UserAgentParser [![Build Status](https://secure.travis-ci.org/ua-parser/uap-ruby.png?branch=master)](http://travis-ci.org/ua-parser/uap-ruby)
 
 UserAgentParser is a simple, comprehensive Ruby gem for parsing user agent strings. It uses [BrowserScope](http://www.browserscope.org/)'s [parsing patterns](https://github.com/tobie/ua-parser).
 
