@@ -83,8 +83,12 @@ UserAgentParser::Parser.new(patterns_path: '/some/path/to/regexes.yaml').parse(u
 The gem incldes a `user_agent_parser` bin command which will read from
 standard input, parse each line and print the result, for example:
 
-```ruby
-$ cat SOME-FILE.json | user_agent_parser --format '%f %M' | distribution
+```bash
+$ cat > SOME-FILE-WITH-USER-AGENTS.txt
+USER_AGENT_1
+USER_AGENT_2
+...
+$ cat SOME-FILE-WITH-USER-AGENTS.txt | user_agent_parser --format '%f %M' | distribution
 ```
 
 See `user_agent_parser -h` for more information.
