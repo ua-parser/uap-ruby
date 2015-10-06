@@ -20,21 +20,21 @@ task :families do
   require 'pp'
 
   root = Pathname(__FILE__).dirname
-  path = root.join('vendor', 'ua-parser', 'test_resources')
+  path = root.join('vendor', 'uap-core')
 
   browser_families = paths_to_families([
-    path.join('test_user_agent_parser.yaml'),
-    path.join('firefox_user_agent_strings.yaml'),
-    path.join('pgts_browser_list.yaml'),
+    #path.join('tests', 'test_ua.yaml'),
+    path.join('test_resources', 'firefox_user_agent_strings.yaml'),
+    path.join('test_resources', 'pgts_browser_list.yaml'),
   ])
 
   os_families = paths_to_families([
-    path.join('test_user_agent_parser_os.yaml'),
-    path.join('additional_os_tests.yaml'),
+    #path.join('tests', 'test_os.yaml'),
+    path.join('test_resources', 'additional_os_tests.yaml'),
   ])
 
   device_families = paths_to_families([
-    path.join('test_device.yaml'),
+    #path.join('tests', 'test_device.yaml'),
   ])
 
   puts "\n\nBrowser Families"

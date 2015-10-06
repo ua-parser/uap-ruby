@@ -24,7 +24,7 @@ module UserAgentParser
       # Parse all the regexs
       yml.each_pair do |type, patterns|
         patterns.each do |pattern|
-          pattern["regex"] = Regexp.new(pattern["regex"])
+          pattern["regex"] = Regexp.new(pattern["regex"], pattern["regex_flag"] == 'i')
         end
       end
 
@@ -78,19 +78,19 @@ module UserAgentParser
       end
 
       if pattern["v1_replacement"]
-        v1 = pattern["v1_replacement"].sub('$1', v1 || '')
+        v1 = pattern["v1_replacement"].sub('$2', v1 || '')
       end
 
       if pattern["v2_replacement"]
-        v2 = pattern["v2_replacement"].sub('$1', v2 || '')
+        v2 = pattern["v2_replacement"].sub('$3', v2 || '')
       end
 
       if pattern["v3_replacement"]
-        v3 = pattern["v3_replacement"].sub('$1', v3 || '')
+        v3 = pattern["v3_replacement"].sub('$4', v3 || '')
       end
 
       if pattern["v4_replacement"]
-        v4 = pattern["v4_replacement"].sub('$1', v4 || '')
+        v4 = pattern["v4_replacement"].sub('$5', v4 || '')
       end
 
       version = version_from_segments(v1, v2, v3, v4)
@@ -106,19 +106,19 @@ module UserAgentParser
       end
 
       if pattern["os_v1_replacement"]
-        v1 = pattern["os_v1_replacement"].sub('$1', v1 || '')
+        v1 = pattern["os_v1_replacement"].sub('$2', v1 || '')
       end
 
       if pattern["os_v2_replacement"]
-        v2 = pattern["os_v2_replacement"].sub('$1', v2 || '')
+        v2 = pattern["os_v2_replacement"].sub('$3', v2 || '')
       end
 
       if pattern["os_v3_replacement"]
-        v3 = pattern["os_v3_replacement"].sub('$1', v3 || '')
+        v3 = pattern["os_v3_replacement"].sub('$4', v3 || '')
       end
 
       if pattern["os_v4_replacement"]
-        v4 = pattern["os_v4_replacement"].sub('$1', v4 || '')
+        v4 = pattern["os_v4_replacement"].sub('$5', v4 || '')
       end
 
       version = version_from_segments(v1, v2, v3, v4)
@@ -127,13 +127,15 @@ module UserAgentParser
     end
 
     def device_from_pattern_match(pattern, match)
-      device = match[1]
+      match = match.to_a.map(&:to_s)
+      family = match[1]
 
       if pattern["device_replacement"]
-        device = pattern["device_replacement"].sub('$1', device || '')
+        family = pattern["device_replacement"]
+        match.each_with_index { |m,i| family = family.sub("$#{i}", m) }
       end
 
-      Device.new(device)
+      Device.new(family.strip)
     end
 
     def version_from_segments(*segments)
