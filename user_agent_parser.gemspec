@@ -1,6 +1,6 @@
 Gem::Specification.new do |gem|
   gem.name    = "user_agent_parser"
-  gem.version = "2.2.0"
+  gem.version = "2.3.0"
 
   gem.author      = "Tim Lucas"
   gem.email       = "t@toolmantim.com"
@@ -10,7 +10,7 @@ Gem::Specification.new do |gem|
   gem.license     = "MIT"
   gem.executables = ['user_agent_parser']
 
-  gem.files = %x{ git ls-files }.split("\n").select { |d| d =~ %r{^(MIT-LICENSE|Readme.md|lib|bin/)} } + ['vendor/ua-parser/regexes.yaml']
+  gem.files = %x{ git ls-files }.split("\n").select { |d| d =~ %r{^(MIT-LICENSE|Readme.md|lib|bin/)} } + ['vendor/uap-core/regexes.yaml']
 
   gem.required_ruby_version = '>= 1.8.7'
 end

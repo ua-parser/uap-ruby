@@ -1,6 +1,6 @@
 # UserAgentParser [![Build Status](https://secure.travis-ci.org/ua-parser/uap-ruby.png?branch=master)](http://travis-ci.org/ua-parser/uap-ruby)
 
-UserAgentParser is a simple, comprehensive Ruby gem for parsing user agent strings. It uses [BrowserScope](http://www.browserscope.org/)'s [parsing patterns](https://github.com/tobie/ua-parser).
+UserAgentParser is a simple, comprehensive Ruby gem for parsing user agent strings. It uses [BrowserScope](http://www.browserscope.org/)'s [parsing patterns](https://github.com/ua-parser/uap-core).
 
 ## Supported Rubies
 
@@ -64,7 +64,7 @@ end
 
 ## The pattern database
 
-The [ua-parser database](https://github.com/tobie/ua-parser/blob/master/regexes.yaml) is included via a [git submodule](http://help.github.com/submodules/). To update the database the submodule needs to be updated and the gem re-released (pull requests for this are very welcome!).
+The [ua-parser database](https://github.com/ua-parser/uap-core/blob/master/regexes.yaml) is included via a [git submodule](http://help.github.com/submodules/). To update the database the submodule needs to be updated and the gem re-released (pull requests for this are very welcome!).
 
 You can also specify the path to your own, updated and/or customised `regexes.yaml` file as a second argument to `UserAgentParser.parse`:
 
