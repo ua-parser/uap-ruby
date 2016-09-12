@@ -3,6 +3,7 @@ require 'user_agent_parser/user_agent'
 require 'user_agent_parser/version'
 require 'user_agent_parser/operating_system'
 require 'user_agent_parser/device'
+require 'user_agent_parser/client'
 
 module UserAgentParser
   DefaultPatternsPath = File.join(File.dirname(__FILE__), "../vendor/uap-core/regexes.yaml")
