@@ -39,6 +39,25 @@ operating_system = user_agent.os
 operating_system.to_s
 => "Windows Vista"
 
+# Device information can also be determined from some devices
+user_agent = UserAgentParser.parse "Mozilla/5.0 (Linux; Android 7.0; SAMSUNG SM-G930T Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/5.0 Chrome/51.0.2704.106 Mobile Safari/537.36"
+=> #<UserAgentParser::UserAgent Samsung Internet 5.0 (Android 7.0) (Samsung SM-G930T)>
+user_agent.device.family
+=> "Samsung SM-G930T"
+user_agent.device.brand
+=> "Samsung"
+user_agent.device.model "SM-G930T"
+
+user_agent = UserAgentParser.parse "Mozilla/5.0 (iPad; CPU OS 10_2_1 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) GSA/23.1.148956103 Mobile/14D27 Safari/600.1.4"
+=> #<UserAgentParser::UserAgent Mobile Safari 10.2.1 (iOS 10.2.1) (iPad)>
+irb(main):026:0> user_agent.device.family
+=> "iPad"
+irb(main):027:0> user_agent.device.brand
+=> "Apple"
+irb(main):028:0> user_agent.device.model
+=> "iPad"
+
+
 # The parser database will be loaded and parsed on every call to
 # UserAgentParser.parse. To avoid this, instantiate your own Parser instance.
 parser = UserAgentParser::Parser.new

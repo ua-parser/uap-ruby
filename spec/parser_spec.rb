@@ -21,6 +21,8 @@ describe UserAgentParser::Parser do
         'minor'             => test_case['minor'],
         'patch'             => test_case['patch'],
         'patch_minor'       => test_case['patch_minor'],
+        'brand'             => test_case['brand'],
+        'model'             => test_case['model'],
       }
     end.reject do |test_case|
       # We don't do the hacky javascript user agent overrides
@@ -37,7 +39,7 @@ describe UserAgentParser::Parser do
   end
 
   def self.user_agent_test_cases
-    file_to_test_cases("test_resources/firefox_user_agent_strings.yaml") 
+    file_to_test_cases("test_resources/firefox_user_agent_strings.yaml")
     file_to_test_cases("tests/test_ua.yaml")
   end
 
@@ -83,7 +85,7 @@ describe UserAgentParser::Parser do
       ua.device.family.must_equal("Custom device")
     end
   end
-  
+
   describe "#parse" do
     user_agent_test_cases.each do |test_case|
       it "parses UA for #{test_case_to_test_name(test_case)}" do
@@ -133,14 +135,19 @@ describe UserAgentParser::Parser do
         end
       end
     end
-    
+
     device_test_cases.each do |test_case|
       it "parses device for #{test_case_to_test_name(test_case)}" do
         user_agent = PARSER.parse(test_case['user_agent_string'])
         device = user_agent.device
-
         if test_case['family']
           device.family.must_equal_test_case_property(test_case, 'family')
+        end
+        if test_case['model']
+          device.model.must_equal_test_case_property(test_case, 'model')
+        end
+        if test_case['brand']
+          device.brand.must_equal_test_case_property(test_case, 'brand')
         end
       end
     end

@@ -128,14 +128,26 @@ module UserAgentParser
 
     def device_from_pattern_match(pattern, match)
       match = match.to_a.map(&:to_s)
-      family = match[1]
+      family = model = match[1]
+      brand = nil
 
       if pattern["device_replacement"]
         family = pattern["device_replacement"]
         match.each_with_index { |m,i| family = family.sub("$#{i}", m) }
       end
+      if pattern["model_replacement"]
+        model = pattern["model_replacement"]
+        match.each_with_index { |m,i| model = model.sub("$#{i}", m) }
+      end
+      if pattern["brand_replacement"]
+        brand = pattern["brand_replacement"]
+        match.each_with_index { |m,i| brand = brand.sub("$#{i}", m) }
+        brand.strip!
+      end
 
-      Device.new(family.strip)
+      model.strip! unless model.nil?
+
+      Device.new(family.strip, model, brand)
     end
 
     def version_from_segments(*segments)
