@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Gem::Specification.new do |gem|
   gem.name    = "user_agent_parser"
   gem.version = "2.3.2"

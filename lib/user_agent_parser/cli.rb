@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module UserAgentParser
   class Cli
     def initialize(user_agent, options = {})

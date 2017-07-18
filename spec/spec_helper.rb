@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'minitest/autorun'
 
 $:.unshift File.expand_path('../../lib', __FILE__)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module UserAgentParser
   class OperatingSystem
     attr_reader :family, :version

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'user_agent_parser/parser'
 require 'user_agent_parser/user_agent'
 require 'user_agent_parser/version'
