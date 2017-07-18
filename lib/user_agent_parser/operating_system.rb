@@ -4,7 +4,7 @@ module UserAgentParser
   class OperatingSystem
     attr_reader :family, :version
 
-    alias_method :name, :family
+    alias name family
 
     def initialize(family = 'Other', version = nil)
       @family = family
@@ -29,6 +29,6 @@ module UserAgentParser
         version == other.version
     end
 
-    alias_method :==, :eql?
+    alias == eql?
   end
 end

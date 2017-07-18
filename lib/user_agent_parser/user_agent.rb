@@ -4,7 +4,7 @@ module UserAgentParser
   class UserAgent
     attr_reader :family, :version, :os, :device
 
-    alias_method :name, :family
+    alias name family
 
     def initialize(family = nil, version = nil, os = nil, device = nil)
       @family = family || 'Other'
@@ -33,6 +33,6 @@ module UserAgentParser
         os == other.os
     end
 
-    alias_method :==, :eql?
+    alias == eql?
   end
 end
