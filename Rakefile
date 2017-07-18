@@ -5,18 +5,18 @@ require 'bundler'
 
 task :default => :test
 
-desc "Run tests"
+desc 'Run tests'
 Rake::TestTask.new do |t|
   t.warning = true
   t.verbose = true
-  t.pattern = "spec/*_spec.rb"
+  t.pattern = 'spec/*_spec.rb'
 end
 
 Bundler::GemHelper.install_tasks
 
 # Does not actually get all families, as some are only listed in the regexes,
 # but gives you a pretty good idea of what will be returned.
-desc "Lists all unique family names for browsers and operating systems."
+desc 'Lists all unique family names for browsers and operating systems.'
 task :families do
   require 'pathname'
   require 'pp'

@@ -39,54 +39,54 @@ describe UserAgentParser::Parser do
   end
 
   def self.user_agent_test_cases
-    file_to_test_cases("test_resources/firefox_user_agent_strings.yaml") 
-    file_to_test_cases("tests/test_ua.yaml")
+    file_to_test_cases('test_resources/firefox_user_agent_strings.yaml') 
+    file_to_test_cases('tests/test_ua.yaml')
   end
 
   def self.operating_system_test_cases
-    file_to_test_cases("tests/test_os.yaml") +
-    file_to_test_cases("test_resources/additional_os_tests.yaml")
+    file_to_test_cases('tests/test_os.yaml') +
+    file_to_test_cases('test_resources/additional_os_tests.yaml')
   end
 
   def self.device_test_cases
-    file_to_test_cases("tests/test_device.yaml")
+    file_to_test_cases('tests/test_device.yaml')
   end
 
   def custom_patterns_path
-    File.join(File.dirname(__FILE__), "custom_regexes.yaml")
+    File.join(File.dirname(__FILE__), 'custom_regexes.yaml')
   end
 
-  describe "::parse" do
-    it "parses a UA" do
-      ua = UserAgentParser.parse("Mozilla/5.0 (Macintosh; U; PPC Mac OS X; en-us) AppleWebKit/418.8 (KHTML, like Gecko) Safari/419.3")
-      ua.family.must_equal("Safari")
+  describe '::parse' do
+    it 'parses a UA' do
+      ua = UserAgentParser.parse('Mozilla/5.0 (Macintosh; U; PPC Mac OS X; en-us) AppleWebKit/418.8 (KHTML, like Gecko) Safari/419.3')
+      ua.family.must_equal('Safari')
     end
-    it "accepts a custom patterns path" do
-      ua = UserAgentParser.parse("Any user agent string", :patterns_path => custom_patterns_path)
-      ua.family.must_equal("Custom browser")
+    it 'accepts a custom patterns path' do
+      ua = UserAgentParser.parse('Any user agent string', :patterns_path => custom_patterns_path)
+      ua.family.must_equal('Custom browser')
     end
   end
 
-  describe "#initialize with a custom patterns path" do
-    it "uses the custom patterns" do
+  describe '#initialize with a custom patterns path' do
+    it 'uses the custom patterns' do
       parser = UserAgentParser::Parser.new(:patterns_path => custom_patterns_path)
-      ua = parser.parse("Any user agent string")
+      ua = parser.parse('Any user agent string')
 
-      ua.family.must_equal("Custom browser")
-      ua.version.major.must_equal("1")
-      ua.version.minor.must_equal("2")
-      ua.version.patch.must_equal("3")
-      ua.version.patch_minor.must_equal("4")
+      ua.family.must_equal('Custom browser')
+      ua.version.major.must_equal('1')
+      ua.version.minor.must_equal('2')
+      ua.version.patch.must_equal('3')
+      ua.version.patch_minor.must_equal('4')
 
-      ua.os.family.must_equal("Custom OS")
-      ua.os.version.major.must_equal("1")
-      ua.os.version.minor.must_equal("2")
+      ua.os.family.must_equal('Custom OS')
+      ua.os.version.major.must_equal('1')
+      ua.os.version.minor.must_equal('2')
 
-      ua.device.family.must_equal("Custom device")
+      ua.device.family.must_equal('Custom device')
     end
   end
   
-  describe "#parse" do
+  describe '#parse' do
     user_agent_test_cases.each do |test_case|
       it "parses UA for #{test_case_to_test_name(test_case)}" do
         user_agent = PARSER.parse(test_case['user_agent_string'])

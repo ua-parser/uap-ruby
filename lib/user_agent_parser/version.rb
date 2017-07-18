@@ -15,7 +15,7 @@ module UserAgentParser
         @version = args.first.to_s.strip
       else
         @segments = args.map(&:to_s).map(&:strip)
-        @version = segments.join(".")
+        @version = segments.join('.')
       end
     end
 
