@@ -7,7 +7,7 @@ module UserAgentParser
   class Parser
     attr_reader :patterns_path
 
-    def initialize(options={})
+    def initialize(options = {})
       @patterns_path = options[:patterns_path] || UserAgentParser::DefaultPatternsPath
       @ua_patterns, @os_patterns, @device_patterns = load_patterns(patterns_path)
     end
@@ -30,7 +30,7 @@ module UserAgentParser
         end
       end
 
-      [ yml['user_agent_parsers'], yml['os_parsers'], yml['device_parsers'] ]
+      [yml['user_agent_parsers'], yml['os_parsers'], yml['device_parsers']]
     end
 
     def parse_ua(user_agent, os = nil, device = nil)

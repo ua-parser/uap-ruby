@@ -13,9 +13,7 @@ module UserAgentParser
       elsif @options[:name]
         @user_agent.name
       elsif @options[:version]
-        with_version do |version|
-          version.to_s
-        end
+        with_version(&:to_s)
       elsif @options[:major]
         major
       elsif @options[:minor]
@@ -38,15 +36,11 @@ module UserAgentParser
     private
 
     def major
-      with_version do |version|
-        version.major
-      end
+      with_version(&:major)
     end
 
     def minor
-      with_version do |version|
-        version.minor
-      end
+      with_version(&:minor)
     end
 
     def version

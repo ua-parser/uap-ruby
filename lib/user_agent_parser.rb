@@ -10,7 +10,7 @@ module UserAgentParser
   DefaultPatternsPath = File.join(File.dirname(__FILE__), '../vendor/uap-core/regexes.yaml')
 
   # Parse the given +user_agent_string+, returning a +UserAgent+
-  def self.parse(user_agent_string, options={})
+  def self.parse(user_agent_string, options = {})
     Parser.new(options).parse(user_agent_string)
   end
 end

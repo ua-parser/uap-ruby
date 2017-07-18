@@ -36,7 +36,7 @@ module UserAgentParser
     end
 
     def inspect
-      "#<#{self.class} #{to_s}>"
+      "#<#{self.class} #{self}>"
     end
 
     def eql?(other)

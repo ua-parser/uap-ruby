@@ -27,12 +27,12 @@ task :families do
   browser_families = paths_to_families([
     # path.join('tests', 'test_ua.yaml'),
     path.join('test_resources', 'firefox_user_agent_strings.yaml'),
-    path.join('test_resources', 'pgts_browser_list.yaml'),
+    path.join('test_resources', 'pgts_browser_list.yaml')
   ])
 
   os_families = paths_to_families([
     # path.join('tests', 'test_os.yaml'),
-    path.join('test_resources', 'additional_os_tests.yaml'),
+    path.join('test_resources', 'additional_os_tests.yaml')
   ])
 
   device_families = paths_to_families([

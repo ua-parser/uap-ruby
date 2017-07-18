@@ -12,7 +12,7 @@ Gem::Specification.new do |gem|
   gem.license     = 'MIT'
   gem.executables = ['user_agent_parser']
 
-  gem.files = %x{ git ls-files }.split("\n").select { |d| d =~ %r{^(MIT-LICENSE|Readme.md|lib|bin/)} } + ['vendor/uap-core/regexes.yaml']
+  gem.files = %x{git ls-files}.split("\n").select { |d| d =~ %r{^(MIT-LICENSE|Readme.md|lib|bin/)} } + ['vendor/uap-core/regexes.yaml']
 
   gem.required_ruby_version = '>= 1.8.7'
 end

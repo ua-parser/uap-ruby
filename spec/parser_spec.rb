@@ -22,7 +22,7 @@ describe UserAgentParser::Parser do
         'major'             => test_case['major'],
         'minor'             => test_case['minor'],
         'patch'             => test_case['patch'],
-        'patch_minor'       => test_case['patch_minor'],
+        'patch_minor'       => test_case['patch_minor']
       }
     end.reject do |test_case|
       # We don't do the hacky javascript user agent overrides
@@ -39,13 +39,13 @@ describe UserAgentParser::Parser do
   end
 
   def self.user_agent_test_cases
-    file_to_test_cases('test_resources/firefox_user_agent_strings.yaml') 
+    file_to_test_cases('test_resources/firefox_user_agent_strings.yaml')
     file_to_test_cases('tests/test_ua.yaml')
   end
 
   def self.operating_system_test_cases
     file_to_test_cases('tests/test_os.yaml') +
-    file_to_test_cases('test_resources/additional_os_tests.yaml')
+      file_to_test_cases('test_resources/additional_os_tests.yaml')
   end
 
   def self.device_test_cases
@@ -85,7 +85,7 @@ describe UserAgentParser::Parser do
       ua.device.family.must_equal('Custom device')
     end
   end
-  
+
   describe '#parse' do
     user_agent_test_cases.each do |test_case|
       it "parses UA for #{test_case_to_test_name(test_case)}" do
@@ -135,7 +135,7 @@ describe UserAgentParser::Parser do
         end
       end
     end
-    
+
     device_test_cases.each do |test_case|
       it "parses device for #{test_case_to_test_name(test_case)}" do
         user_agent = PARSER.parse(test_case['user_agent_string'])
