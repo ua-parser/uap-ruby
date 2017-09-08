@@ -4,6 +4,8 @@ UserAgentParser is a simple, comprehensive Ruby gem for parsing user agent strin
 
 ## Supported Rubies
 
+* Ruby 2.4
+* Ruby 2.3
 * Ruby 2.2
 * Ruby 2.1
 * Ruby 2.0
