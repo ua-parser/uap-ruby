@@ -46,7 +46,8 @@ user_agent.device.family
 => "Samsung SM-G930T"
 user_agent.device.brand
 => "Samsung"
-user_agent.device.model "SM-G930T"
+user_agent.device.model
+=> "SM-G930T"
 
 user_agent = UserAgentParser.parse "Mozilla/5.0 (iPad; CPU OS 10_2_1 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) GSA/23.1.148956103 Mobile/14D27 Safari/600.1.4"
 => #<UserAgentParser::UserAgent Mobile Safari 10.2.1 (iOS 10.2.1) (iPad)>
