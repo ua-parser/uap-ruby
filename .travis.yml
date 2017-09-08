@@ -9,3 +9,5 @@ rvm:
   - jruby-19mode
   - ruby-head
   - jruby-9.1.8.0
+before_install:
+  - gem install bundler
