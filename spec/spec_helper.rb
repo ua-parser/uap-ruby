@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 require 'minitest/autorun'
+require 'coveralls'
+Coveralls.wear!
+
 
 $:.unshift File.expand_path('../../lib', __FILE__)
 require 'user_agent_parser'

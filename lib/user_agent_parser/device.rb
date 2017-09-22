@@ -2,12 +2,14 @@
 
 module UserAgentParser
   class Device
-    attr_reader :family
+    attr_reader :family, :model, :brand
 
     alias name family
 
-    def initialize(family = nil)
+    def initialize(family = nil, model = nil, brand = nil)
       @family = family || 'Other'
+      @model = model || @family
+      @brand = brand
     end
 
     def to_s

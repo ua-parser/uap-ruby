@@ -4,7 +4,6 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 require 'yaml'
 
 describe UserAgentParser::Parser do
-
   PARSER = UserAgentParser::Parser.new
 
   # Some Ruby versions (JRuby) need sanitised test names, as some chars screw
@@ -22,7 +21,9 @@ describe UserAgentParser::Parser do
         'major'             => test_case['major'],
         'minor'             => test_case['minor'],
         'patch'             => test_case['patch'],
-        'patch_minor'       => test_case['patch_minor']
+        'patch_minor'       => test_case['patch_minor'],
+        'brand'             => test_case['brand'],
+        'model'             => test_case['model']
       }
     end.reject do |test_case|
       # We don't do the hacky javascript user agent overrides
@@ -140,9 +141,14 @@ describe UserAgentParser::Parser do
       it "parses device for #{test_case_to_test_name(test_case)}" do
         user_agent = PARSER.parse(test_case['user_agent_string'])
         device = user_agent.device
-
         if test_case['family']
           device.family.must_equal_test_case_property(test_case, 'family')
+        end
+        if test_case['model']
+          device.model.must_equal_test_case_property(test_case, 'model')
+        end
+        if test_case['brand']
+          device.brand.must_equal_test_case_property(test_case, 'brand')
         end
       end
     end
