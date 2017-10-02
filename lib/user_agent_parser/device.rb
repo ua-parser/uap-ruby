@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 module UserAgentParser
   class Device
     attr_reader :family, :model, :brand
 
-    alias_method :name, :family
+    alias name family
 
     def initialize(family = nil, model = nil, brand = nil)
       @family = family || 'Other'
@@ -15,13 +17,13 @@ module UserAgentParser
     end
 
     def inspect
-      "#<#{self.class} #{to_s}>"
+      "#<#{self.class} #{self}>"
     end
 
     def eql?(other)
       self.class.eql?(other.class) && family == other.family
     end
 
-    alias_method :==, :eql?
+    alias == eql?
   end
 end

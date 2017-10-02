@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module UserAgentParser
   class Version
 
@@ -6,14 +8,14 @@ module UserAgentParser
     SEGMENTS_REGEX = /\d+\-\d+|\d+[a-zA-Z]+$|\d+|[A-Za-z][0-9A-Za-z-]*$/
 
     attr_reader :version
-    alias :to_s :version
+    alias to_s version
 
     def initialize(*args)
       if args.length == 1 && args.first.is_a?(String)
         @version = args.first.to_s.strip
       else
         @segments = args.map(&:to_s).map(&:strip)
-        @version = segments.join(".")
+        @version = segments.join('.')
       end
     end
 
@@ -34,7 +36,7 @@ module UserAgentParser
     end
 
     def inspect
-      "#<#{self.class} #{to_s}>"
+      "#<#{self.class} #{self}>"
     end
 
     def eql?(other)
@@ -42,7 +44,7 @@ module UserAgentParser
         version == other.version
     end
 
-    alias_method :==, :eql?
+    alias == eql?
 
     # Private
     def segments

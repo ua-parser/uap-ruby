@@ -6,7 +6,6 @@ rvm:
   - 2.1.8
   - 2.0.0
   - 1.9.3
-  - ree
   - jruby-19mode
   - ruby-head
   - jruby-9.1.8.0

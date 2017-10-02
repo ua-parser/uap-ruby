@@ -1,0 +1,20 @@
+AllCops:
+  TargetRubyVersion: 1.9
+
+Style/FileName:
+  Exclude:
+    - "lib/castle-rb.rb"
+
+Style/MethodMissing:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/ModuleLength:
+  Exclude:
+    - "**/*_spec.rb"
+
+Metrics/BlockLength:
+  Exclude:
+    - "**/*_spec.rb"

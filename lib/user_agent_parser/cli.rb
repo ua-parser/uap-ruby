@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module UserAgentParser
   class Cli
     def initialize(user_agent, options = {})
@@ -11,9 +13,7 @@ module UserAgentParser
       elsif @options[:name]
         @user_agent.name
       elsif @options[:version]
-        with_version do |version|
-          version.to_s
-        end
+        with_version(&:to_s)
       elsif @options[:major]
         major
       elsif @options[:minor]
@@ -21,13 +21,13 @@ module UserAgentParser
       elsif @options[:os]
         @user_agent.os.to_s
       elsif format = @options[:format]
-        format.
-          gsub('%f', @user_agent.family).
-          gsub('%n', @user_agent.name).
-          gsub('%v', version.to_s).
-          gsub('%M', major.to_s).
-          gsub('%m', minor.to_s).
-          gsub('%o', @user_agent.os.to_s)
+        format
+          .gsub('%f', @user_agent.family)
+          .gsub('%n', @user_agent.name)
+          .gsub('%v', version.to_s)
+          .gsub('%M', major.to_s)
+          .gsub('%m', minor.to_s)
+          .gsub('%o', @user_agent.os.to_s)
       else
         @user_agent.to_s
       end
@@ -36,15 +36,11 @@ module UserAgentParser
     private
 
     def major
-      with_version do |version|
-        version.major
-      end
+      with_version(&:major)
     end
 
     def minor
-      with_version do |version|
-        version.minor
-      end
+      with_version(&:minor)
     end
 
     def version
