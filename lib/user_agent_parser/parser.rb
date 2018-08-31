@@ -8,6 +8,7 @@ module UserAgentParser
     attr_reader :patterns_path
 
     def initialize(options = {})
+      @fast_match = Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('2.4.0')
       @patterns_path = options[:patterns_path] || UserAgentParser::DefaultPatternsPath
       @ua_patterns, @os_patterns, @device_patterns = load_patterns(patterns_path)
     end
@@ -26,7 +27,7 @@ module UserAgentParser
       # Parse all the regexs
       yml.each_pair do |type, patterns|
         patterns.each do |pattern|
-          pattern['regex'] = Regexp.new(pattern['regex'], pattern['regex_flag'] == 'i')
+          pattern[:regex] = Regexp.new(pattern['regex'], pattern['regex_flag'] == 'i')
         end
       end
 
@@ -65,8 +66,14 @@ module UserAgentParser
 
     def first_pattern_match(patterns, value)
       patterns.each do |pattern|
-        if match = pattern['regex'].match(value)
-          return [pattern, match]
+        if @fast_match
+          if pattern[:regex].match?(value)
+            return [pattern, pattern[:regex].match(value)]
+          end
+        else
+          if match = pattern[:regex].match(value)
+            return [pattern, match]
+          end
         end
       end
       nil
