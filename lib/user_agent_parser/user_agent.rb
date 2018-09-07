@@ -34,5 +34,14 @@ module UserAgentParser
     end
 
     alias == eql?
+
+    def to_h
+      {
+        device: device.to_h,
+        family: family,
+        os: os.to_h,
+        version: version.to_h
+      }
+    end
   end
 end

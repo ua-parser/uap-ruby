@@ -25,5 +25,13 @@ module UserAgentParser
     end
 
     alias == eql?
+
+    def to_h
+      {
+        family: family,
+        model: model,
+        brand: brand
+      }
+    end
   end
 end

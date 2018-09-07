@@ -50,5 +50,15 @@ module UserAgentParser
     def segments
       @segments ||= version.scan(SEGMENTS_REGEX)
     end
+
+    def to_h
+      {
+        version: version,
+        major: major,
+        minor: minor,
+        patch: patch,
+        patch_minor: patch_minor
+      }
+    end
   end
 end
