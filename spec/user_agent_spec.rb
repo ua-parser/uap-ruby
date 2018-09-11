@@ -156,4 +156,18 @@ describe UserAgentParser::UserAgent do
       agent.inspect.must_equal '#<UserAgentParser::UserAgent Mobile Safari 5.0.2 (iOS 4.2.1) (iPhone)>'
     end
   end
+
+  describe '#to_h' do
+    it 'returns everything' do
+      browser_version = UserAgentParser::Version.new('5.0.2')
+      os_version = UserAgentParser::Version.new('4.2.1')
+      os = UserAgentParser::OperatingSystem.new('iOS', os_version)
+      device = UserAgentParser::Device.new('iPhone')
+      agent = UserAgentParser::UserAgent.new('Mobile Safari', browser_version, os, device)
+      assert_equal(
+        {:device=>{:family=>"iPhone", :model=>"iPhone", :brand=>nil}, :family=>"Mobile Safari", :os=>{:version=>{:version=>"4.2.1", :major=>"4", :minor=>"2", :patch=>"1", :patch_minor=>nil}, :family=>"iOS"}, :version=>{:version=>"5.0.2", :major=>"5", :minor=>"0", :patch=>"2", :patch_minor=>nil}},
+        agent.to_h
+      )
+    end
+  end
 end
