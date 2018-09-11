@@ -26,7 +26,7 @@ module UserAgentParser
       # Parse all the regexs
       yml.each_pair do |type, patterns|
         patterns.each do |pattern|
-          pattern['regex'] = Regexp.new(pattern['regex'], pattern['regex_flag'] == 'i')
+          pattern[:regex] = Regexp.new(pattern['regex'], pattern['regex_flag'] == 'i')
         end
       end
 
@@ -63,13 +63,24 @@ module UserAgentParser
       end
     end
 
-    def first_pattern_match(patterns, value)
-      patterns.each do |pattern|
-        if match = pattern['regex'].match(value)
-          return [pattern, match]
+    if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('2.4.0')
+      def first_pattern_match(patterns, value)
+        patterns.each do |pattern|
+          if pattern[:regex].match?(value)
+            return [pattern, pattern[:regex].match(value)]
+          end
         end
+        nil
       end
-      nil
+    else
+      def first_pattern_match(patterns, value)
+        patterns.each do |pattern|
+          if match = pattern[:regex].match(value)
+            return [pattern, match]
+          end
+        end
+        nil
+      end
     end
 
     def user_agent_from_pattern_match(pattern, match, os = nil, device = nil)
