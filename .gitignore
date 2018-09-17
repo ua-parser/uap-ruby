@@ -1,2 +1,2 @@
-/pkg/
-/Gemfile.lock
+coverage
+vendor/bundle
