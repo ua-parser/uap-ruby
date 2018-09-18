@@ -14,7 +14,7 @@ Gem::Specification.new do |gem|
 
   gem.files = %x{git ls-files}.split("\n").select { |d| d =~ %r{^(MIT-LICENSE|Readme.md|lib|bin/)} } + ['vendor/uap-core/regexes.yaml']
 
-  gem.required_ruby_version = '>= 1.8.7'
+  gem.required_ruby_version = '>= 2.3'
 
   gem.add_development_dependency 'coveralls', '0.8.21'
 end
