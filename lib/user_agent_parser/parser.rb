@@ -3,8 +3,25 @@
 require 'yaml'
 
 module UserAgentParser
-
   class Parser
+    FAMILY_REPLACEMENT_KEYS = %w[
+      family_replacement
+      v1_replacement
+      v2_replacement
+      v3_replacement
+      v4_replacement
+    ].freeze
+
+    OS_REPLACEMENT_KEYS = %w[
+      os_replacement
+      os_v1_replacement
+      os_v2_replacement
+      os_v3_replacement
+      os_v4_replacement
+    ].freeze
+
+    private_constant :FAMILY_REPLACEMENT_KEYS, :OS_REPLACEMENT_KEYS
+
     attr_reader :patterns_path
 
     def initialize(options = {})
@@ -84,59 +101,15 @@ module UserAgentParser
     end
 
     def user_agent_from_pattern_match(pattern, match, os = nil, device = nil)
-      family, v1, v2, v3, v4 = match[1], match[2], match[3], match[4], match[5]
+      family, *versions = from_pattern_match(FAMILY_REPLACEMENT_KEYS, pattern, match)
 
-      if pattern['family_replacement']
-        family = pattern['family_replacement'].sub('$1', family || '')
-      end
-
-      if pattern['v1_replacement']
-        v1 = pattern['v1_replacement'].sub('$2', v1 || '')
-      end
-
-      if pattern['v2_replacement']
-        v2 = pattern['v2_replacement'].sub('$3', v2 || '')
-      end
-
-      if pattern['v3_replacement']
-        v3 = pattern['v3_replacement'].sub('$4', v3 || '')
-      end
-
-      if pattern['v4_replacement']
-        v4 = pattern['v4_replacement'].sub('$5', v4 || '')
-      end
-
-      version = version_from_segments(v1, v2, v3, v4)
-
-      UserAgent.new(family, version, os, device)
+      UserAgent.new(family, version_from_segments(*versions), os, device)
     end
 
     def os_from_pattern_match(pattern, match)
-      os, v1, v2, v3, v4 = match[1], match[2], match[3], match[4], match[5]
+      os, *versions = from_pattern_match(OS_REPLACEMENT_KEYS, pattern, match)
 
-      if pattern['os_replacement']
-        os = pattern['os_replacement'].sub('$1', os || '')
-      end
-
-      if pattern['os_v1_replacement']
-        v1 = pattern['os_v1_replacement'].sub('$2', v1 || '')
-      end
-
-      if pattern['os_v2_replacement']
-        v2 = pattern['os_v2_replacement'].sub('$3', v2 || '')
-      end
-
-      if pattern['os_v3_replacement']
-        v3 = pattern['os_v3_replacement'].sub('$4', v3 || '')
-      end
-
-      if pattern['os_v4_replacement']
-        v4 = pattern['os_v4_replacement'].sub('$5', v4 || '')
-      end
-
-      version = version_from_segments(v1, v2, v3, v4)
-
-      OperatingSystem.new(os, version)
+      OperatingSystem.new(os, version_from_segments(*versions))
     end
 
     def device_from_pattern_match(pattern, match)
@@ -161,6 +134,27 @@ module UserAgentParser
       model.strip! unless model.nil?
 
       Device.new(family.strip, model, brand)
+    end
+
+    # Maps replacement keys to their values
+    def from_pattern_match(keys, pattern, match)
+      keys.each_with_index.map do |key, idx|
+        # Check if there is any replacement specified
+        replacement = pattern[key]
+        if replacement
+          # Check if replacement key is refering to a regex match group
+          group_idx = replacement.index('$')
+          if group_idx
+            group_nbr = replacement[group_idx + 1]
+            replacement.sub("$#{group_nbr}", match[group_nbr.to_i])
+          else
+            replacement
+          end
+        else
+          # No replacement defined, just return correct match group
+          match[idx + 1]
+        end
+      end
     end
 
     def version_from_segments(*segments)
