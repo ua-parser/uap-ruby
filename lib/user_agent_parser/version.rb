@@ -11,7 +11,7 @@ module UserAgentParser
     alias to_s version
 
     def initialize(*args)
-      # If only one string argument is given, asume a complete version string
+      # If only one string argument is given, assume a complete version string
       # and attempt to parse it
       if args.length == 1 && args.first.is_a?(String)
         @version = args.first.to_s.strip
