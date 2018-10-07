@@ -140,21 +140,21 @@ module UserAgentParser
     def from_pattern_match(keys, pattern, match)
       keys.each_with_index.map do |key, idx|
         # Check if there is any replacement specified
-        replacement = pattern[key]
-        if replacement
-          # Check if replacement key is refering to a regex match group
-          group_idx = replacement.index('$')
-          if group_idx
-            group_nbr = replacement[group_idx + 1]
-            replacement.sub("$#{group_nbr}", match[group_nbr.to_i])
-          else
-            replacement
-          end
+        if pattern[key]
+          interpolate(pattern[key], match)
         else
           # No replacement defined, just return correct match group
           match[idx + 1]
         end
       end
+    end
+
+    # Interpolates a string with data from matches if specified
+    def interpolate(replacement, match)
+      group_idx = replacement.index('$')
+      return replacement if group_idx.nil?
+      group_nbr = replacement[group_idx + 1]
+      replacement.sub("$#{group_nbr}", match[group_nbr.to_i])
     end
 
     def version_from_segments(*segments)
