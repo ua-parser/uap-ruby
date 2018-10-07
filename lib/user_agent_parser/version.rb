@@ -11,10 +11,12 @@ module UserAgentParser
     alias to_s version
 
     def initialize(*args)
+      # If only one string argument is given, asume a complete version string
+      # and attempt to parse it
       if args.length == 1 && args.first.is_a?(String)
         @version = args.first.to_s.strip
       else
-        @segments = args.map(&:to_s).map(&:strip)
+        @segments = args.compact.map(&:to_s).map(&:strip)
         @version = segments.join('.')
       end
     end

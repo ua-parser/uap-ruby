@@ -158,8 +158,8 @@ module UserAgentParser
     end
 
     def version_from_segments(*segments)
-      segments = segments.compact
-      segments.empty? ? nil : Version.new(*segments)
+      return if segments.all?(&:nil?)
+      Version.new(*segments)
     end
   end
 end
