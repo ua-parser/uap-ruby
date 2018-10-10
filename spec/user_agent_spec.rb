@@ -160,13 +160,13 @@ describe UserAgentParser::UserAgent do
   describe '#to_h' do
     let(:expected) do
       {
-        device: { family: "iPhone", model: "iPhone", brand: nil },
-        family: "Mobile Safari",
+        device: { family: 'iPhone', model: 'iPhone', brand: nil },
+        family: 'Mobile Safari',
         os: {
-          version: { version: "4.2.1", major: "4", minor: "2", patch: "1", patch_minor: nil},
-          family: "iOS"
+          version: { version: '4.2.1', major: '4', minor: '2', patch: '1', patch_minor: nil},
+          family: 'iOS'
         },
-        version: { version: "5.0.2", major: "5", minor: "0", patch: "2", patch_minor: nil }
+        version: { version: '5.0.2', major: '5', minor: '0', patch: '2', patch_minor: nil }
       }
     end
 

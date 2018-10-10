@@ -121,12 +121,12 @@ module UserAgentParser
         family = pattern['device_replacement']
         match.each_with_index { |m,i| family = family.sub("$#{i}", m) }
       end
-      if pattern["model_replacement"]
-        model = pattern["model_replacement"]
+      if pattern['model_replacement']
+        model = pattern['model_replacement']
         match.each_with_index { |m,i| model = model.sub("$#{i}", m) }
       end
-      if pattern["brand_replacement"]
-        brand = pattern["brand_replacement"]
+      if pattern['brand_replacement']
+        brand = pattern['brand_replacement']
         match.each_with_index { |m,i| brand = brand.sub("$#{i}", m) }
         brand.strip!
       end
