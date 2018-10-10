@@ -1,12 +1,9 @@
 AllCops:
-  TargetRubyVersion: 1.9
+  TargetRubyVersion: 2.3
 
 Style/FileName:
   Exclude:
     - "lib/castle-rb.rb"
-
-Style/MethodMissing:
-  Enabled: false
 
 Style/Documentation:
   Enabled: false
