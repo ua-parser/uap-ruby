@@ -35,13 +35,13 @@ module UserAgentParser
       parse_ua(user_agent, os, device)
     end
 
-  private
+    private
 
     def load_patterns(path)
       yml = YAML.load_file(path)
 
       # Parse all the regexs
-      yml.each_pair do |type, patterns|
+      yml.each_pair do |_type, patterns|
         patterns.each do |pattern|
           pattern[:regex] = Regexp.new(pattern['regex'], pattern['regex_flag'] == 'i')
         end
@@ -92,7 +92,7 @@ module UserAgentParser
     else
       def first_pattern_match(patterns, value)
         patterns.each do |pattern|
-          if match = pattern[:regex].match(value)
+          if (match = pattern[:regex].match(value))
             return [pattern, match]
           end
         end
@@ -131,7 +131,7 @@ module UserAgentParser
         brand.strip!
       end
 
-      model.strip! unless model.nil?
+      model&.strip!
 
       Device.new(family.strip, model, brand)
     end
@@ -153,12 +153,14 @@ module UserAgentParser
     def interpolate(replacement, match)
       group_idx = replacement.index('$')
       return replacement if group_idx.nil?
+
       group_nbr = replacement[group_idx + 1]
       replacement.sub("$#{group_nbr}", match[group_nbr.to_i])
     end
 
     def version_from_segments(*segments)
       return if segments.all?(&:nil?)
+
       Version.new(*segments)
     end
   end

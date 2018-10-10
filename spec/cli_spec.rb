@@ -7,18 +7,18 @@ describe UserAgentParser::Cli do
   let(:cli) { UserAgentParser::Cli.new(user_agent, options) }
   let(:options) { {} }
   let(:parser) { UserAgentParser::Parser.new }
-  let(:user_agent) {
+  let(:user_agent) do
     parser.parse('Mozilla/5.0 (iPad; CPU OS 6_0_1 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A523 Safari/8536.25')
-  }
+  end
 
   it 'prints family and version when no options' do
     cli.run!.must_equal('Mobile Safari 6.0')
   end
 
   describe 'invalid version' do
-    let(:user_agent) {
+    let(:user_agent) do
       parser.parse('Mozilla/5.0 (iPad; CPU OS like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/XYZ Mobile/10A523 Safari/8536.25')
-    }
+    end
 
     describe '--version' do
       let(:options) { { version: true } }

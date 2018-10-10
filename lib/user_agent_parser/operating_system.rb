@@ -13,9 +13,7 @@ module UserAgentParser
 
     def to_s
       string = family
-      unless version.nil?
-        string += " #{version}"
-      end
+      string += " #{version}" unless version.nil?
       string
     end
 

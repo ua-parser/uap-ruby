@@ -8,7 +8,7 @@ require 'user_agent_parser/cli'
 
 options = {}
 
-optparse = OptionParser.new do|opts|
+optparse = OptionParser.new do |opts|
   opts.on('--family', 'Print family only') do
     options[:family] = true
   end
