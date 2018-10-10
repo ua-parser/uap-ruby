@@ -1,9 +1,18 @@
 # frozen_string_literal: true
 
-require 'minitest/autorun'
 require 'coveralls'
-Coveralls.wear!
+require 'simplecov'
 
+SimpleCov.formatter = Coveralls::SimpleCov::Formatter
+SimpleCov.start do
+  add_filter '/.bundle/'
+  add_filter '/doc/'
+  add_filter '/spec/'
+  add_filter '/config/'
+  merge_timeout 600
+end
+
+require 'minitest/autorun'
 
 $:.unshift File.expand_path('../../lib', __FILE__)
 require 'user_agent_parser'

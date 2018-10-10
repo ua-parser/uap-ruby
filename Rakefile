@@ -24,20 +24,26 @@ task :families do
   root = Pathname(__FILE__).dirname
   path = root.join('vendor', 'uap-core')
 
-  browser_families = paths_to_families([
-    # path.join('tests', 'test_ua.yaml'),
-    path.join('test_resources', 'firefox_user_agent_strings.yaml'),
-    path.join('test_resources', 'pgts_browser_list.yaml')
-  ])
+  browser_families = paths_to_families(
+    [
+      # path.join('tests', 'test_ua.yaml'),
+      path.join('test_resources', 'firefox_user_agent_strings.yaml'),
+      path.join('test_resources', 'pgts_browser_list.yaml')
+    ]
+  )
 
-  os_families = paths_to_families([
-    # path.join('tests', 'test_os.yaml'),
-    path.join('test_resources', 'additional_os_tests.yaml')
-  ])
+  os_families = paths_to_families(
+    [
+      # path.join('tests', 'test_os.yaml'),
+      path.join('test_resources', 'additional_os_tests.yaml')
+    ]
+  )
 
-  device_families = paths_to_families([
-    # path.join('tests', 'test_device.yaml'),
-  ])
+  device_families = paths_to_families(
+    [
+      # path.join('tests', 'test_device.yaml'),
+    ]
+  )
 
   puts "\n\nBrowser Families"
   puts browser_families.inspect

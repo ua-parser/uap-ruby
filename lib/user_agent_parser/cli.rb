@@ -20,7 +20,7 @@ module UserAgentParser
         minor
       elsif @options[:os]
         @user_agent.os.to_s
-      elsif format = @options[:format]
+      elsif (format = @options[:format])
         format
           .gsub('%f', @user_agent.family)
           .gsub('%n', @user_agent.name)
@@ -47,8 +47,8 @@ module UserAgentParser
       @version ||= @user_agent.version
     end
 
-    def with_version(&block)
-      block.call(version) if version
+    def with_version
+      yield(version) if version
     end
   end
 end

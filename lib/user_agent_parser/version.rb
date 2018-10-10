@@ -2,7 +2,6 @@
 
 module UserAgentParser
   class Version
-
     # Private: Regex used to split string version string into major, minor,
     # patch, and patch_minor.
     SEGMENTS_REGEX = /\d+\-\d+|\d+[a-zA-Z]+$|\d+|[A-Za-z][0-9A-Za-z-]*$/
