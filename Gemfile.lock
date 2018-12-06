@@ -24,8 +24,8 @@ GEM
     simplecov-html (0.10.2)
     term-ansicolor (1.7.0)
       tins (~> 1.0)
-    thor (0.20.0)
-    tins (1.18.0)
+    thor (0.20.3)
+    tins (1.20.2)
 
 PLATFORMS
   java
