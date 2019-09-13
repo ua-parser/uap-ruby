@@ -29,5 +29,29 @@ module MiniTest
     end
 
     Object.infect_an_assertion :assert_test_case_property_equal, :must_equal_test_case_property
+
+    def assert_less_than(expected, actual)
+      assert(
+        actual < expected,
+        "expected #{actual} to be less than: #{expected}"
+      )
+    end
+
+    Object.infect_an_assertion :assert_less_than, :must_be_less_than
+
+    def assert_more_than(expected, actual)
+      assert(
+        actual > expected,
+        "expected #{actual} to be greater than: #{expected}"
+      )
+    end
+
+    Object.infect_an_assertion :assert_more_than, :must_be_more_than
+  end
+end
+
+module Measure
+  def self.milliseconds_elapsed(&block)
+    Benchmark.realtime(&block) * 1000
   end
 end

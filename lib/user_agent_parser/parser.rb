@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'yaml'
-
 module UserAgentParser
   class Parser
+    @@patterns = UserAgentParser::Patterns.new
+
     FAMILY_REPLACEMENT_KEYS = %w[
       family_replacement
       v1_replacement
@@ -24,9 +24,13 @@ module UserAgentParser
 
     attr_reader :patterns_path
 
+    def self.load_patterns(path)
+      @@patterns.get(path)
+    end
+
     def initialize(options = {})
-      @patterns_path = options[:patterns_path] || UserAgentParser::DefaultPatternsPath
-      @ua_patterns, @os_patterns, @device_patterns = load_patterns(patterns_path)
+      @patterns_path = options[:patterns_path]
+      @ua_patterns, @os_patterns, @device_patterns = Parser::load_patterns(@patterns_path)
     end
 
     def parse(user_agent)
@@ -36,19 +40,6 @@ module UserAgentParser
     end
 
     private
-
-    def load_patterns(path)
-      yml = YAML.load_file(path)
-
-      # Parse all the regexs
-      yml.each_pair do |_type, patterns|
-        patterns.each do |pattern|
-          pattern[:regex] = Regexp.new(pattern['regex'], pattern['regex_flag'] == 'i')
-        end
-      end
-
-      [yml['user_agent_parsers'], yml['os_parsers'], yml['device_parsers']]
-    end
 
     def parse_ua(user_agent, os = nil, device = nil)
       pattern, match = first_pattern_match(@ua_patterns, user_agent)
