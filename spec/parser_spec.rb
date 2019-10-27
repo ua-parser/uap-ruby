@@ -60,11 +60,11 @@ describe UserAgentParser::Parser do
   describe '::parse' do
     it 'parses a UA' do
       ua = UserAgentParser.parse('Mozilla/5.0 (Macintosh; U; PPC Mac OS X; en-us) AppleWebKit/418.8 (KHTML, like Gecko) Safari/419.3')
-      ua.family.must_equal('Safari')
+      _(ua.family).must_equal('Safari')
     end
     it 'accepts a custom patterns path' do
       ua = UserAgentParser.parse('Any user agent string', patterns_path: custom_patterns_path)
-      ua.family.must_equal('Custom browser')
+      _(ua.family).must_equal('Custom browser')
     end
   end
 
@@ -73,17 +73,17 @@ describe UserAgentParser::Parser do
       parser = UserAgentParser::Parser.new(patterns_path: custom_patterns_path)
       ua = parser.parse('Any user agent string')
 
-      ua.family.must_equal('Custom browser')
-      ua.version.major.must_equal('1')
-      ua.version.minor.must_equal('2')
-      ua.version.patch.must_equal('3')
-      ua.version.patch_minor.must_equal('4')
+      _(ua.family).must_equal('Custom browser')
+      _(ua.version.major).must_equal('1')
+      _(ua.version.minor).must_equal('2')
+      _(ua.version.patch).must_equal('3')
+      _(ua.version.patch_minor).must_equal('4')
 
-      ua.os.family.must_equal('Custom OS')
-      ua.os.version.major.must_equal('1')
-      ua.os.version.minor.must_equal('2')
+      _(ua.os.family).must_equal('Custom OS')
+      _(ua.os.version.major).must_equal('1')
+      _(ua.os.version.minor).must_equal('2')
 
-      ua.device.family.must_equal('Custom device')
+      _(ua.device.family).must_equal('Custom device')
     end
   end
 
@@ -93,19 +93,19 @@ describe UserAgentParser::Parser do
         user_agent = PARSER.parse(test_case['user_agent_string'])
 
         if test_case['family']
-          user_agent.family.must_equal_test_case_property(test_case, 'family')
+          _(user_agent.family).must_equal_test_case_property(test_case, 'family')
         end
 
         if test_case['major']
-          user_agent.version.major.must_equal_test_case_property(test_case, 'major')
+          _(user_agent.version.major).must_equal_test_case_property(test_case, 'major')
         end
 
         if test_case['minor']
-          user_agent.version.minor.must_equal_test_case_property(test_case, 'minor')
+          _(user_agent.version.minor).must_equal_test_case_property(test_case, 'minor')
         end
 
         if test_case['patch']
-          user_agent.version.patch.must_equal_test_case_property(test_case, 'patch')
+          _(user_agent.version.patch).must_equal_test_case_property(test_case, 'patch')
         end
       end
     end
@@ -116,23 +116,23 @@ describe UserAgentParser::Parser do
         operating_system = user_agent.os
 
         if test_case['family']
-          operating_system.family.must_equal_test_case_property(test_case, 'family')
+          _(operating_system.family).must_equal_test_case_property(test_case, 'family')
         end
 
         if test_case['major']
-          operating_system.version.major.must_equal_test_case_property(test_case, 'major')
+          _(operating_system.version.major).must_equal_test_case_property(test_case, 'major')
         end
 
         if test_case['minor']
-          operating_system.version.minor.must_equal_test_case_property(test_case, 'minor')
+          _(operating_system.version.minor).must_equal_test_case_property(test_case, 'minor')
         end
 
         if test_case['patch']
-          operating_system.version.patch.must_equal_test_case_property(test_case, 'patch')
+          _(operating_system.version.patch).must_equal_test_case_property(test_case, 'patch')
         end
 
         if test_case['patch_minor']
-          operating_system.version.patch_minor.must_equal_test_case_property(test_case, 'patch_minor')
+          _(operating_system.version.patch_minor).must_equal_test_case_property(test_case, 'patch_minor')
         end
       end
     end
@@ -141,14 +141,17 @@ describe UserAgentParser::Parser do
       it "parses device for #{test_case_to_test_name(test_case)}" do
         user_agent = PARSER.parse(test_case['user_agent_string'])
         device = user_agent.device
+
         if test_case['family']
-          device.family.must_equal_test_case_property(test_case, 'family')
+          _(device.family).must_equal_test_case_property(test_case, 'family')
         end
+
         if test_case['model']
-          device.model.must_equal_test_case_property(test_case, 'model')
+          _(device.model).must_equal_test_case_property(test_case, 'model')
         end
+
         if test_case['brand']
-          device.brand.must_equal_test_case_property(test_case, 'brand')
+          _(device.brand).must_equal_test_case_property(test_case, 'brand')
         end
       end
     end

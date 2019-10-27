@@ -12,7 +12,7 @@ describe UserAgentParser::Cli do
   end
 
   it 'prints family and version when no options' do
-    cli.run!.must_equal('Mobile Safari 6.0')
+    _(cli.run!).must_equal('Mobile Safari 6.0')
   end
 
   describe 'invalid version' do
@@ -24,7 +24,7 @@ describe UserAgentParser::Cli do
       let(:options) { { version: true } }
 
       it 'returns nil' do
-        cli.run!.must_be_nil
+        _(cli.run!).must_be_nil
       end
     end
 
@@ -32,7 +32,7 @@ describe UserAgentParser::Cli do
       let(:options) { { major: true } }
 
       it 'returns nil' do
-        cli.run!.must_be_nil
+        _(cli.run!).must_be_nil
       end
     end
 
@@ -40,7 +40,7 @@ describe UserAgentParser::Cli do
       let(:options) { { minor: true } }
 
       it 'returns nil' do
-        cli.run!.must_be_nil
+        _(cli.run!).must_be_nil
       end
     end
 
@@ -48,7 +48,7 @@ describe UserAgentParser::Cli do
       let(:options) { { format: '%n|%f|%v|%M|%m|%o' } }
 
       it 'returns string without versions' do
-        cli.run!.must_equal('Mobile Safari|Mobile Safari||||Other')
+        _(cli.run!).must_equal('Mobile Safari|Mobile Safari||||Other')
       end
     end
   end
@@ -57,7 +57,7 @@ describe UserAgentParser::Cli do
     let(:options) { { name: true } }
 
     it 'returns name only' do
-      cli.run!.must_equal('Mobile Safari')
+      _(cli.run!).must_equal('Mobile Safari')
     end
   end
 
@@ -65,7 +65,7 @@ describe UserAgentParser::Cli do
     let(:options) { { family: true } }
 
     it 'returns family only' do
-      cli.run!.must_equal('Mobile Safari')
+      _(cli.run!).must_equal('Mobile Safari')
     end
   end
 
@@ -73,7 +73,7 @@ describe UserAgentParser::Cli do
     let(:options) { { version: true } }
 
     it 'returns version only' do
-      cli.run!.must_equal('6.0')
+      _(cli.run!).must_equal('6.0')
     end
   end
 
@@ -81,7 +81,7 @@ describe UserAgentParser::Cli do
     let(:options) { { major: true } }
 
     it 'returns major version only' do
-      cli.run!.must_equal('6')
+      _(cli.run!).must_equal('6')
     end
   end
 
@@ -89,7 +89,7 @@ describe UserAgentParser::Cli do
     let(:options) { { minor: true } }
 
     it 'returns minor version only' do
-      cli.run!.must_equal('0')
+      _(cli.run!).must_equal('0')
     end
   end
 
@@ -97,7 +97,7 @@ describe UserAgentParser::Cli do
     let(:options) { { os: true } }
 
     it 'returns operating system only' do
-      cli.run!.must_equal('iOS 6.0.1')
+      _(cli.run!).must_equal('iOS 6.0.1')
     end
   end
 
@@ -105,7 +105,7 @@ describe UserAgentParser::Cli do
     let(:options) { { format: '%n|%v|%M|%m|%o' } }
 
     it 'return string with correct replacements' do
-      cli.run!.must_equal('Mobile Safari|6.0|6|0|iOS 6.0.1')
+      _(cli.run!).must_equal('Mobile Safari|6.0|6|0|iOS 6.0.1')
     end
   end
 end

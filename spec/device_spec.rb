@@ -6,14 +6,14 @@ describe UserAgentParser::Device do
   describe '#name' do
     it 'returns family' do
       os = UserAgentParser::Device.new('iPod')
-      os.name.must_equal os.family
+      _(os.name).must_equal os.family
     end
   end
 
   describe '#to_s' do
     it 'returns a string of just the family' do
       os = UserAgentParser::Device.new('iPod')
-      os.to_s.must_equal 'iPod'
+      _(os.to_s).must_equal 'iPod'
     end
   end
 
@@ -21,13 +21,13 @@ describe UserAgentParser::Device do
     it 'returns true for same family' do
       device1 = UserAgentParser::Device.new('iPod')
       device2 = UserAgentParser::Device.new('iPod')
-      device1.must_equal device2
+      _(device1).must_equal device2
     end
 
     it 'returns false different family' do
       device1 = UserAgentParser::Device.new('iPod')
       device2 = UserAgentParser::Device.new('iPad')
-      device1.wont_equal device2
+      _(device1).wont_equal device2
     end
   end
 
@@ -48,7 +48,7 @@ describe UserAgentParser::Device do
   describe '#inspect' do
     it 'returns class family and instance to_s' do
       device = UserAgentParser::Device.new('iPod')
-      device.inspect.to_s.must_equal '#<UserAgentParser::Device iPod>'
+      _(device.inspect.to_s).must_equal '#<UserAgentParser::Device iPod>'
     end
   end
 end
