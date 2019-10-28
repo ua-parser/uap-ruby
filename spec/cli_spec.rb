@@ -48,7 +48,7 @@ describe UserAgentParser::Cli do
       let(:options) { { format: '%n|%f|%v|%M|%m|%o' } }
 
       it 'returns string without versions' do
-        _(cli.run!).must_equal('Mobile Safari|Mobile Safari||||Other')
+        _(cli.run!).must_equal('Mobile Safari|Mobile Safari||||iOS')
       end
     end
   end
