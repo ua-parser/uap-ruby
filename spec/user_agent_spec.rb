@@ -5,13 +5,13 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 describe UserAgentParser::UserAgent do
   describe '#to_s' do
     it 'returns a string of just the family' do
-      UserAgentParser::UserAgent.new('Chrome').to_s.must_equal 'Chrome'
+      _(UserAgentParser::UserAgent.new('Chrome').to_s).must_equal 'Chrome'
     end
 
     it 'returns a string of family and version' do
       version = UserAgentParser::Version.new('1.2.3pre')
       agent = UserAgentParser::UserAgent.new('Chrome', version)
-      agent.to_s.must_equal 'Chrome 1.2.3pre'
+      _(agent.to_s).must_equal 'Chrome 1.2.3pre'
     end
   end
 
@@ -19,14 +19,14 @@ describe UserAgentParser::UserAgent do
     describe 'with family' do
       it 'sets family' do
         agent = UserAgentParser::UserAgent.new('Chromium')
-        agent.family.must_equal 'Chromium'
+        _(agent.family).must_equal 'Chromium'
       end
     end
 
     describe 'with no family' do
       it 'sets family to Other' do
         agent = UserAgentParser::UserAgent.new
-        agent.family.must_equal 'Other'
+        _(agent.family).must_equal 'Other'
       end
     end
 
@@ -34,7 +34,7 @@ describe UserAgentParser::UserAgent do
       it 'sets version' do
         version = UserAgentParser::Version.new('1.2.3')
         agent = UserAgentParser::UserAgent.new(nil, version)
-        agent.version.must_equal version
+        _(agent.version).must_equal version
       end
     end
 
@@ -42,7 +42,7 @@ describe UserAgentParser::UserAgent do
       it 'sets os' do
         os = UserAgentParser::OperatingSystem.new('Windows XP')
         agent = UserAgentParser::UserAgent.new(nil, nil, os)
-        agent.os.must_equal os
+        _(agent.os).must_equal os
       end
     end
 
@@ -50,7 +50,7 @@ describe UserAgentParser::UserAgent do
       it 'sets device' do
         device = UserAgentParser::Device.new('iPhone')
         agent = UserAgentParser::UserAgent.new(nil, nil, nil, device)
-        agent.device.must_equal device
+        _(agent.device).must_equal device
       end
     end
   end
@@ -58,7 +58,7 @@ describe UserAgentParser::UserAgent do
   describe '#name' do
     it 'returns family' do
       agent = UserAgentParser::UserAgent.new('Safari')
-      agent.name.must_equal agent.family
+      _(agent.name).must_equal agent.family
     end
   end
 
@@ -67,7 +67,7 @@ describe UserAgentParser::UserAgent do
       version = UserAgentParser::Version.new('1.0')
       agent1 = UserAgentParser::UserAgent.new('Chrome', version)
       agent2 = UserAgentParser::UserAgent.new('Chrome', version)
-      agent1.must_equal agent2
+      _(agent1).must_equal agent2
     end
 
     it 'returns true for same agents on same OS' do
@@ -75,7 +75,7 @@ describe UserAgentParser::UserAgent do
       os = UserAgentParser::OperatingSystem.new('Windows')
       agent1 = UserAgentParser::UserAgent.new('Chrome', version, os)
       agent2 = UserAgentParser::UserAgent.new('Chrome', version, os)
-      agent1.must_equal agent2
+      _(agent1).must_equal agent2
     end
 
     it 'returns false for same agent on different OS' do
@@ -84,7 +84,7 @@ describe UserAgentParser::UserAgent do
       mac = UserAgentParser::OperatingSystem.new('Mac')
       agent1 = UserAgentParser::UserAgent.new('Chrome', version, windows)
       agent2 = UserAgentParser::UserAgent.new('Chrome', version, mac)
-      agent1.wont_equal agent2
+      _(agent1).wont_equal agent2
     end
 
     it 'returns false for same os, but different browser version' do
@@ -93,7 +93,7 @@ describe UserAgentParser::UserAgent do
       os = UserAgentParser::OperatingSystem.new('Windows')
       agent1 = UserAgentParser::UserAgent.new('Chrome', browser_version1, os)
       agent2 = UserAgentParser::UserAgent.new('Chrome', browser_version2, os)
-      agent1.wont_equal agent2
+      _(agent1).wont_equal agent2
     end
   end
 
@@ -136,7 +136,7 @@ describe UserAgentParser::UserAgent do
     it 'returns the family and version' do
       browser_version = UserAgentParser::Version.new('1.0')
       agent = UserAgentParser::UserAgent.new('Chrome', browser_version)
-      agent.inspect.to_s.must_equal '#<UserAgentParser::UserAgent Chrome 1.0>'
+      _(agent.inspect.to_s).must_equal '#<UserAgentParser::UserAgent Chrome 1.0>'
     end
 
     it 'returns the OS if present' do
@@ -144,7 +144,7 @@ describe UserAgentParser::UserAgent do
       os_version = UserAgentParser::Version.new('10.7.4')
       os = UserAgentParser::OperatingSystem.new('OS X', os_version)
       agent = UserAgentParser::UserAgent.new('Chrome', browser_version, os)
-      agent.inspect.must_equal '#<UserAgentParser::UserAgent Chrome 1.0 (OS X 10.7.4)>'
+      _(agent.inspect).must_equal '#<UserAgentParser::UserAgent Chrome 1.0 (OS X 10.7.4)>'
     end
 
     it 'returns device if present' do
@@ -153,7 +153,7 @@ describe UserAgentParser::UserAgent do
       os = UserAgentParser::OperatingSystem.new('iOS', os_version)
       device = UserAgentParser::Device.new('iPhone')
       agent = UserAgentParser::UserAgent.new('Mobile Safari', browser_version, os, device)
-      agent.inspect.must_equal '#<UserAgentParser::UserAgent Mobile Safari 5.0.2 (iOS 4.2.1) (iPhone)>'
+      _(agent.inspect).must_equal '#<UserAgentParser::UserAgent Mobile Safari 5.0.2 (iOS 4.2.1) (iPhone)>'
     end
   end
 
