@@ -2,12 +2,14 @@
 
 module UserAgentParser
   class UserAgent
+    DEFAULT_FAMILY = 'Other'
+
     attr_reader :family, :version, :os, :device
 
     alias name family
 
     def initialize(family = nil, version = nil, os = nil, device = nil)
-      @family = family || 'Other'
+      @family = family || DEFAULT_FAMILY
       @version = version
       @os = os
       @device = device

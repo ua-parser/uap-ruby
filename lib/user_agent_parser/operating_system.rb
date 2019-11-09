@@ -2,11 +2,13 @@
 
 module UserAgentParser
   class OperatingSystem
+    DEFAULT_FAMILY = 'Other'
+
     attr_reader :family, :version
 
     alias name family
 
-    def initialize(family = 'Other', version = nil)
+    def initialize(family = DEFAULT_FAMILY, version = nil)
       @family = family
       @version = version
     end
