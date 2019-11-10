@@ -25,7 +25,7 @@ jobs:
     - <<: *test
       rvm: 2.4.8
     - <<: *test
-      rvm: jruby-9.2.8.0
+      rvm: jruby-9.2.9.0
     - <<: *test
       rvm: ruby-head
 
