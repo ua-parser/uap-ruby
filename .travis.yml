@@ -12,8 +12,7 @@ test: &test
   stage: Test
   language: ruby
   before_install:
-    - gem install bundler
-    - gem update --system
+    - yes | gem update --system
   script: bundle exec rake test
 
 jobs:
@@ -23,18 +22,15 @@ jobs:
     - <<: *test
       rvm: 2.5.7
     - <<: *test
-      rvm: 2.4.8
+      rvm: 2.4.9
     - <<: *test
       rvm: jruby-9.2.9.0
-    - <<: *test
-      rvm: ruby-head
 
     - stage: coditsu
       language: ruby
       rvm: 2.6.5
       before_install:
-        - gem update --system
-        - gem install bundler
+        - yes | gem update --system
       script: \curl -sSL https://api.coditsu.io/run/ci | bash
 
 stages:
