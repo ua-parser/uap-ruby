@@ -33,6 +33,8 @@ user_agent.version.major
 => "9"
 user_agent.version.minor
 => "0"
+user_agent.family == "IE" && user_agent.version >= "9"
+=> true
 operating_system = user_agent.os
 => #<UserAgentParser::OperatingSystem Windows Vista>
 operating_system.to_s
