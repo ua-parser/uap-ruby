@@ -57,6 +57,10 @@ describe UserAgentParser::Parser do
     File.join(File.dirname(__FILE__), 'custom_regexes.yaml')
   end
 
+  def other_patterns_path
+    File.join(File.dirname(__FILE__), 'other_regexes.yaml')
+  end
+
   describe '::parse' do
     it 'parses a UA' do
       ua = UserAgentParser.parse('Mozilla/5.0 (Macintosh; U; PPC Mac OS X; en-us) AppleWebKit/418.8 (KHTML, like Gecko) Safari/419.3')
@@ -69,9 +73,12 @@ describe UserAgentParser::Parser do
   end
 
   describe '#initialize with a custom patterns path' do
-    it 'uses the custom patterns' do
+    it 'accepts a single patterns_path string' do
       parser = UserAgentParser::Parser.new(patterns_path: custom_patterns_path)
       ua = parser.parse('Any user agent string')
+
+      _(parser.patterns_paths).must_equal([custom_patterns_path])
+      _(parser.patterns_path).must_equal(custom_patterns_path)
 
       _(ua.family).must_equal('Custom browser')
       _(ua.version.major).must_equal('1')
@@ -84,6 +91,20 @@ describe UserAgentParser::Parser do
       _(ua.os.version.minor).must_equal('2')
 
       _(ua.device.family).must_equal('Custom device')
+    end
+
+    it 'accepts patterns_paths array' do
+      patterns_paths = [custom_patterns_path, other_patterns_path]
+      parser = UserAgentParser::Parser.new(patterns_paths: patterns_paths)
+
+      _(parser.patterns_paths).must_equal(patterns_paths)
+      _(parser.patterns_path).must_equal(custom_patterns_path)
+
+      ua = parser.parse('Any user agent string')
+      oua = parser.parse('Other user agent string')
+
+      _(ua.family).must_equal('Custom browser')
+      _(oua.family).must_equal('Other browser')
     end
   end
 
