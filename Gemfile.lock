@@ -6,9 +6,9 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    coveralls_reborn (0.14.0)
+    coveralls_reborn (0.15.0)
       json (~> 2.1)
-      simplecov (~> 0.17.1)
+      simplecov (~> 0.18.1)
       term-ansicolor (~> 1.6)
       thor (>= 0.20.3, < 2.0)
       tins (~> 1.16)
@@ -17,11 +17,10 @@ GEM
     json (2.3.0-java)
     minitest (5.14.0)
     rake (13.0.1)
-    simplecov (0.17.1)
+    simplecov (0.18.1)
       docile (~> 1.1)
-      json (>= 1.8, < 3)
-      simplecov-html (~> 0.10.0)
-    simplecov-html (0.10.2)
+      simplecov-html (~> 0.11.0)
+    simplecov-html (0.11.0)
     sync (0.5.0)
     term-ansicolor (1.7.1)
       tins (~> 1.0)
