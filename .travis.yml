@@ -26,7 +26,7 @@ jobs:
     - <<: *test
       rvm: 2.4.9
     - <<: *test
-      rvm: jruby-9.2.9.0
+      rvm: jruby-9.2.11.0
 
     - stage: coditsu
       language: ruby
