@@ -1,3 +1,4 @@
 coverage
 vendor/bundle
 .coditsu/local.yml
+pkg

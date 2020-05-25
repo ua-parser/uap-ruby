@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    user_agent_parser (2.6.0)
+    user_agent_parser (2.7.0)
 
 GEM
   remote: https://rubygems.org/
