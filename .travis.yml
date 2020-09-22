@@ -23,8 +23,6 @@ jobs:
     - <<: *test
       rvm: 2.5.7
     - <<: *test
-      rvm: 2.4.9
-    - <<: *test
       rvm: jruby-9.2.9.0
 
     - stage: coditsu
