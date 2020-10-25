@@ -1,3 +1,4 @@
+.bundle
 coverage
 vendor/bundle
 .coditsu/local.yml
