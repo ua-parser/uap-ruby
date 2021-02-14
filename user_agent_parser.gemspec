@@ -7,8 +7,11 @@ Gem::Specification.new do |gem|
   gem.authors     = 'Tim Lucas'
   gem.email       = 't@toolmantim.com'
   gem.homepage    = 'https://github.com/ua-parser/uap-ruby'
-  gem.summary     = "A simple, comprehensive Ruby gem for parsing user agent strings with the help of BrowserScope's UA database"
-  gem.description = gem.summary
+  gem.summary     = "Parsing user agent strings with the help of BrowserScope's UA database"
+  gem.description = <<~DESCRIPTION
+    A simple, comprehensive Ruby gem for parsing user agent strings
+    with the help of BrowserScope's UserAgent database
+  DESCRIPTION
   gem.license     = 'MIT'
   gem.executables = ['user_agent_parser']
 
