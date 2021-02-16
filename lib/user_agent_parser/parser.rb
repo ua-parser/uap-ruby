@@ -30,6 +30,7 @@ module UserAgentParser
     end
 
     def parse(user_agent)
+      user_agent = user_agent&.encode('UTF-8', invalid: :replace)
       os = parse_os(user_agent)
       device = parse_device(user_agent)
       parse_ua(user_agent, os, device)
