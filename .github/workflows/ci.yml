@@ -1,0 +1,59 @@
+name: ci
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  specs:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby:
+          - '3.0'
+          - '2.7'
+          - '2.6'
+          - '2.5'
+        include:
+          - ruby: '3.0'
+            coverage: 'true'
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+      - name: Update rubygems
+        run: |
+          gem update --system
+      - uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: bundle-use-ruby-${{ matrix.ruby }}-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            bundle-use-ruby-${{ matrix.ruby }}-
+      - name: Bundle install
+        run: |
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
+      - name: Run specs
+        env:
+          GITHUB_COVERAGE: ${{ matrix.coverage }}
+        run: |
+          bundle exec rake test
+
+  # coditsu:
+  #    runs-on: ubuntu-latest
+  #    strategy:
+  #      fail-fast: false
+  #    steps:
+  #      - uses: actions/checkout@v2
+  #        with:
+  #          fetch-depth: 0
+  #      - name: Run Coditsu
+  #        run: \curl -sSL https://api.coditsu.io/run/ci | bash
