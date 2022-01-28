@@ -1,5 +1,7 @@
 # master
 
+  * sync with uap-core 0.15.0
+
 # 2.8.0 (2021-11-02)
   * sync with uap-core 0.14.0
   * drop support for ruby 2.4
