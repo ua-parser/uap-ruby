@@ -1,10 +1,14 @@
 # frozen_string_literal: true
 
+require 'rubygems/version'
+
 module UserAgentParser
   class Version
+    include Comparable
+
     # Private: Regex used to split string version string into major, minor,
     # patch, and patch_minor.
-    SEGMENTS_REGEX = /\d+\-\d+|\d+[a-zA-Z]+$|\d+|[A-Za-z][0-9A-Za-z-]*$/
+    SEGMENTS_REGEX = /\d+\-\d+|\d+[a-zA-Z]+$|\d+|[A-Za-z][0-9A-Za-z-]*$/.freeze
 
     attr_reader :version
     alias to_s version
@@ -45,9 +49,10 @@ module UserAgentParser
         version == other.version
     end
 
-    alias == eql?
+    def <=>(other)
+      Gem::Version.new(version).<=>(Gem::Version.new(other.to_s))
+    end
 
-    # Private
     def segments
       @segments ||= version.scan(SEGMENTS_REGEX)
     end
