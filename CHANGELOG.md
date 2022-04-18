@@ -1,5 +1,8 @@
 # master
 
+# 2.11.0 (2022-04-18)
+  * Make user agent versions comparable (via #68) (@misdoro)
+
 # 2.10.0 (2022-04-18)
   * sync with uap-core 09e9ccc
 
