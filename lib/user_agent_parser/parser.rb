@@ -38,16 +38,24 @@ module UserAgentParser
     private
 
     def load_patterns(path)
-      yml = YAML.load_file(path)
-
-      # Parse all the regexs
-      yml.each_pair do |_type, patterns|
-        patterns.each do |pattern|
-          pattern[:regex] = Regexp.new(pattern['regex'], pattern['regex_flag'] == 'i')
-        end
+      yml = begin
+        YAML.load_file(path, freeze: true)
+      rescue ArgumentError
+        YAML.load_file(path)
       end
+      [
+        parse_pattern(yml['user_agent_parsers']),
+        parse_pattern(yml['os_parsers']),
+        parse_pattern(yml['device_parsers']),
+      ]
+    end
 
-      [yml['user_agent_parsers'], yml['os_parsers'], yml['device_parsers']]
+    def parse_pattern(patterns)
+      patterns.map do |pattern|
+        pattern = pattern.dup
+        pattern[:regex] = Regexp.new(pattern.delete('regex'), pattern.delete('regex_flag') == 'i')
+        pattern
+      end
     end
 
     def parse_ua(user_agent, os = nil, device = nil)
