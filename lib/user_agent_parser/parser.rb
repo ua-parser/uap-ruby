@@ -4,6 +4,8 @@ require 'yaml'
 
 module UserAgentParser
   class Parser
+    extend Gem::Deprecate
+
     FAMILY_REPLACEMENT_KEYS = %w[
       family_replacement
       v1_replacement
@@ -22,11 +24,13 @@ module UserAgentParser
 
     private_constant :FAMILY_REPLACEMENT_KEYS, :OS_REPLACEMENT_KEYS
 
-    attr_reader :patterns_path
+    attr_reader :patterns_paths
 
-    def initialize(options = {})
-      @patterns_path = options[:patterns_path] || UserAgentParser::DefaultPatternsPath
-      @ua_patterns, @os_patterns, @device_patterns = load_patterns(patterns_path)
+    def initialize(patterns_path: nil, patterns_paths: [])
+      @patterns_paths = [patterns_path, *patterns_paths].compact
+      @patterns_paths = [UserAgentParser::DefaultPatternsPath] if @patterns_paths.empty?
+
+      @ua_patterns, @os_patterns, @device_patterns = load_patterns(@patterns_paths)
     end
 
     def parse(user_agent)
@@ -35,9 +39,23 @@ module UserAgentParser
       parse_ua(user_agent, os, device)
     end
 
+    def patterns_path
+      patterns_paths.first
+    end
+    deprecate :patterns_path, :patterns_paths, 2022, 12
+
     private
 
-    def load_patterns(path)
+    def load_patterns(patterns_paths)
+      patterns_paths.each_with_object([[], [], []]) do |path, patterns|
+        ua_patterns, os_patterns, device_patterns = load_patterns_file(path)
+        patterns[0] += ua_patterns
+        patterns[1] += os_patterns
+        patterns[2] += device_patterns
+      end
+    end
+
+    def load_patterns_file(path)
       yml = begin
         YAML.load_file(path, freeze: true)
       rescue ArgumentError
@@ -88,24 +106,11 @@ module UserAgentParser
       end
     end
 
-    if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('2.4.0')
-      def first_pattern_match(patterns, value)
-        patterns.each do |pattern|
-          if pattern[:regex].match?(value)
-            return [pattern, pattern[:regex].match(value)]
-          end
-        end
-        nil
+    def first_pattern_match(patterns, value)
+      patterns.each do |pattern|
+        return [pattern, pattern[:regex].match(value)] if pattern[:regex].match?(value)
       end
-    else
-      def first_pattern_match(patterns, value)
-        patterns.each do |pattern|
-          if (match = pattern[:regex].match(value))
-            return [pattern, match]
-          end
-        end
-        nil
-      end
+      nil
     end
 
     def user_agent_from_pattern_match(pattern, match, os = nil, device = nil)

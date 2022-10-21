@@ -100,6 +100,11 @@ or when instantiating a `UserAgentParser::Parser`:
 UserAgentParser::Parser.new(patterns_path: '/some/path/to/regexes.yaml').parse(ua_string)
 ```
 
+Extending the standard database is possible by providing multiple files in `patterns_paths` (plural) array argument:
+```ruby
+UserAgentParser::Parser.new(patterns_paths: [UserAgentParser::DefaultPatternsPath, '/some/path/to/regexes.yaml'])
+```
+
 ## Command line tool
 
 The gem incldes a `user_agent_parser` bin command which will read from
