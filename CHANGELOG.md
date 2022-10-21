@@ -1,5 +1,7 @@
 # master
 
+  * sync with https://github.com/ua-parser/uap-core/commit/dc85ab2628798538a2874dea4a9563f40a31f55a
+
 # 2.11.0 (2022-04-18)
   * Make user agent versions comparable (via #68) (@misdoro)
 
