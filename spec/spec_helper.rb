@@ -1,15 +1,17 @@
 # frozen_string_literal: true
 
-require 'coveralls'
-require 'simplecov'
+if ENV['SIMPLECOV'] == '1'
+  require 'coveralls'
+  require 'simplecov'
 
-SimpleCov.formatter = Coveralls::SimpleCov::Formatter
-SimpleCov.start do
-  add_filter '/.bundle/'
-  add_filter '/doc/'
-  add_filter '/spec/'
-  add_filter '/config/'
-  merge_timeout 600
+  SimpleCov.formatter = Coveralls::SimpleCov::Formatter
+  SimpleCov.start do
+    add_filter '/.bundle/'
+    add_filter '/doc/'
+    add_filter '/spec/'
+    add_filter '/config/'
+    merge_timeout 600
+  end
 end
 
 require 'minitest/autorun'
