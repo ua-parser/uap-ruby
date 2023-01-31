@@ -16,14 +16,12 @@ jobs:
           - '3.1'
           - '3.0'
           - '2.7'
-          - '2.6'
-          - '2.5'
-          - 'jruby'
+          - 'jruby-9.3.8.0'
         include:
           - ruby: '3.1'
-            coverage: 'true'
+            coverage: '1'
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: true
       - name: Setup Ruby
@@ -33,7 +31,7 @@ jobs:
       - name: Update rubygems
         run: |
           gem update --system
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         with:
           path: vendor/bundle
           key: bundle-use-ruby-${{ matrix.ruby }}-${{ hashFiles('**/Gemfile.lock') }}
@@ -45,7 +43,7 @@ jobs:
           bundle install --jobs 4 --retry 3
       - name: Run specs
         env:
-          GITHUB_COVERAGE: ${{ matrix.coverage }}
+          SIMPLECOV: ${{ matrix.coverage }}
         run: |
           bundle exec rake test
 
