@@ -1,5 +1,8 @@
 # master
 
+# 2.14.0 (2023-01-31)
+  * Sync with https://github.com/ua-parser/uap-core/commit/1ef0926f2b489cc929589c00f8b8a3efce25acc3
+
 # 2.13.0 (2022-10-21)
   * Support loading multiple database files (via #70) (@misdoro)
     * Support `patterns_path` argument but deprecate `pattern_path` attribute accessor
