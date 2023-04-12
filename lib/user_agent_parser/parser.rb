@@ -106,16 +106,6 @@ module UserAgentParser
       end
     end
 
-    def parse_ua(user_agent, os = nil, device = nil)
-      pattern, match = first_pattern_match(@ua_patterns, user_agent)
-
-      if match
-        user_agent_from_pattern_match(pattern, match, os, device)
-      else
-        UserAgent.new(nil, nil, os, device)
-      end
-    end
-
     def first_pattern_match(patterns, value)
       patterns.each do |pattern|
         return [pattern, pattern[:regex].match(value)] if pattern[:regex].match?(value)

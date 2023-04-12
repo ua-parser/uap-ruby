@@ -17,13 +17,13 @@ describe UserAgentParser::Parser do
     file_to_yaml(file)['test_cases'].map do |test_case|
       {
         'user_agent_string' => test_case['user_agent_string'],
-        'family'            => test_case['family'],
-        'major'             => test_case['major'],
-        'minor'             => test_case['minor'],
-        'patch'             => test_case['patch'],
-        'patch_minor'       => test_case['patch_minor'],
-        'brand'             => test_case['brand'],
-        'model'             => test_case['model']
+        'family' => test_case['family'],
+        'major' => test_case['major'],
+        'minor' => test_case['minor'],
+        'patch' => test_case['patch'],
+        'patch_minor' => test_case['patch_minor'],
+        'brand' => test_case['brand'],
+        'model' => test_case['model']
       }
     end.reject do |test_case|
       # We don't do the hacky javascript user agent overrides
@@ -177,4 +177,80 @@ describe UserAgentParser::Parser do
       end
     end
   end
+
+  describe '#parse_os' do
+    operating_system_test_cases.each do |test_case|
+      it "parses OS for #{test_case_to_test_name(test_case)}" do
+        operating_system = PARSER.parse_os(test_case['user_agent_string'])
+
+        if test_case['family']
+          _(operating_system.family).must_equal_test_case_property(test_case, 'family')
+        end
+
+        if test_case['major']
+          _(operating_system.version.major).must_equal_test_case_property(test_case, 'major')
+        end
+
+        if test_case['minor']
+          _(operating_system.version.minor).must_equal_test_case_property(test_case, 'minor')
+        end
+
+        if test_case['patch']
+          _(operating_system.version.patch).must_equal_test_case_property(test_case, 'patch')
+        end
+
+        if test_case['patch_minor']
+          _(operating_system.version.patch_minor).must_equal_test_case_property(test_case, 'patch_minor')
+        end
+      end
+    end
+  end
+
+  describe '#parse_device' do
+    device_test_cases.each do |test_case|
+      it "parses device for #{test_case_to_test_name(test_case)}" do
+        device = PARSER.parse_device(test_case['user_agent_string'])
+
+        if test_case['family']
+          _(device.family).must_equal_test_case_property(test_case, 'family')
+        end
+
+        if test_case['model']
+          _(device.model).must_equal_test_case_property(test_case, 'model')
+        end
+
+        if test_case['brand']
+          _(device.brand).must_equal_test_case_property(test_case, 'brand')
+        end
+      end
+    end
+  end
+
+  describe '#parse_ua' do
+    user_agent_test_cases.each do |test_case|
+      it "parses UA for #{test_case_to_test_name(test_case)}" do
+        user_agent = PARSER.parse_ua(test_case['user_agent_string'])
+
+        assert_nil user_agent.os
+        assert_nil user_agent.device
+
+        if test_case['family']
+          _(user_agent.family).must_equal_test_case_property(test_case, 'family')
+        end
+
+        if test_case['major']
+          _(user_agent.version.major).must_equal_test_case_property(test_case, 'major')
+        end
+
+        if test_case['minor']
+          _(user_agent.version.minor).must_equal_test_case_property(test_case, 'minor')
+        end
+
+        if test_case['patch']
+          _(user_agent.version.patch).must_equal_test_case_property(test_case, 'patch')
+        end
+      end
+    end
+  end
+
 end
