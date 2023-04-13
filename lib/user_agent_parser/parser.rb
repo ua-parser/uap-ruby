@@ -39,6 +39,36 @@ module UserAgentParser
       parse_ua(user_agent, os, device)
     end
 
+    def parse_os(user_agent)
+      pattern, match = first_pattern_match(@os_patterns, user_agent)
+
+      if match
+        os_from_pattern_match(pattern, match)
+      else
+        OperatingSystem.new
+      end
+    end
+
+    def parse_device(user_agent)
+      pattern, match = first_pattern_match(@device_patterns, user_agent)
+
+      if match
+        device_from_pattern_match(pattern, match)
+      else
+        Device.new
+      end
+    end
+
+    def parse_ua(user_agent, os = nil, device = nil)
+      pattern, match = first_pattern_match(@ua_patterns, user_agent)
+
+      if match
+        user_agent_from_pattern_match(pattern, match, os, device)
+      else
+        UserAgent.new(nil, nil, os, device)
+      end
+    end
+
     def patterns_path
       patterns_paths.first
     end
@@ -73,36 +103,6 @@ module UserAgentParser
         pattern = pattern.dup
         pattern[:regex] = Regexp.new(pattern.delete('regex'), pattern.delete('regex_flag') == 'i')
         pattern
-      end
-    end
-
-    def parse_ua(user_agent, os = nil, device = nil)
-      pattern, match = first_pattern_match(@ua_patterns, user_agent)
-
-      if match
-        user_agent_from_pattern_match(pattern, match, os, device)
-      else
-        UserAgent.new(nil, nil, os, device)
-      end
-    end
-
-    def parse_os(user_agent)
-      pattern, match = first_pattern_match(@os_patterns, user_agent)
-
-      if match
-        os_from_pattern_match(pattern, match)
-      else
-        OperatingSystem.new
-      end
-    end
-
-    def parse_device(user_agent)
-      pattern, match = first_pattern_match(@device_patterns, user_agent)
-
-      if match
-        device_from_pattern_match(pattern, match)
-      else
-        Device.new
       end
     end
 
