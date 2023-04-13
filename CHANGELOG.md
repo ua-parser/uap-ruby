@@ -1,5 +1,8 @@
 # master
 
+# 2.15.0 (2023-04-12)
+ * Expose `parse_os`, `parse_device` and `parse_ua` methods on `Parser`
+
 # 2.14.0 (2023-01-31)
   * Sync with https://github.com/ua-parser/uap-core/commit/1ef0926f2b489cc929589c00f8b8a3efce25acc3
 
