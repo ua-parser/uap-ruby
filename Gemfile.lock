@@ -23,7 +23,7 @@ GEM
     sync (0.5.0)
     term-ansicolor (1.7.1)
       tins (~> 1.0)
-    thor (1.2.1)
+    thor (1.2.2)
     tins (1.32.1)
       sync
 
@@ -38,4 +38,4 @@ DEPENDENCIES
   user_agent_parser!
 
 BUNDLED WITH
-   2.4.10
+   2.4.13
