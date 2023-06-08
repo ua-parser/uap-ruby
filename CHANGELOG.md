@@ -1,5 +1,8 @@
 # master
 
+# 2.16.0 (2023-06-07)
+  * Sync with https://github.com/ua-parser/uap-core/tree/v0.18.0
+
 # 2.15.0 (2023-04-12)
  * Expose `parse_os`, `parse_device` and `parse_ua` methods on `Parser`
 
