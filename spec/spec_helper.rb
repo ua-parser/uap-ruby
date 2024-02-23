@@ -19,7 +19,7 @@ require 'minitest/autorun'
 $:.unshift File.expand_path('../../lib', __FILE__)
 require 'user_agent_parser'
 
-module MiniTest
+module Minitest
   module Assertions
     # Asserts the test case property is equal to the expected value. On failure
     # the message includes the property and user_agent_string from the test
