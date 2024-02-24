@@ -6,14 +6,14 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    coveralls_reborn (0.27.0)
+    coveralls_reborn (0.28.0)
       simplecov (~> 0.22.0)
       term-ansicolor (~> 1.7)
       thor (~> 1.2)
       tins (~> 1.32)
     docile (1.4.0)
-    minitest (5.18.0)
-    rake (13.0.6)
+    minitest (5.22.2)
+    rake (13.1.0)
     simplecov (0.22.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -23,7 +23,7 @@ GEM
     sync (0.5.0)
     term-ansicolor (1.7.1)
       tins (~> 1.0)
-    thor (1.2.2)
+    thor (1.3.0)
     tins (1.32.1)
       sync
 
@@ -38,4 +38,4 @@ DEPENDENCIES
   user_agent_parser!
 
 BUNDLED WITH
-   2.4.13
+   2.5.6
