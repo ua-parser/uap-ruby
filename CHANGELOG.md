@@ -1,5 +1,8 @@
 # master
 
+# 2.19.0 (2024-12-10)
+  * Sync with https://github.com/ua-parser/uap-core/commit/d4cde4c565a7e588472fbf6667f01fc4c23fa60b
+
 # 2.18.0 (2024-06-04)
   * Sync with https://github.com/ua-parser/uap-core/commit/df56280c9e2b42dd64be2b750f803c58feb3f94a
 
