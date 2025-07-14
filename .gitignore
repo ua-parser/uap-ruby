@@ -1,5 +1,6 @@
 .bundle
 coverage
 vendor/bundle
+.tool-versions
 
 pkg
