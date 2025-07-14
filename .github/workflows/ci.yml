@@ -34,14 +34,3 @@ jobs:
           SIMPLECOV: ${{ matrix.coverage }}
         run: |
           bundle exec rake test
-
-  # coditsu:
-  #    runs-on: ubuntu-latest
-  #    strategy:
-  #      fail-fast: false
-  #    steps:
-  #      - uses: actions/checkout@v2
-  #        with:
-  #          fetch-depth: 0
-  #      - name: Run Coditsu
-  #        run: \curl -sSL https://api.coditsu.io/run/ci | bash
