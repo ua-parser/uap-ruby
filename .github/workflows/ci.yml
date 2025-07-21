@@ -13,12 +13,12 @@ jobs:
       fail-fast: false
       matrix:
         ruby:
+          - '3.4'
           - '3.3'
           - '3.2'
           - '3.1'
-          - '3.0'
         include:
-          - ruby: '3.3'
+          - ruby: '3.4'
             coverage: '1'
     steps:
       - uses: actions/checkout@v4
@@ -34,14 +34,3 @@ jobs:
           SIMPLECOV: ${{ matrix.coverage }}
         run: |
           bundle exec rake test
-
-  # coditsu:
-  #    runs-on: ubuntu-latest
-  #    strategy:
-  #      fail-fast: false
-  #    steps:
-  #      - uses: actions/checkout@v2
-  #        with:
-  #          fetch-depth: 0
-  #      - name: Run Coditsu
-  #        run: \curl -sSL https://api.coditsu.io/run/ci | bash

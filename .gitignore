@@ -1,5 +1,6 @@
 .bundle
 coverage
 vendor/bundle
-.coditsu/local.yml
+.tool-versions
+
 pkg
