@@ -1,5 +1,8 @@
 # master
 
+# 2.21.0 (2026-02-12)
+  * Sync with https://github.com/ua-parser/uap-core/commit/383604dfd6c7518c152e3bd9b7eda67662b1b343
+
 # 2.20.0 (2025-07-15)
   * Sync with https://github.com/ua-parser/uap-core/commit/432e95f6767cc8bab4c20c255784cd6f7e93bc15
   * drop Ruby 3.0 support
